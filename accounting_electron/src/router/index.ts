@@ -1,0 +1,15 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import routes from './routes'
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: routes,
+})
+
+router.beforeEach((to, from, next) => {
+    // 继续前进 next()
+    // 返回 false 以取消导航
+    next()
+})
+
+export default router
