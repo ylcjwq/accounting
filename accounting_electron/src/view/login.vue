@@ -82,7 +82,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       console.log(ruleForm);
       console.log('submit!')
-      await login(ruleForm)
+      const data = await login(ruleForm)
+      console.log(data);
+      if (data.code == 200) {
+        localStorage.setItem('token', data.token);
+      }
     } else {
       console.log('error submit!')
       return false
