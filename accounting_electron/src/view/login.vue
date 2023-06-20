@@ -23,10 +23,12 @@
   
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from 'element-plus'
 import { login } from "@/api/login"
 
 const ruleFormRef = ref<FormInstance>()
+const router = useRouter()
 
 // const checkAge = (rule: any, value: any, callback: any) => {
 //   if (!value) {
@@ -86,6 +88,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log(data);
       if (data.code == 200) {
         localStorage.setItem('token', data.token);
+        router.push("/home")
       }
     } else {
       console.log('error submit!')
