@@ -35,7 +35,7 @@ Router.post('/login', async (req, res) => {    //登录接口
 })
 
 // !校验登录(暂未实现)
-router.post("/check_login", async (req, res) => {
+Router.post("/check_login", async (req, res) => {
     // 从token获取用户id
     const token = req.body.token;
     try {
