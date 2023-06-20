@@ -2,48 +2,25 @@
   <el-container class="layout-container-demo" style="height: 500px">
     <el-aside width="200px">
       <el-scrollbar>
-        <el-menu :default-openeds="['1', '3']">
-          <el-sub-menu index="1">
+        <el-menu default-active="1">
+          <el-menu-item index="1" @click="routerPush('/')">
+            <el-icon><icon-menu /></el-icon>
+            <span>首页</span>
+          </el-menu-item>
+          <el-sub-menu index="2">
             <template #title>
               <el-icon>
                 <message />
-              </el-icon>Navigator One
+              </el-icon>记账
             </template>
             <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="1-1" @click="routerPush('/')">Option 1</el-menu-item>
-              <el-menu-item index="1-2" @click="routerPush('/accounting')">Option 2</el-menu-item>
+              <el-menu-item index="2-1" @click="routerPush('/spending')">支出</el-menu-item>
+              <el-menu-item index="2-2" @click="routerPush('/revenue')">收入</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="1-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="1-4">
-              <template #title>Option4</template>
-              <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
-          </el-sub-menu>
-          <el-sub-menu index="2">
-            <template #title>
-              <el-icon><icon-menu /></el-icon>Navigator Two
-            </template>
-            <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="2-1">Option 1</el-menu-item>
-              <el-menu-item index="2-2">Option 2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="2-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="2-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
           </el-sub-menu>
           <el-sub-menu index="3">
             <template #title>
-              <el-icon>
-                <setting />
-              </el-icon>Navigator Three
+              <el-icon><icon-menu /></el-icon>Navigator Two
             </template>
             <el-menu-item-group>
               <template #title>Group 1</template>
@@ -56,6 +33,25 @@
             <el-sub-menu index="3-4">
               <template #title>Option 4</template>
               <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
+            </el-sub-menu>
+          </el-sub-menu>
+          <el-sub-menu index="4">
+            <template #title>
+              <el-icon>
+                <setting />
+              </el-icon>Navigator Three
+            </template>
+            <el-menu-item-group>
+              <template #title>Group 1</template>
+              <el-menu-item index="4-1">Option 1</el-menu-item>
+              <el-menu-item index="4-2">Option 2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="Group 2">
+              <el-menu-item index="4-3">Option 3</el-menu-item>
+            </el-menu-item-group>
+            <el-sub-menu index="4-4">
+              <template #title>Option 4</template>
+              <el-menu-item index="4-4-1">Option 4-1</el-menu-item>
             </el-sub-menu>
           </el-sub-menu>
         </el-menu>
@@ -86,17 +82,13 @@
       </el-main>
     </el-container>
   </el-container>
-  <div>
-    <router-link to="/login">Home</router-link>
-    <router-view></router-view>
-  </div>
 </template>
   
 <script lang="ts" setup>
 import { useRouter } from "vue-router"
 const router = useRouter()
 
-const routerPush = (path: string) => {
+const routerPush = (path: string) => {    //路由跳转方法
   router.push(path)
 }
 </script>

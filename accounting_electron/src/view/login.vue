@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
-import type { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from "element-plus"
 import { login } from "@/api/login"
 
 const ruleFormRef = ref<FormInstance>()
