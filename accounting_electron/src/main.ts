@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router'
-import '@/static/reset.css'
+
+import '@/style/reset.css'
+import "@/style/iconfont/iconfont.css";
 
 createApp(App).use(router).mount('#app')

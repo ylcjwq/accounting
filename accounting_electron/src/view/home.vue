@@ -4,14 +4,12 @@
       <el-scrollbar>
         <el-menu default-active="1">
           <el-menu-item index="1" @click="routerPush('/')">
-            <el-icon><icon-menu /></el-icon>
+            <i class="icon icon-shouye"></i>
             <span>首页</span>
           </el-menu-item>
           <el-sub-menu index="2">
             <template #title>
-              <el-icon>
-                <message />
-              </el-icon>记账
+              <i class="icon icon-jizhangben"></i>记账
             </template>
             <el-menu-item-group>
               <el-menu-item index="2-1" @click="routerPush('/spending')">支出</el-menu-item>
