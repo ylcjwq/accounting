@@ -91,7 +91,7 @@ const routerPush = (path: string) => {    //路由跳转方法
 }
 </script>
   
-<style scoped>
+<style scoped lang="scss">
 .layout-container-demo .el-header {
   position: relative;
   background-color: var(--el-color-primary-light-7);
