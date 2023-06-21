@@ -4,12 +4,16 @@
       <el-scrollbar>
         <el-menu default-active="1">
           <el-menu-item index="1" @click="routerPush('/')">
-            <i class="icon icon-shouye"></i>
+            <el-icon>
+              <House />
+            </el-icon>
             <span>首页</span>
           </el-menu-item>
           <el-sub-menu index="2">
             <template #title>
-              <i class="icon icon-jizhangben"></i>记账
+              <el-icon>
+                <Notebook />
+              </el-icon>记账
             </template>
             <el-menu-item-group>
               <el-menu-item index="2-1" @click="routerPush('/spending')">支出</el-menu-item>
@@ -58,6 +62,7 @@
 
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
+        <div class="leftbar"></div>
         <div class="toolbar">
           <el-dropdown>
             <el-icon style="margin-right: 8px; margin-top: 1px">
@@ -83,6 +88,7 @@
 </template>
   
 <script lang="ts" setup>
+import { Menu as IconMenu, House, Notebook, Setting } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
 const router = useRouter()
 

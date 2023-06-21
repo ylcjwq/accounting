@@ -34,6 +34,14 @@ Router.post('/login', async (req, res) => {    //登录接口
     })
 })
 
+//测试接口
+Router.get("/test", async (req, res) => {
+    res.send({
+        code: 200,
+        msg: '链接成功',
+    })
+})
+
 // !校验登录(暂未实现)
 Router.post("/check_login", async (req, res) => {
     // 从token获取用户id

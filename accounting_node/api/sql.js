@@ -8,7 +8,7 @@ let pool = mysql.createPool({
     user: 'root',
     password: 'ylc20010506',
     port: '3306',
-    database: 'wmpt',
+    database: 'accounting',
     multipleStatements: true
 })
 

@@ -45,7 +45,7 @@ export default defineConfig({
   server: {
     proxy: { //配置代理服务器
       "/api": {
-        target: "http://localhost:3300",    //目标url
+        target: "http://8.130.71.186:3300",    //目标url
         changeOrigin: true,    //允许跨域
         rewrite: (path) => path.replace(/^\/api/, ""),     //重写路径,替换/api
       },
