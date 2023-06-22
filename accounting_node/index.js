@@ -18,8 +18,8 @@ app.get('/images/*', function (req, res) {     //允许images下的图片被访�
 })
 
 // 导入模块
-let denglu = require('./api/denglu')
-app.use('/login', denglu)
+let login = require('./api/login')
+app.use('/login', login)
 
 app.listen(3300, () => {
     console.log('running port is 3300(client)');

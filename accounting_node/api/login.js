@@ -7,10 +7,12 @@ module.exports = Router;
 
 Router.use(express.json(), express.urlencoded())
 
-Router.post('/login', async (req, res) => {    //登录接口
+
+//登录接口
+Router.post('/login', async (req, res) => {
     let { username, password } = req.body;
     console.log(req.body);
-    let row = await mysql.query(`select * from user WHERE username='${username}' AND password='${password}';`);  //查询数据库中是否有对应的账号密码
+    let row = await mysql.query(`SELECT * FROM user WHERE username='${username}' AND password='${password}';`);  //查询数据库中是否有对应的账号密码
 
     if (row.length == 0) {     //不存在，返回400
         res.send({
@@ -34,16 +36,40 @@ Router.post('/login', async (req, res) => {    //登录接口
     })
 })
 
-//测试接口
-Router.get("/test", async (req, res) => {
+
+//检查数据库用户名是否存在接口，在调用注册接口前，应该先调用此接口
+Router.get("checkEnroll", async (req, res) => {
+    let { username } = req.query
+    let row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`)
+    if (row.length == 0) {     //用户名不存在，可以注册
+        res.send({
+            code: 200,
+            msg: "用户名可以注册",
+        })
+        return
+    }
+    // 如果存在
     res.send({
-        code: 200,
-        msg: '链接成功',
+        code: 400,
+        msg: "该用户已存在，请重新输入",
     })
 })
 
+
+
+//注册接口
+Router.post("/enroll", async (req, res) => {
+    let { username, password } = req.body
+    let row = await mysql.query(`INSERT INTO user  VALUES (NULL,'${username}', '${password}',NULL,'${username}')`)   //将用户名、密码、名称写入user表
+    res.send({
+        code: 200,
+        msg: '注册成功',
+    })
+})
+
+
 // !校验登录(暂未实现)
-Router.post("/check_login", async (req, res) => {
+Router.post("/checkLogin", async (req, res) => {
     // 从token获取用户id
     const token = req.body.token;
     try {
