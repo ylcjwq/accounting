@@ -1,8 +1,8 @@
 <template>
-  <el-container class="layout-container-demo" style="height: 500px">
-    <el-aside width="200px">
+  <el-container class="layout-container-demo" style="height: 100vh">
+    <el-aside :width="200">
       <el-scrollbar>
-        <el-menu default-active="1">
+        <el-menu default-active="1" :collapse="isCollapse" class="el-menu-vertical-demo">
           <el-menu-item index="1" @click="routerPush('/')">
             <el-icon>
               <House />
@@ -13,7 +13,8 @@
             <template #title>
               <el-icon>
                 <Notebook />
-              </el-icon>记账
+              </el-icon>
+              <span>记账</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="2-1" @click="routerPush('/spending')">支出</el-menu-item>
@@ -22,7 +23,8 @@
           </el-sub-menu>
           <el-sub-menu index="3">
             <template #title>
-              <el-icon><icon-menu /></el-icon>Navigator Two
+              <el-icon><icon-menu /></el-icon>
+              <span>Navigator Two</span>
             </template>
             <el-menu-item-group>
               <template #title>Group 1</template>
@@ -41,7 +43,8 @@
             <template #title>
               <el-icon>
                 <setting />
-              </el-icon>Navigator Three
+              </el-icon>
+              <span>Navigator Three</span>
             </template>
             <el-menu-item-group>
               <template #title>Group 1</template>
@@ -61,8 +64,15 @@
     </el-aside>
 
     <el-container>
-      <el-header style="text-align: right; font-size: 12px">
-        <div class="leftbar"></div>
+      <el-header style="display: flex; font-size: 16px;justify-content: space-between;">
+        <div class="leftbar">
+          <el-icon @click="isCollapse = false" v-if="isCollapse">
+            <Expand />
+          </el-icon>
+          <el-icon @click="isCollapse = true" v-else>
+            <Fold />
+          </el-icon>
+        </div>
         <div class="toolbar">
           <el-dropdown>
             <el-icon style="margin-right: 8px; margin-top: 1px">
@@ -88,9 +98,12 @@
 </template>
   
 <script lang="ts" setup>
-import { Menu as IconMenu, House, Notebook, Setting } from '@element-plus/icons-vue'
+import { Menu as IconMenu } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
+import { Ref, ref } from "vue";
+
 const router = useRouter()
+const isCollapse: Ref<boolean> = ref(false)
 
 const routerPush = (path: string) => {    //路由跳转方法
   router.push(path)
@@ -118,11 +131,24 @@ const routerPush = (path: string) => {    //路由跳转方法
 }
 
 .layout-container-demo .toolbar {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   right: 20px;
+}
+
+.layout-container-demo .leftbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 22px;
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 200px;
 }
 </style>
   
