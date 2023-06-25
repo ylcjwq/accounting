@@ -18,8 +18,14 @@ app.get('/images/*', function (req, res) {     //允许images下的图片被访�
 })
 
 // 导入模块
-let login = require('./api/login')
+//登录相关模块
+let login = require('./api/user/login')
 app.use('/login', login)
+
+//用户信息相关模块
+let user = require('./api/user/user')
+app.use('/user', user)
+
 
 app.listen(3300, () => {
     console.log('running port is 3300(client)');

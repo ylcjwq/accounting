@@ -1,6 +1,6 @@
 const express = require('express');
 let Router = express.Router();
-let mysql = require('./sql');
+let mysql = require('../sql');
 const JWT = require('jsonwebtoken');
 
 module.exports = Router;
