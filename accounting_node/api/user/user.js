@@ -22,3 +22,4 @@ Router.post('/name', async (req, res) => {
         })
     }
 })
+module.exports = Router

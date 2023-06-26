@@ -90,3 +90,4 @@ Router.post("/checkLogin", async (req, res) => {
     }
 });
 
+module.exports = Router
