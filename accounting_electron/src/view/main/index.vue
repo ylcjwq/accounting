@@ -3,7 +3,7 @@
         <div class="home_up">
             <div class="totalExpenditure">
                 <p class="expenditure">总支出发布</p>
-                <el-table  :data="tableData" style="width: 100%">
+                <el-table :data="tableData" style="width: 100%">
                     <el-table-column prop="date" label="类型" width="180" />
                     <el-table-column prop="expenditure" label="支出" width="180" />
                     <el-table-column prop="Percentage" label="所占比例" />
@@ -11,7 +11,7 @@
             </div>
             <div class="totalIncome">
                 <p class="expenditure">总收入发布</p>
-                <el-table  :data="tableData" style="width: 100%">
+                <el-table :data="tableData" style="width: 100%">
                     <el-table-column prop="date" label="类型" width="180" />
                     <el-table-column prop="expenditure" label="支出" width="180" />
                     <el-table-column prop="Percentage" label="所占比例" />
@@ -52,7 +52,7 @@ const tableData = [
 ]
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 .home_up {
     height: 50%;
     width: 100%;
