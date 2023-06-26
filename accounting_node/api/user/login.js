@@ -40,7 +40,7 @@ Router.post('/login', async (req, res) => {
 //注册接口
 Router.post("/enroll", async (req, res) => {
     const { username, password } = req.body
-    const row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`)
+    const row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`) //查询数据库中用户名是否存在
     if (row.length == 0) {     //用户名不存在，可以注册
         const row = await mysql.query(`INSERT INTO user  VALUES (NULL,'${username}', '${password}',NULL,'${username}')`)   //将用户名、密码、名称写入user表
         res.send({
