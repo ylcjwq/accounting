@@ -16,8 +16,8 @@
                     <el-button type="primary" @click="submitForm(ruleFormRef)">登 录</el-button>
                     <!-- <el-button @click="resetForm(ruleFormRef)">重 置</el-button> -->
                 </el-form-item>
-                <span class="register">
-                    没有账号？去注册
+                <span class="register" @click="router.push('/login')">
+                    已有账号？去注册
                 </span>
             </el-form>
         </div>
@@ -36,12 +36,12 @@ interface RuleForm {            //定义输入框内容接口
     checkPass: string | number
 }
 
-const ruleFormRef = ref<FormInstance>()
 const router = useRouter()
+const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<RuleForm>({
+    username: '',
     password: '',
     checkPass: '',
-    username: '',
 })
 
 const validatePass1 = (rule: any, value: any, callback: any) => {
@@ -70,13 +70,15 @@ const validatePass3 = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请再次输入密码'))
     } else if (value !== ruleForm.password) {
+        console.log(value);
+        console.log(ruleForm.password);
         callback(new Error("两次密码输入不一致"))
     } else {
         callback()
     }
 }
 
-const rules = reactive<FormRules<typeof ruleForm>>({
+const rules = reactive<FormRules>({
     username: [{ validator: validatePass1, trigger: 'blur' }],
     password: [{ validator: validatePass2, trigger: 'blur' }],
     checkPass: [{ validator: validatePass3, trigger: 'blur' }],
@@ -84,7 +86,7 @@ const rules = reactive<FormRules<typeof ruleForm>>({
 
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    formEl.validate(async (valid) => {
+    formEl.validate(async (valid: any) => {
         if (valid) {
 
             console.log('submit!')

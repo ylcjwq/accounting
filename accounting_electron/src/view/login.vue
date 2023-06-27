@@ -32,6 +32,12 @@ const ruleFormRef = ref<FormInstance>()
 
 const router = useRouter()
 
+// 登录参数声明
+const ruleForm = reactive({
+  username: '',
+  password: ''
+})
+
 // 点击登录事件
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
@@ -51,12 +57,6 @@ const validatePass2 = (rule: any, value: any, callback: any) => {
     callback()
   }
 }
-
-// 登录参数声明
-const ruleForm = reactive({
-  username: '',
-  password: ''
-})
 
 const rules = reactive<FormRules>({
   username: [{ validator: validatePass, trigger: 'blur' }],

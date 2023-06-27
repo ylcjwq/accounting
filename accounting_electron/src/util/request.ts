@@ -1,7 +1,6 @@
 import axios from "axios"
 import type { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { Names } from './requestCom/envName'//枚举
-import { errorCodeType } from './requestCom/errorCode'//请求错误代码
 // console.log(import.meta.env.VITE_HTTP)
 const service = axios.create({
     //配置的跨域标识
@@ -20,14 +19,13 @@ service.interceptors.request.use((config: AxiosRequestConfig) => {
 //响应拦截器
 service.interceptors.response.use((config: AxiosResponse) => {
     const code = config.data['code'] || 200;
+    const msg = config.data['msg'] || "未知错误";
     if (code == 200) {
         return Promise.resolve(config.data)
     } else {
-        const msg = errorCodeType(code)
         ElMessage.error(msg)
         return Promise.reject(config.data)
     }
-    // return config;
 }, (error: AxiosError) => {
     console.log(error)
 })
