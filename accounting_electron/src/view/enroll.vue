@@ -44,6 +44,7 @@ const ruleForm = reactive<RuleForm>({
     checkPass: '',
 })
 
+
 const validatePass1 = (rule: any, value: any, callback: any) => {  //账号校验规则
     if (value === '') {
         callback(new Error('请输入账号！'))
@@ -90,7 +91,7 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
         if (valid) {
 
             console.log('submit!')
-            const data = await enroll(ruleForm)
+            const data: any = await enroll(ruleForm)
             if (data.code == 200) {
                 console.log("注册成功!");
             }
