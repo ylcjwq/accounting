@@ -5,4 +5,11 @@ export const login = (data: any) => {
         method: 'post',
         data
     })
+};
+export const enroll = (data: any) => {
+    return request({
+        url: '/login/enroll',
+        method: 'post',
+        data
+    })
 }

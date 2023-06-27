@@ -38,7 +38,7 @@ Router.post('/login', async (req, res) => {
 
 
 //检查数据库用户名是否存在接口，在调用注册接口前，应该先调用此接口
-Router.get("checkEnroll", async (req, res) => {
+Router.get("/checkEnroll", async (req, res) => {
     let { username } = req.query
     let row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`)
     if (row.length == 0) {     //用户名不存在，可以注册
