@@ -44,7 +44,7 @@ const ruleForm = reactive<RuleForm>({
     checkPass: '',
 })
 
-const validatePass1 = (rule: any, value: any, callback: any) => {
+const validatePass1 = (rule: any, value: any, callback: any) => {  //账号校验规则
     if (value === '') {
         callback(new Error('请输入账号！'))
     } else {
@@ -55,7 +55,7 @@ const validatePass1 = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-const validatePass2 = (rule: any, value: any, callback: any) => {
+const validatePass2 = (rule: any, value: any, callback: any) => {  //密码校验规则
     if (value === '') {
         callback(new Error('请输入密码'))
     } else {
@@ -66,7 +66,7 @@ const validatePass2 = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-const validatePass3 = (rule: any, value: any, callback: any) => {
+const validatePass3 = (rule: any, value: any, callback: any) => {  //确认密码校验规则
     if (value === '') {
         callback(new Error('请再次输入密码'))
     } else if (value !== ruleForm.password) {
@@ -84,7 +84,7 @@ const rules = reactive<FormRules>({
     checkPass: [{ validator: validatePass3, trigger: 'blur' }],
 })
 
-const submitForm = (formEl: FormInstance | undefined) => {
+const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
     if (!formEl) return
     formEl.validate(async (valid: any) => {
         if (valid) {
