@@ -61,7 +61,6 @@ const validatePass2 = (_rule: any, value: any, callback: any) => {   //未使用
 const rules = reactive<FormRules>({
   username: [{ validator: validatePass, trigger: 'blur' }],
   password: [{ validator: validatePass2, trigger: 'blur' }],
-  // age: [{ validator: checkAge, trigger: 'blur' }],
 })
 
 // 点击登录
