@@ -37,17 +37,11 @@ Router.post('/login', async (req, res) => {
 })
 
 
-<<<<<<< HEAD:accounting_node/api/login.js
-//检查数据库用户名是否存在接口，在调用注册接口前，应该先调用此接口
-Router.get("/checkEnroll", async (req, res) => {
-    let { username } = req.query
-    let row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`)
-=======
+
 //注册接口
 Router.post("/enroll", async (req, res) => {
     const { username, password } = req.body
     const row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`) //查询数据库中用户名是否存在
->>>>>>> 44555010b30b17a691163b0eaf84e60e8f0c7e2b:accounting_node/api/user/login.js
     if (row.length == 0) {     //用户名不存在，可以注册
         const row = await mysql.query(`INSERT INTO user  VALUES (NULL,'${username}', '${password}',NULL,'${username}')`)   //将用户名、密码、名称写入user表
         res.send({
