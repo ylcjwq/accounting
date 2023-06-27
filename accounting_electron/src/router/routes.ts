@@ -15,6 +15,12 @@ const routes = [
         name: "login",
         title: "登录",
         component: () => import("@/view/login.vue")
+    },
+    {
+        path: "/enroll",
+        name: "enroll",
+        title: "注册",
+        component: () => import("@/view/enroll.vue")
     }
 ]
 

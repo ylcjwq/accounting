@@ -21,6 +21,8 @@ router.beforeEach((to: any, from: any, next: any) => {
     NProgress.start()
     if (to.path == "/login") {
         next()
+    } else if (to.path == "/enroll") {
+        next()
     } else {
         const token = localStorage.getItem("token")
         if (token) {
