@@ -39,7 +39,7 @@ const ruleForm = reactive({
 })
 
 // 点击登录事件
-const validatePass = (rule: any, value: any, callback: any) => {
+const validatePass = (_rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error('请输入账号！'))
   } else {
@@ -50,7 +50,7 @@ const validatePass = (rule: any, value: any, callback: any) => {
     callback()
   }
 }
-const validatePass2 = (rule: any, value: any, callback: any) => {
+const validatePass2 = (_rule: any, value: any, callback: any) => {   //未使用的参数前面加_解决ts报错的问题
   if (value === '') {
     callback(new Error('请输入密码！'))
   } else {
@@ -69,16 +69,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(async (valid) => {
     if (valid) {
-      console.log(ruleForm);
-      console.log('submit!')
-      const data = await login(ruleForm)
-      console.log(data);
+      const data: any = await login(ruleForm)
       if (data.code == 200) {
         localStorage.setItem('token', data.token);
         router.push("/home")
       }
     } else {
-      console.log('error submit!')
       return false
     }
   })

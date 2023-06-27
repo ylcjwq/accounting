@@ -45,7 +45,7 @@ const ruleForm = reactive<RuleForm>({
 })
 
 
-const validatePass1 = (rule: any, value: any, callback: any) => {  //账号校验规则
+const validatePass1 = (_rule: any, value: any, callback: any) => {  //账号校验规则
     if (value === '') {
         callback(new Error('请输入账号！'))
     } else {
@@ -56,7 +56,7 @@ const validatePass1 = (rule: any, value: any, callback: any) => {  //账号校�
         callback()
     }
 }
-const validatePass2 = (rule: any, value: any, callback: any) => {  //密码校验规则
+const validatePass2 = (_rule: any, value: any, callback: any) => {  //密码校验规则
     if (value === '') {
         callback(new Error('请输入密码'))
     } else {
@@ -67,12 +67,10 @@ const validatePass2 = (rule: any, value: any, callback: any) => {  //密码校�
         callback()
     }
 }
-const validatePass3 = (rule: any, value: any, callback: any) => {  //确认密码校验规则
+const validatePass3 = (_rule: any, value: any, callback: any) => {  //确认密码校验规则
     if (value === '') {
         callback(new Error('请再次输入密码'))
     } else if (value !== ruleForm.password) {
-        console.log(value);
-        console.log(ruleForm.password);
         callback(new Error("两次密码输入不一致"))
     } else {
         callback()
@@ -89,14 +87,11 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
     if (!formEl) return
     formEl.validate(async (valid: any) => {
         if (valid) {
-
-            console.log('submit!')
             const data: any = await enroll(ruleForm)
             if (data.code == 200) {
                 console.log("注册成功!");
             }
         } else {
-            console.log('error submit!')
             return false
         }
     })
