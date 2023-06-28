@@ -13,11 +13,12 @@
                     <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm(ruleFormRef)">登 录</el-button>
-                    <!-- <el-button @click="resetForm(ruleFormRef)">重 置</el-button> -->
+                    <el-button type="primary" @click="submitForm(ruleFormRef)">注 册</el-button>
+                    <el-button @click="resetForm(ruleFormRef)">重 置</el-button>
                 </el-form-item>
                 <span class="register" @click="router.push('/login')">
-                    已有账号？去注册
+                    <span :class="{already:isBoolean.isBoolean}">已有账号？</span>
+                    <span class="ToLogin">去登录</span>
                 </span>
             </el-form>
         </div>
@@ -36,6 +37,11 @@ interface RuleForm {            //定义输入框内容接口
     checkPass: string | number
 }
 
+// 定义字体样式初始化
+const isBoolean = reactive({
+    isBoolean: false
+})
+
 const router = useRouter()
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<RuleForm>({
@@ -47,7 +53,7 @@ const ruleForm = reactive<RuleForm>({
 
 const validatePass1 = (_rule: any, value: any, callback: any) => {  //账号校验规则
     if (value === '') {
-        callback(new Error('请输入账号！'))
+        callback(new Error('请输入账号'))
     } else {
         if (ruleForm.username !== '') {
             if (!ruleFormRef.value) return
@@ -94,10 +100,15 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
                 console.log("失败");
 
             }
+            
         } else {
             return false
         }
     })
+}
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
 }
 </script>
 
@@ -112,7 +123,7 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
     /* 图片充满元素 */
     .login_item {
         width: 450px;
-        height: 350px;
+        height: 394px;
         background-color: rgb(255, 255, 255);
         border-radius: 8px;
         position: absolute;
@@ -125,12 +136,14 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
             /* padding-left: 0; */
             margin-top: 80px;
             margin-right: 18px;
-
             .register {
                 margin-left: 296px;
                 line-height: 186px;
                 font-size: 17px;
                 color: red;
+                .already{
+                    color: black;
+                }
             }
         }
     }
