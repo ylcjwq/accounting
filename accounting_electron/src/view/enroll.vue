@@ -16,7 +16,7 @@
                     <el-button type="primary" @click="submitForm(ruleFormRef)">注 册</el-button>
                     <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px;">重 置</el-button>
                 </el-form-item>
-                <div class="register" @click="router.push('/login')">
+                <div class="register" @click="router.replace('/login')">
                     <span style="color: rgb(141, 139, 139)">已有账号?</span>
                     <span class="goToLogin">去登录</span>
                 </div>
