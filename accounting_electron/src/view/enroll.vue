@@ -17,8 +17,8 @@
                     <el-button @click="resetForm(ruleFormRef)">重 置</el-button>
                 </el-form-item>
                 <span class="register" @click="router.push('/login')">
-                    <span :class="{already:isBoolean.isBoolean}">已有账号？</span>
-                    <span :class="{ToLogin: isColor.color}">去登录</span>
+                    <span>已有账号？</span>
+                    <span class="goToLogin">去登录</span>
                 </span>
             </el-form>
         </div>
@@ -106,15 +106,15 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
                 isColor.color = true
                 resetForm(ruleFormRef.value)
             }
-            
+
         } else {
             return false
         }
     })
 }
 const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
+    if (!formEl) return
+    formEl.resetFields()
 }
 </script>
 
@@ -138,25 +138,23 @@ const resetForm = (formEl: FormInstance | undefined) => {
         transform: translate(-50%, -50%);
 
         .demo-ruleForm {
-            /* margin-left: 0; */
-            /* padding-left: 0; */
             margin-top: 80px;
             margin-right: 18px;
-            .register {
-                margin-left: 296px;
-                line-height: 186px;
-                font-size: 17px;
-                color: red;
-                .already{
-                    color: black;
-                }
-                .ToLogin{
-                    background-image: linear-gradient(to right, #ff0000, #0000ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-                }
-            }
         }
+    }
+}
+
+.goToLogin {
+    font-size: 24px;
+    margin: 10px 0 20px 10px;
+    background: -webkit-gradient(linear, left top, right top, color-stop(0, #f902ff), color-stop(.4, aqua), color-stop(.5, #fff), color-stop(.6, #f902ff), color-stop(1, aqua));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: animate 4s infinite;
+
+    i {
+        font-size: 26px;
+        color: yellowgreen;
     }
 }
 </style>

@@ -71,7 +71,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       const data: any = await login(ruleForm)
       if (data.code == 200) {
         localStorage.setItem('token', data.token);
-        router.push("/home")
+        router.replace("/home")
       }
     } else {
       return false
