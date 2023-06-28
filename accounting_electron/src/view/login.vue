@@ -2,6 +2,7 @@
   <!-- 登录模块 -->
   <div class="loginBox">
     <div class="login_item">
+      <span class="log_item">登录/注册</span>
       <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px" class="demo-ruleForm">
         <el-form-item label="账 号" prop="username">
           <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
@@ -10,11 +11,12 @@
           <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleFormRef)">登 录</el-button>
-          <el-button @click="resetForm(ruleFormRef)">重 置</el-button>
+          <el-button type="primary" @click="submitForm(ruleFormRef)" style="margin-left: 73px; margin-top: 30px;">登 录</el-button>
+          <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px;margin-top: 30px;">重 置</el-button>
         </el-form-item>
         <span class="register" @click="router.push('/enroll')">
-          没有账号？去注册
+          <span style="color: rgb(141, 139, 139)">没有账号?</span>
+          <span class="goToLogin">去注册</span>
         </span>
       </el-form>
     </div>
@@ -95,6 +97,12 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
   /* 图片充满元素 */
   .login_item {
+    .log_item{
+      color: rgb(141, 139, 139);
+      float: left;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
     width: 450px;
     height: 350px;
     background-color: rgb(255, 255, 255);
@@ -111,10 +119,18 @@ const resetForm = (formEl: FormInstance | undefined) => {
       margin-right: 18px;
 
       .register {
-        margin-left: 296px;
-        line-height: 186px;
+        margin: 30px 0 0 160px;
+        cursor: pointer;
+        line-height: 81px;
         font-size: 17px;
         color: red;
+        .goToLogin {
+        font-size: 16px;
+        background: -webkit-gradient(linear, left top, right top, color-stop(0, #89e972), color-stop(.4, rgb(159, 241, 173)), color-stop(.5, rgb(188, 243, 227)), color-stop(.6, #92e9f0), color-stop(1, rgb(96, 207, 235)));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+    }
       }
     }
   }
