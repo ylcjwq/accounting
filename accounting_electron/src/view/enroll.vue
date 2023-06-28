@@ -90,6 +90,9 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
             const data: any = await enroll(ruleForm)
             if (data.code == 200) {
                 console.log("注册成功!");
+            } else {
+                console.log("失败");
+
             }
         } else {
             return false

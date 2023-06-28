@@ -24,9 +24,10 @@ service.interceptors.response.use((config: AxiosResponse) => {
         return Promise.resolve(config.data)
     } else {
         ElMessage.error(msg)
-        return Promise.reject(config.data)
+        return Promise.resolve(config.data)
     }
 }, (error: AxiosError) => {
     console.log(error)
+    return Promise.reject(error)
 })
 export default service
