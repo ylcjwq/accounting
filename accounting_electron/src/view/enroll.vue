@@ -26,10 +26,13 @@
 </template>
 
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
 import { enroll } from "@/api/login"
+
+
 
 interface RuleForm {            //定义输入框内容接口
     username: string | number
@@ -60,7 +63,7 @@ const validatePass1 = (_rule: any, value: any, callback: any) => {  //账号校�
     } else {
         if (ruleForm.username !== '') {
             if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('password', () => null)
+            ruleFormRef.value.validateField('username', () => null)
         }
         callback()
     }
@@ -71,7 +74,7 @@ const validatePass2 = (_rule: any, value: any, callback: any) => {  //密码校�
     } else {
         if (ruleForm.checkPass !== '') {
             if (!ruleFormRef.value) return
-            ruleFormRef.value.validateField('checkPass', () => null)
+            ruleFormRef.value.validateField('password', () => null)
         }
         callback()
     }
@@ -100,6 +103,7 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
             if (data.code == 200) {
                 console.log("注册成功!");
                 router.replace('/login')
+                open2()
             } else {
                 console.log("失败");
                 isBoolean.isBoolean = true
@@ -115,6 +119,13 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
 const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
+}
+// 注册成功，消息提示
+const open2 = () => {
+  ElMessage({
+    message: '注册成功',
+    type: 'success',
+  })
 }
 </script>
 
