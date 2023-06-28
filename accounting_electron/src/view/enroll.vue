@@ -1,6 +1,7 @@
 <template>
     <div class="enrollBox">
         <div class="login_item">
+            <span class="log_item">注 册</span>
             <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px"
                 class="demo-ruleForm">
                 <el-form-item label="账 号" prop="username">
@@ -138,6 +139,12 @@ const open2 = () => {
 
     /* 图片充满元素 */
     .login_item {
+        .log_item{
+      color: rgb(141, 139, 139);
+      float: left;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
         width: 450px;
         height: 350px;
         background-color: rgb(255, 255, 255);
