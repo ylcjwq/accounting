@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang='ts'>
-import { ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
