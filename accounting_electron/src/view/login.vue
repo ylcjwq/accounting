@@ -2,7 +2,7 @@
   <!-- 登录模块 -->
   <div class="loginBox">
     <div class="login_item">
-      <span class="log_item">登录/注册</span>
+      <span class="log_item">登 录</span>
       <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px" class="demo-ruleForm">
         <el-form-item label="账 号" prop="username">
           <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
