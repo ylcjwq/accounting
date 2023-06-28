@@ -18,7 +18,7 @@
                 </el-form-item>
                 <span class="register" @click="router.push('/login')">
                     <span :class="{already:isBoolean.isBoolean}">已有账号？</span>
-                    <span class="ToLogin">去登录</span>
+                    <span :class="{ToLogin: isColor.color}">去登录</span>
                 </span>
             </el-form>
         </div>
@@ -40,6 +40,9 @@ interface RuleForm {            //定义输入框内容接口
 // 定义字体样式初始化
 const isBoolean = reactive({
     isBoolean: false
+})
+const isColor = reactive({
+    color: false
 })
 
 const router = useRouter()
@@ -96,9 +99,12 @@ const submitForm = (formEl: FormInstance | undefined) => {   //确认注册
             const data: any = await enroll(ruleForm)
             if (data.code == 200) {
                 console.log("注册成功!");
+                router.replace('/login')
             } else {
                 console.log("失败");
-
+                isBoolean.isBoolean = true
+                isColor.color = true
+                resetForm(ruleFormRef.value)
             }
             
         } else {
@@ -143,6 +149,11 @@ const resetForm = (formEl: FormInstance | undefined) => {
                 color: red;
                 .already{
                     color: black;
+                }
+                .ToLogin{
+                    background-image: linear-gradient(to right, #ff0000, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
                 }
             }
         }
