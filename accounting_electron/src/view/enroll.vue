@@ -12,14 +12,14 @@
                 <el-form-item label="确认密码" prop="checkPass">
                     <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-left: 60px;">
                     <el-button type="primary" @click="submitForm(ruleFormRef)">注 册</el-button>
-                    <el-button @click="resetForm(ruleFormRef)">重 置</el-button>
+                    <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px;">重 置</el-button>
                 </el-form-item>
-                <span class="register" @click="router.push('/login')">
-                    <span>已有账号？</span>
+                <div class="register" @click="router.push('/login')">
+                    <span style="color: rgb(141, 139, 139)">已有账号?</span>
                     <span class="goToLogin">去登录</span>
-                </span>
+                </div>
             </el-form>
         </div>
     </div>
@@ -122,10 +122,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
 }
 // 注册成功，消息提示
 const open2 = () => {
-  ElMessage({
-    message: '注册成功',
-    type: 'success',
-  })
+    ElMessage({
+        message: '注册成功',
+        type: 'success',
+    })
 }
 </script>
 
@@ -140,7 +140,7 @@ const open2 = () => {
     /* 图片充满元素 */
     .login_item {
         width: 450px;
-        height: 394px;
+        height: 350px;
         background-color: rgb(255, 255, 255);
         border-radius: 8px;
         position: absolute;
@@ -155,17 +155,15 @@ const open2 = () => {
     }
 }
 
-.goToLogin {
-    font-size: 24px;
-    margin: 10px 0 20px 10px;
-    background: -webkit-gradient(linear, left top, right top, color-stop(0, #f902ff), color-stop(.4, aqua), color-stop(.5, #fff), color-stop(.6, #f902ff), color-stop(1, aqua));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: animate 4s infinite;
+.register {
+    margin: 30px 0 0 160px;
 
-    i {
-        font-size: 26px;
-        color: yellowgreen;
+    .goToLogin {
+        font-size: 16px;
+        background: -webkit-gradient(linear, left top, right top, color-stop(0, #89e972), color-stop(.4, rgb(159, 241, 173)), color-stop(.5, rgb(188, 243, 227)), color-stop(.6, #92e9f0), color-stop(1, rgb(96, 207, 235)));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
     }
 }
 </style>
