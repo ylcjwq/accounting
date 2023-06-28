@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@types/echarts": "^4.9.18",
     "axios": "^1.4.0",
+    "echarts": "^5.4.2",
     "element-plus": "^2.3.6",
     "node-sass": "^9.0.0",
     "nprogress": "^0.2.0",
