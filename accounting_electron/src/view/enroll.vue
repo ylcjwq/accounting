@@ -2,16 +2,17 @@
     <div class="enrollBox">
         <div class="login_item">
             <span class="log_item">注 册</span>
-            <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="70px"
-                class="demo-ruleForm">
+            <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="70px" class="demo-ruleForm">
                 <el-form-item label="账 号" prop="username">
-                    <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User"/>
+                    <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User" />
                 </el-form-item>
                 <el-form-item label="密 码" prop="password">
-                    <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password/>
+                    <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock"
+                        show-password />
                 </el-form-item>
                 <el-form-item label="确认密码" prop="checkPass">
-                    <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" :prefix-icon="Lock" show-password/>
+                    <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" :prefix-icon="Lock"
+                        show-password />
                 </el-form-item>
                 <el-form-item style="margin-left: 60px;">
                     <el-button type="primary" @click="submitForm(ruleFormRef)">注 册</el-button>
@@ -27,10 +28,10 @@
 </template>
 
 <script setup lang='ts'>
-import { User,Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
+import { User, Lock } from '@element-plus/icons-vue'
 import { enroll } from "@/api/login"
 
 
@@ -140,12 +141,13 @@ const open2 = () => {
 
     /* 图片充满元素 */
     .login_item {
-        .log_item{
-      color: rgb(141, 139, 139);
-      float: left;
-      margin-top: 10px;
-      margin-left: 10px;
-    }
+        .log_item {
+            color: rgb(141, 139, 139);
+            float: left;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
         width: 450px;
         height: 350px;
         background-color: rgb(255, 255, 255);
