@@ -3,12 +3,12 @@
   <div class="loginBox">
     <div class="login_item">
       <span class="log_item">登 录</span>
-      <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px" class="demo-ruleForm">
-        <el-form-item label="账 号" prop="username">
-          <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
+      <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="70px" class="demo-ruleForm">
+        <el-form-item label="账 号" prop="username" >
+          <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User" :append="''"/>
         </el-form-item>
         <el-form-item label="密 码" prop="password">
-          <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+          <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password/>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm(ruleFormRef)" style="margin-left: 73px; margin-top: 30px;">登 录</el-button>
@@ -24,7 +24,7 @@
 </template>
   
 <script lang="ts" setup>
-
+import { User,Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
