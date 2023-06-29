@@ -73,6 +73,9 @@
             <Fold />
           </el-icon>
         </div>
+        <div class="h_title">
+          记账本软件
+        </div>
         <div class="toolbar">
           <el-dropdown>
             <el-icon style="margin-right: 8px; margin-top: 1px">
@@ -80,9 +83,9 @@
             </el-icon>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
-                <el-dropdown-item>Delete</el-dropdown-item>
+                <el-dropdown-item>个人设置</el-dropdown-item>
+                <el-dropdown-item @click="OutLogin">退出登录</el-dropdown-item>
+                <!-- <el-dropdown-item>Delete</el-dropdown-item> -->
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -108,6 +111,11 @@ const isCollapse: Ref<boolean> = ref(false)
 const routerPush = (path: string) => {    //路由跳转方法
   router.push(path)
 }
+// 点击退出按钮
+const OutLogin = ()=>{
+  router.replace('/login');
+  window.localStorage.removeItem('token')
+}
 </script>
   
 <style scoped lang="scss">
@@ -129,7 +137,12 @@ const routerPush = (path: string) => {    //路由跳转方法
 .layout-container-demo .el-main {
   padding: 0;
 }
-
+.layout-container-demo .h_title{
+  font-weight: 530;
+  font-size: 20px;
+  letter-spacing: 10px;
+  margin-top: 20px;
+}
 .layout-container-demo .toolbar {
   display: flex;
   align-items: center;
