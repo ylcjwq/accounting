@@ -1,10 +1,9 @@
 <template>
-    <div>
-        支出支出支出
-    </div>
+    <spendIcon />
 </template>
 
 <script setup lang='ts'>
+import spendIcon from './spendIcon.vue';
 
 </script>
 
