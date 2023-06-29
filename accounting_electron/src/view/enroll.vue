@@ -2,16 +2,16 @@
     <div class="enrollBox">
         <div class="login_item">
             <span class="log_item">注 册</span>
-            <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="70px"
+            <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="70px"
                 class="demo-ruleForm">
                 <el-form-item label="账 号" prop="username">
-                    <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
+                    <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User"/>
                 </el-form-item>
                 <el-form-item label="密 码" prop="password">
-                    <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+                    <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password/>
                 </el-form-item>
                 <el-form-item label="确认密码" prop="checkPass">
-                    <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
+                    <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" :prefix-icon="Lock" show-password/>
                 </el-form-item>
                 <el-form-item style="margin-left: 60px;">
                     <el-button type="primary" @click="submitForm(ruleFormRef)">注 册</el-button>
@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang='ts'>
+import { User,Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
