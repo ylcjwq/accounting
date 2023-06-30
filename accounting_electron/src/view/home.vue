@@ -77,10 +77,14 @@
           记账本软件
         </div>
         <div class="toolbar">
+          <span class="h_username">早上好！Tom！</span>
           <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px">
+            <!-- <el-icon style="margin-right: 8px; margin-top: 1px">
               <setting />
-            </el-icon>
+            </el-icon> -->
+            <div class="h_headscul">
+              <img src="../assets/headscu.png" alt="">
+            </div>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>个人设置</el-dropdown-item>
@@ -89,7 +93,6 @@
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <span>Tom</span>
         </div>
       </el-header>
 
@@ -150,7 +153,23 @@ const OutLogin = ()=>{
   height: 100%;
   right: 20px;
 }
+.layout-container-demo .toolbar .h_username{
+  margin-right: 20px;
+}
+.layout-container-demo .toolbar .h_headscul{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  // border: 1px solid white;
+  box-shadow: 8px 8px 15px 3px white;
 
+  // background-color: red;
+}
+.layout-container-demo .toolbar .h_headscul img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
 .layout-container-demo .leftbar {
   display: flex;
   align-items: center;
