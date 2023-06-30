@@ -1,25 +1,123 @@
 @font-face {
-  font-family: "icon";
-  /* Project id  */
-  src: url('iconfont.ttf?t=1687312196311') format('truetype');
+  font-family: "iconfont"; /* Project id 4146347 */
+  src: url('iconfont.woff2?t=1688127138511') format('woff2'),
+       url('iconfont.woff?t=1688127138511') format('woff'),
+       url('iconfont.ttf?t=1688127138511') format('truetype');
 }
 
-.icon {
-  font-family: "icon" !important;
+.iconfont {
+  font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-shezhi:before {
-  content: "\e70f";
+.icon-gongzi:before {
+  content: "\e60e";
 }
 
-.icon-shouye:before {
-  content: "\e60b";
+.icon-jiaotongbaoxiao:before {
+  content: "\e75d";
 }
 
-.icon-jizhangben:before {
-  content: "\e64d";
+.icon-wangluo:before {
+  content: "\e612";
 }
+
+.icon-yinliao:before {
+  content: "\e609";
+}
+
+.icon-tongxunlu:before {
+  content: "\e664";
+}
+
+.icon-yifu:before {
+  content: "\e608";
+}
+
+.icon-icon-test:before {
+  content: "\e614";
+}
+
+.icon-lingshi:before {
+  content: "\e600";
+}
+
+.icon-pijiu:before {
+  content: "\e7f1";
+}
+
+.icon-jianzhi:before {
+  content: "\e65e";
+}
+
+.icon-yiliaoxiang:before {
+  content: "\e874";
+}
+
+.icon-shuidianfei:before {
+  content: "\e634";
+}
+
+.icon-fun:before {
+  content: "\e613";
+}
+
+.icon-daily-necessities:before {
+  content: "\e61a";
+}
+
+.icon-licai:before {
+  content: "\e62e";
+}
+
+.icon-ranqi:before {
+  content: "\e725";
+}
+
+.icon-hongbao:before {
+  content: "\e694";
+}
+
+.icon-qiandai:before {
+  content: "\e697";
+}
+
+.icon-xiezi:before {
+  content: "\e622";
+}
+
+.icon-fukuan:before {
+  content: "\eec7";
+}
+
+.icon-lvyou:before {
+  content: "\e618";
+}
+
+.icon-xuexirenwu:before {
+  content: "\ecf9";
+}
+
+.icon-yundong:before {
+  content: "\f2eb";
+}
+
+.icon-classguileijiaju:before {
+  content: "\e7fe";
+}
+
+.icon-fangzu:before {
+  content: "\e601";
+}
+
+.icon-canyin:before {
+  content: "\e602";
+}
+
+.icon-licai1:before {
+  content: "\e91a";
+}
+
