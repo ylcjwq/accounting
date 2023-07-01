@@ -112,7 +112,7 @@ import useStore from "@/store";
 const router = useRouter()
 const isCollapse: Ref<boolean> = ref(false)
 const user = useStore()
-console.log(user.userInfo.userInfo);
+console.log(user.userInfo);
 
 
 const routerPush = (path: string) => {    //路由跳转方法
@@ -191,6 +191,7 @@ const OutLogin = () => {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 200px;
-}</style>
+}
+</style>
   
   

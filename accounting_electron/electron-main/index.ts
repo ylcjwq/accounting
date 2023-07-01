@@ -33,7 +33,6 @@ app.once("ready", async () => {   //给electron添加vue调试工具
         await session.defaultSession.loadExtension(extensionPath)
     } catch (error) {
         console.log(error);
-
     }
 
 })
