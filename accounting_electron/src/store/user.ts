@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-
+//存储用户信息
 export default defineStore("userInfo", {
     state: () => {
         return {
