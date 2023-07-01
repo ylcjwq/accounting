@@ -107,15 +107,19 @@
 import { Menu as IconMenu } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
 import { Ref, ref } from "vue";
+import useStore from "@/store";
 
 const router = useRouter()
 const isCollapse: Ref<boolean> = ref(false)
+const user = useStore()
+console.log(user.userInfo.userInfo);
+
 
 const routerPush = (path: string) => {    //路由跳转方法
   router.push(path)
 }
 // 点击退出按钮
-const OutLogin = ()=>{
+const OutLogin = () => {
   router.replace('/login');
   window.localStorage.removeItem('token')
 }
@@ -140,12 +144,14 @@ const OutLogin = ()=>{
 .layout-container-demo .el-main {
   padding: 0;
 }
-.layout-container-demo .h_title{
+
+.layout-container-demo .h_title {
   font-weight: 530;
   font-size: 20px;
   letter-spacing: 10px;
   margin-top: 20px;
 }
+
 .layout-container-demo .toolbar {
   display: flex;
   align-items: center;
@@ -153,10 +159,12 @@ const OutLogin = ()=>{
   height: 100%;
   right: 20px;
 }
-.layout-container-demo .toolbar .h_username{
+
+.layout-container-demo .toolbar .h_username {
   margin-right: 20px;
 }
-.layout-container-demo .toolbar .h_headscul{
+
+.layout-container-demo .toolbar .h_headscul {
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -165,11 +173,13 @@ const OutLogin = ()=>{
 
   // background-color: red;
 }
-.layout-container-demo .toolbar .h_headscul img{
+
+.layout-container-demo .toolbar .h_headscul img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
+
 .layout-container-demo .leftbar {
   display: flex;
   align-items: center;
@@ -181,7 +191,6 @@ const OutLogin = ()=>{
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 200px;
-}
-</style>
+}</style>
   
   

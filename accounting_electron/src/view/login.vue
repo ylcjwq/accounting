@@ -4,14 +4,15 @@
     <div class="login_item">
       <span class="log_item">登 录</span>
       <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="70px" class="demo-ruleForm">
-        <el-form-item label="账 号" prop="username" >
-          <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User" :append="''"/>
+        <el-form-item label="账 号" prop="username">
+          <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User" :append="''" />
         </el-form-item>
         <el-form-item label="密 码" prop="password">
-          <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password/>
+          <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleFormRef)" style="margin-left: 73px; margin-top: 30px;">登 录</el-button>
+          <el-button type="primary" @click="submitForm(ruleFormRef)" style="margin-left: 73px; margin-top: 30px;">登
+            录</el-button>
           <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px;margin-top: 30px;">重 置</el-button>
         </el-form-item>
         <span class="register" @click="router.push('/enroll')">
@@ -24,15 +25,16 @@
 </template>
   
 <script lang="ts" setup>
-import { User,Lock } from '@element-plus/icons-vue'
+import { User, Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
+import useStore from "@/store";
 import { login } from "@/api/login"
 
 const ruleFormRef = ref<FormInstance>()
-
 const router = useRouter()
+const store = useStore()
 
 // 登录参数声明
 const ruleForm = reactive({
@@ -72,6 +74,15 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       const data: any = await login(ruleForm)
       if (data.code == 200) {
+        console.log(data);
+
+        store.userInfo.$patch({
+          userInfo: {
+            id: data.data.id,
+            name: data.data.name,
+            img: data.data.img
+          }
+        })
         localStorage.setItem('token', data.token);
         router.replace("/home")
       }
@@ -97,12 +108,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
   /* 图片充满元素 */
   .login_item {
-    .log_item{
+    .log_item {
       color: rgb(141, 139, 139);
       float: left;
       margin-top: 10px;
       margin-left: 10px;
     }
+
     width: 450px;
     height: 350px;
     background-color: rgb(255, 255, 255);
@@ -124,13 +136,14 @@ const resetForm = (formEl: FormInstance | undefined) => {
         line-height: 81px;
         font-size: 17px;
         color: red;
+
         .goToLogin {
-        font-size: 16px;
-        background: -webkit-gradient(linear, left top, right top, color-stop(0, #89e972), color-stop(.4, rgb(159, 241, 173)), color-stop(.5, rgb(188, 243, 227)), color-stop(.6, #92e9f0), color-stop(1, rgb(96, 207, 235)));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        cursor: pointer;
-    }
+          font-size: 16px;
+          background: -webkit-gradient(linear, left top, right top, color-stop(0, #89e972), color-stop(.4, rgb(159, 241, 173)), color-stop(.5, rgb(188, 243, 227)), color-stop(.6, #92e9f0), color-stop(1, rgb(96, 207, 235)));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          cursor: pointer;
+        }
       }
     }
   }

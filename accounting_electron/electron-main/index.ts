@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, session } from "electron";
 import path from "path";
 
 const createWindow = () => {
@@ -24,6 +24,18 @@ app.whenReady().then(() => {
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     })
+})
+
+app.once("ready", async () => {   //给electron添加vue调试工具
+    let extensionPath = "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Extensions\\olofadcdnkkjdfgjcmjaadnlehnnihnl\\6.5.0_0"
+    // BrowserWindow.addDevToolsExtension(extensionPath)
+    try {
+        await session.defaultSession.loadExtension(extensionPath)
+    } catch (error) {
+        console.log(error);
+
+    }
+
 })
 
 //关闭窗口
