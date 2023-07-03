@@ -1,15 +1,12 @@
 import { defineStore } from "pinia";
 
-interface UserInfo {  //定义userInfo的接口
-    id: number
-    name: string | number
-    img: string
-}
-
-export default defineStore("user", {
+//存储用户信息
+export default defineStore("userInfo", {
     state: () => {
         return {
-            userInfo: {} as UserInfo,
+            id: null as number | null,
+            name: null as string | number | null,
+            img: null as string | null,
         }
     }
 })
