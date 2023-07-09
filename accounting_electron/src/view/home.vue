@@ -77,19 +77,15 @@
           记账本软件
         </div>
         <div class="toolbar">
-          <span class="h_username">早上好！Tom！</span>
+          <span class="h_username">{{ greet(time) }} {{ name }}！</span>
           <el-dropdown>
-            <!-- <el-icon style="margin-right: 8px; margin-top: 1px">
-              <setting />
-            </el-icon> -->
             <div class="h_headscul">
               <img src="../assets/headscu.png" alt="">
             </div>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>个人设置</el-dropdown-item>
+                <el-dropdown-item @click="routerPush('/user')">个人设置</el-dropdown-item>
                 <el-dropdown-item @click="OutLogin">退出登录</el-dropdown-item>
-                <!-- <el-dropdown-item>Delete</el-dropdown-item> -->
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -107,13 +103,25 @@
 import { Menu as IconMenu } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
 import { Ref, ref } from "vue";
+import { storeToRefs } from 'pinia'
 import { useUserStore } from "@/store/user";
 
 const router = useRouter()
 const isCollapse: Ref<boolean> = ref(false)
 const userStore = useUserStore()
-console.log(userStore);
+const { name } = storeToRefs(userStore)  //从仓库中获取用户名
+const time: Date = new Date()     //获取当前时间对象
 
+const greet = (time: Date): string => {   //判断当前时间，返回对应的问候语
+  if (time.getHours() >= 0 && time.getHours() < 12) {
+    return "早上好!"
+  } else if (time.getHours() >= 12 && time.getHours() < 14) {
+    return "中午好!"
+  } else if (time.getHours() >= 14 && time.getHours() < 18) {
+    return "下午好!"
+  }
+  return "晚上好!"
+}
 
 const routerPush = (path: string) => {    //路由跳转方法
   router.push(path)

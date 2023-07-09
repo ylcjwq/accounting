@@ -18,10 +18,10 @@ const children = [
         component: () => import('@/view/revenue/index.vue')
     },
     {
-        path: '/accounting',
-        name: 'accounting',
-        title: '记账',
-        component: () => import('@/view/accounting/index.vue')
+        path: '/user',
+        name: 'user',
+        title: '个人信息',
+        component: () => import('@/view/user/index.vue')
     }
 ]
 

@@ -17,7 +17,7 @@ NProgress.configure({
     parent: 'body',   //指定进度条的父容器
 })
 
-router.beforeEach((to: any, from: any, next: any) => {
+router.beforeEach((to: any, _from: any, next: any) => {
     NProgress.start()
     if (to.path == "/login") {
         next()

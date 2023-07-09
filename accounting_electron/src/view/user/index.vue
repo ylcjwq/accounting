@@ -1,6 +1,6 @@
 <template>
     <div>
-        记账本
+        个人信息
     </div>
 </template>
 
