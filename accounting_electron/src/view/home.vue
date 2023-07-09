@@ -107,12 +107,12 @@
 import { Menu as IconMenu } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
 import { Ref, ref } from "vue";
-import useStore from "@/store";
+import { useUserStore } from "@/store/user";
 
 const router = useRouter()
 const isCollapse: Ref<boolean> = ref(false)
-const user = useStore()
-console.log(user.userInfo);
+const userStore = useUserStore()
+console.log(userStore);
 
 
 const routerPush = (path: string) => {    //路由跳转方法

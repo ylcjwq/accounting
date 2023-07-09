@@ -29,12 +29,12 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus"
-import useStore from "@/store";
+import { useUserStore } from "@/store/user";
 import { login } from "@/api/login"
 
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter()
-const store = useStore()
+const userStore = useUserStore()
 
 // 登录参数声明
 const ruleForm = reactive({
@@ -74,7 +74,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       const data: any = await login(ruleForm)
       if (data.code == 200) {
-        store.userInfo.$patch({    //将用户信息存入仓库
+        userStore.$patch({    //将用户信息存入仓库
           id: data.data.id,
           name: data.data.name,
           img: data.data.img
