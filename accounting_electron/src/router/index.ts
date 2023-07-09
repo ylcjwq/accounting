@@ -33,7 +33,7 @@ router.beforeEach((to: any, _from: any, next: any) => {
     }
 })
 
-router.afterEach((to: any, from: any) => {
+router.afterEach((_to: any, _from: any) => {
     NProgress.done(true)
 })
 
