@@ -27,7 +27,7 @@ app.whenReady().then(() => {
 })
 
 app.once("ready", async () => {   //给electron添加vue调试工具
-    let extensionPath = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\nhdogjmejiglipccpnnnanhbledajbpd\\6.5.0_0"
+    let extensionPath = "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Extensions\\olofadcdnkkjdfgjcmjaadnlehnnihnl\\6.5.0_0"
     // BrowserWindow.addDevToolsExtension(extensionPath)
     try {
         await session.defaultSession.loadExtension(extensionPath)
