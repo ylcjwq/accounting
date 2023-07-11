@@ -1,5 +1,5 @@
 <template>
-  <div id="main" :style="{ width: Width + 'px', height: Hight + 'px' }">
+  <div id="main" ref="spendEcharts" :style="{ width: Width + 'px', height: Height + 'px' }">
 
   </div>
   {{ Width }}
@@ -7,7 +7,7 @@
   
 <script setup lang="ts">
 import * as echarts from 'echarts/core';
-import { onMounted, toRefs, onUnmounted, watch, } from 'vue';
+import { onMounted, toRefs, onUnmounted, watch, nextTick, ref } from 'vue';
 import {
   TitleComponent,
   TitleComponentOption,
@@ -45,11 +45,12 @@ type EChartsOption = echarts.ComposeOption<
 >;
 
 const props = defineProps({
-  Hight: Number,
+  Height: Number,
   Width: Number
 })
 
-let { Hight, Width } = toRefs(props);
+let { Height, Width } = toRefs(props);
+const spendEcharts = ref<HTMLElement | null>(null)
 
 const initChart = () => {
   var chartDom = document.querySelector('#main') as HTMLElement;
@@ -122,12 +123,15 @@ const initChart = () => {
 
   option && myChart.setOption(option);
 }
+
 // 监听图表大小变化
-watch([Hight, Width], ([newHigh, newWidth], [oldHight, oldWidth]) => {
-  var chartDom = document.querySelector('#main') as HTMLElement
+watch([Height, Width], () => {
+  var chartDom = spendEcharts.value!
   var myChart = echarts.init(chartDom);
   // 重新设置大小
-  myChart.resize();
+  nextTick(() => {     //在DOM更新完毕后再重新设置图表的大小，确保图表DOM元素能获取到正确的属性
+    myChart.resize();
+  })
 });
 
 onMounted(() => {
@@ -136,7 +140,7 @@ onMounted(() => {
 });
 //销毁图表
 onUnmounted(() => {
-  var chartDom = document.querySelector('#main') as HTMLElement
+  var chartDom = spendEcharts.value!
   var myChart = echarts.init(chartDom);
   myChart.dispose();
 });

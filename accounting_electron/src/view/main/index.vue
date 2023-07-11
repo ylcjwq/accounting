@@ -29,7 +29,7 @@
         <div class="home_up">
             <div class="totalExpenditure">
                 <div class="center" style="height: 100%; width: 92%;" v-if="LineHeight">
-                    <Line :Hight="LineHeight" :Width="LineWidth" />
+                    <Line :Height="LineHeight" :Width="LineWidth" />
                 </div>
             </div>
             <div class="totalIncome"></div>
