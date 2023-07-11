@@ -53,7 +53,7 @@ let { Height, Width } = toRefs(props);
 const spendEcharts = ref<HTMLElement | null>(null)
 
 const initChart = () => {
-  var chartDom = document.querySelector('#main') as HTMLElement;
+  var chartDom = spendEcharts.value!;
   var myChart = echarts.init(chartDom);
   var option: EChartsOption;
   option = {
