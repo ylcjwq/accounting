@@ -6,7 +6,7 @@
   
 <script setup lang="ts">
 import * as echarts from 'echarts/core';
-import { onMounted, toRefs, onUnmounted, watch, nextTick, ref } from 'vue';
+import { onMounted, toRefs, onBeforeUnmount, watch, nextTick, ref } from 'vue';
 import {
   TitleComponent,
   TitleComponentOption,
@@ -138,13 +138,10 @@ onMounted(() => {
   initChart();
 });
 //销毁图表
-onUnmounted(() => {
-  if (spendEcharts.value!) {
-    var chartDom = spendEcharts.value!
-    var myChart = echarts.init(chartDom);
-    myChart.dispose();
-  }
-
+onBeforeUnmount(() => {
+  var chartDom = spendEcharts.value!
+  var myChart = echarts.init(chartDom);
+  myChart.dispose();
 });
 </script>
   

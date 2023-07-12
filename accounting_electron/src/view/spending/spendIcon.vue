@@ -27,9 +27,11 @@ import { spendIcon } from "@/util/iconArray/icon"
 
     .outBorder {
         width: 96%;
-        height: 96%;
+        height: 94%;
         border: 1px solid aquamarine;
         border-radius: 20px;
+        padding: 10px;
+        margin-top: 20px;
 
         .dib-box {
             display: flex;
