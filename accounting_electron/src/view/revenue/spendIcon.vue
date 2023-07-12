@@ -2,7 +2,7 @@
     <div class="spendIcon">
         <div class="outBorder">
             <ul class="icon_lists dib-box">
-                <li class="dib" v-for="item in revenueIcon" :key="item.name">
+                <li class="dib" v-for="item in revenueIcon" :key="item.name" @click="recording(item.name, 'revenue')">
                     <svg class="icon svg-icon" aria-hidden="true">
                         <use :xlink:href="item.href"></use>
                     </svg>
@@ -14,7 +14,8 @@
 </template>
 
 <script setup lang='ts'>
-import { revenueIcon } from "@/util/iconArray/icon"
+import { revenueIcon } from "@/util/accounting/icon"
+import { recording } from "@/util/accounting/recording"
 </script>
 
 <style lang='scss' scoped>
@@ -57,4 +58,4 @@ import { revenueIcon } from "@/util/iconArray/icon"
         }
     }
 }
-</style>
+</style>@/util/accounting/icon@/util/accounting/recording
