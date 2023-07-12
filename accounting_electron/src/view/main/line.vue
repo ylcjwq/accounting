@@ -2,7 +2,6 @@
   <div id="main" ref="spendEcharts" :style="{ width: Width + 'px', height: Height + 'px' }">
 
   </div>
-  {{ Width }}
 </template>
   
 <script setup lang="ts">
@@ -140,15 +139,13 @@ onMounted(() => {
 });
 //销毁图表
 onUnmounted(() => {
-  var chartDom = spendEcharts.value!
-  var myChart = echarts.init(chartDom);
-  myChart.dispose();
+  if (spendEcharts.value!) {
+    var chartDom = spendEcharts.value!
+    var myChart = echarts.init(chartDom);
+    myChart.dispose();
+  }
+
 });
 </script>
   
-<style lang="scss">
-#main {
-  width: 100%;
-  height: 400px;
-}
-</style>
+<style lang="scss"></style>
