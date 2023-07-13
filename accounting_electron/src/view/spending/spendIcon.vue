@@ -11,11 +11,13 @@
             </ul>
         </div>
     </div>
+    <recordingDialog />
 </template>
 
 <script setup lang='ts'>
 import { spendIcon } from "@/util/accounting/icon"
 import { recording } from "@/util/accounting/recording"
+import recordingDialog from "@/components/accounting/recording.vue";
 </script>
 
 <style lang='scss' scoped>
