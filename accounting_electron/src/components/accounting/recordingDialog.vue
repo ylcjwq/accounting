@@ -58,7 +58,7 @@ const form = reactive({
   type: [],
 });
 
-const save = ():void=>{
+const save = ():void=>{    //点击确认时将支出/收入保存
   console.log(dialogType);
   console.log(form);
 }
