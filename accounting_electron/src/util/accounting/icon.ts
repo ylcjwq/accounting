@@ -5,10 +5,10 @@ interface IconProp {    //定义字体图标svg数组对象接口
 
 //收入字体图标数组对象
 export const revenueIcon: IconProp[] = [
-    { href: "#icon-gongzi", name: "工资收入" },
-    { href: "#icon-jianzhi", name: "兼职收入" },
-    { href: "#icon-licai1", name: "理财收入" },
-    { href: "#icon-qiandai", name: "其他收入" },
+    { href: "#icon-gongzi", name: "工资" },
+    { href: "#icon-jianzhi", name: "兼职" },
+    { href: "#icon-licai1", name: "理财" },
+    { href: "#icon-qiandai", name: "其他" },
 ]
 
 //支出字体图标数组对象
@@ -35,5 +35,5 @@ export const spendIcon: IconProp[] = [
     { href: "#icon-yundong", name: "运动" },
     { href: "#icon-classguileijiaju", name: "家具" },
     { href: "#icon-yiliaoxiang", name: "医疗" },
-    { href: "#icon-fukuan", name: "其他支出" },
+    { href: "#icon-fukuan", name: "其他" },
 ]
