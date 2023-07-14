@@ -21,7 +21,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">
+        <el-button type="primary" @click="save">
           确认
         </el-button>
       </span>
@@ -57,6 +57,11 @@ const form = reactive({
   region: "",
   type: [],
 });
+
+const save = ():void=>{
+  console.log(dialogType);
+  console.log(form);
+}
 </script>
 <style scoped lang="scss">
 .el-button--text {
