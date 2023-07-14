@@ -2,9 +2,13 @@
   <el-dialog v-model="dialogFormVisible" :title="title">
     <el-form :model="form">
       <el-form-item label="支出方式" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
+        <el-select v-model="form.region" placeholder="请选择支付方式">
+          <el-option
+            v-for="item in account"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="支出金额" :label-width="formLabelWidth">
@@ -29,6 +33,7 @@
 import { computed, reactive, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRecordingStore } from "@/store/recording";
+import { account } from "@/util/accounting/recording";
 
 let dialogFormVisible = ref<boolean>(false); //弹窗的状态
 const recordingStore = useRecordingStore();
