@@ -12,10 +12,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="支出金额" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
+        <el-input v-model="form.number" autocomplete="off" />
       </el-form-item>
       <el-form-item label="备注" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
+        <el-input v-model="form.remark" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -52,14 +52,10 @@ const title = computed(() => {
 const formLabelWidth = "140px";
 
 const form = reactive({
-  name: "",
+  number: "",
+  remark:"",
   region: "",
-  date1: "",
-  date2: "",
-  delivery: false,
   type: [],
-  resource: "",
-  desc: "",
 });
 </script>
 <style scoped lang="scss">
