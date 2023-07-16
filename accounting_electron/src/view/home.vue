@@ -134,10 +134,8 @@ const OutLogin = () => {
   window.localStorage.removeItem('token')
 }
 
-// const canvas = ref(null);
 onMounted(() => {
-  // console.log(canvas);
-  new RotationBall();
+  new RotationBall();      //执行画布方法
 })
 
 
@@ -186,10 +184,7 @@ onMounted(() => {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  // border: 1px solid white;
   box-shadow: 8px 8px 15px 3px white;
-
-  // background-color: red;
 }
 
 .layout-container-demo .toolbar .h_headscul img {
@@ -217,7 +212,7 @@ onMounted(() => {
   left: 0;
   z-index: 0;
   opacity: 0.3;
-  pointer-events: none;
+  pointer-events: none; //设置画布层不捕获鼠标事件
 }
 </style>
   
