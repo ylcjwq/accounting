@@ -96,15 +96,17 @@
         <router-view></router-view>
       </el-main>
     </el-container>
+    <canvas id="canvas"></canvas>
   </el-container>
 </template>
   
 <script lang="ts" setup>
 import { Menu as IconMenu } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from 'pinia'
 import { useUserStore } from "@/store/user";
+import { RotationBall } from "@/util/mouseCanvas.js";
 
 const router = useRouter()
 const isCollapse = ref<boolean>(false)
@@ -131,6 +133,13 @@ const OutLogin = () => {
   router.replace('/login');
   window.localStorage.removeItem('token')
 }
+
+// const canvas = ref(null);
+onMounted(() => {
+  // console.log(canvas);
+  new RotationBall();
+})
+
 
 </script>
   
@@ -200,6 +209,15 @@ const OutLogin = () => {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 200px;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.3;
+  pointer-events: none;
 }
 </style>
   
