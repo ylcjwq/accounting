@@ -1,3 +1,5 @@
+import { fa } from "element-plus/es/locale";
+
 class Utils {
     static randomDoubleFromRange(low: number, high: number): number {    //绕圆心的随机起始位置
         return Math.random() * (high - low + 1) + low;
@@ -73,6 +75,21 @@ class Ball {
         this.theta += this.speed;
         this.draw(lastPosition);
     }
+
+    // updateRander(): void {
+    //     let lastPosition = {
+    //         x: this.x,
+    //         y: this.y,
+    //     };
+
+    //     this.lastMouse.x += (this.mouse.x - this.lastMouse.x) * this.dragSpeed;     //更新圆心位置
+    //     this.lastMouse.y += (this.mouse.y - this.lastMouse.y) * this.dragSpeed;
+
+    //     this.x = this.lastMouse.x         //更新路径位置
+    //     this.y = this.lastMouse.y
+    //     this.theta += this.speed;
+    //     this.draw(lastPosition);
+    // }
 }
 
 export class RotationBall {
@@ -81,6 +98,8 @@ export class RotationBall {
     balls: Ball[];           // 球的集合
     colorArray: string[];    // 颜色集合
     mouse: { x: number, y: number };   // 鼠标位置
+    // show: boolean
+    // timer: ReturnType<typeof setTimeout> | null;
 
     constructor() {
         this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -93,13 +112,15 @@ export class RotationBall {
             x: innerWidth / 2,
             y: innerHeight / 2,
         };
+        // this.show = true
+        // this.timer = null;
 
         this.eventFn();
         this.init();
         this.animate();
     }
 
-    init(): void {
+    init(): void {  //生成小球
         let color = Utils.randomColors(this.colorArray);
         this.balls.push(
             new Ball({
@@ -115,23 +136,34 @@ export class RotationBall {
     }
 
     eventFn(): void {
-        addEventListener("mousemove", (event) => {
+        addEventListener("mousemove", (event) => {   //更新鼠标坐标
             this.mouse.x = event.clientX;
             this.mouse.y = event.clientY;
+            // for (let ball of this.balls) {
+            //     ball.updateRander();
+            //     this.show = false
+            // }
+            // clearTimeout(this.timer!);
+
+            // this.timer = setTimeout(() => {
+            //     this.show = true
+            // }, 150); // 设置延迟时间，单位为毫秒
         });
 
-        addEventListener("resize", () => {
+        addEventListener("resize", () => {         //更新canvas画布宽高
             this.canvas.width = innerWidth;
             this.canvas.height = innerHeight;
         });
     }
 
     animate(): void {
-        requestAnimationFrame(() => this.animate());
+        requestAnimationFrame(() => this.animate());    //递归调用animate方法实现动画效果
         this.ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);   //每次更新后清除上一次的路径
         for (let ball of this.balls) {
+            // if (this.show) {
             ball.update();
+            // }
         }
     }
 }
