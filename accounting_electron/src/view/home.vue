@@ -102,12 +102,12 @@
 <script lang="ts" setup>
 import { Menu as IconMenu } from '@element-plus/icons-vue'
 import { useRouter } from "vue-router"
-import { Ref, ref } from "vue";
+import { ref } from "vue";
 import { storeToRefs } from 'pinia'
 import { useUserStore } from "@/store/user";
 
 const router = useRouter()
-const isCollapse: Ref<boolean> = ref(false)
+const isCollapse = ref<boolean>(false)
 const userStore = useUserStore()
 const { name } = storeToRefs(userStore)  //从仓库中获取用户名
 const time: Date = new Date()     //获取当前时间对象
@@ -131,6 +131,7 @@ const OutLogin = () => {
   router.replace('/login');
   window.localStorage.removeItem('token')
 }
+
 </script>
   
 <style scoped lang="scss">
