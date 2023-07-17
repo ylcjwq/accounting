@@ -210,8 +210,8 @@ onMounted(() => {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 0;
-  opacity: 0.3;
+  z-index: 9999;
+  opacity: 0.2;
   pointer-events: none; //设置画布层不捕获鼠标事件
 }
 </style>

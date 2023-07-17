@@ -1,15 +1,8 @@
-import { fa } from "element-plus/es/locale";
-
 class Utils {
     static randomDoubleFromRange(low: number, high: number): number {    //绕圆心的随机起始位置
         return Math.random() * (high - low + 1) + low;
     }
-
-    static randomColors(colors: string[]): string {
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
 }
-
 class Ball {
     x: number;                // 圆心坐标
     y: number;                // 圆心坐标
@@ -21,7 +14,7 @@ class Ball {
     theta: number;          // 旋转角度
     speed: number;          // 旋转速度
     dragSpeed: number;      // 拖动速度
-    distance: number;       // 移动的距离
+    distance: number;       // 旋转半径
     lastMouse: { x: number, y: number };   // 上一个鼠标的位置
 
     constructor(obj: {
@@ -43,7 +36,7 @@ class Ball {
         this.theta = Utils.randomDoubleFromRange(0, Math.PI * 2);
         this.speed = 0.05;
         this.dragSpeed = 0.05;
-        this.distance = Utils.randomDoubleFromRange(70, 100);
+        this.distance = 50
         this.lastMouse = { x: obj.x, y: obj.y };
     }
 
@@ -75,31 +68,13 @@ class Ball {
         this.theta += this.speed;
         this.draw(lastPosition);
     }
-
-    // updateRander(): void {
-    //     let lastPosition = {
-    //         x: this.x,
-    //         y: this.y,
-    //     };
-
-    //     this.lastMouse.x += (this.mouse.x - this.lastMouse.x) * this.dragSpeed;     //更新圆心位置
-    //     this.lastMouse.y += (this.mouse.y - this.lastMouse.y) * this.dragSpeed;
-
-    //     this.x = this.lastMouse.x         //更新路径位置
-    //     this.y = this.lastMouse.y
-    //     this.theta += this.speed;
-    //     this.draw(lastPosition);
-    // }
 }
 
 export class RotationBall {
     canvas: HTMLCanvasElement;    // canvas元素
     ctx: CanvasRenderingContext2D;   // 绘画上下文
     balls: Ball[];           // 球的集合
-    colorArray: string[];    // 颜色集合
     mouse: { x: number, y: number };   // 鼠标位置
-    // show: boolean
-    // timer: ReturnType<typeof setTimeout> | null;
 
     constructor() {
         this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -107,13 +82,10 @@ export class RotationBall {
         this.canvas.width = innerWidth;
         this.canvas.height = innerHeight;
         this.balls = [];
-        this.colorArray = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"];
         this.mouse = {
             x: innerWidth / 2,
             y: innerHeight / 2,
         };
-        // this.show = true
-        // this.timer = null;
 
         this.eventFn();
         this.init();
@@ -121,12 +93,12 @@ export class RotationBall {
     }
 
     init(): void {  //生成小球
-        let color = Utils.randomColors(this.colorArray);
+        let color = "#fff"
         this.balls.push(
             new Ball({
                 x: this.canvas.width / 2,
                 y: this.canvas.height / 2,
-                radius: 3,
+                radius: 4,
                 color,
                 canvas: this.canvas,
                 ctx: this.ctx,
@@ -139,15 +111,6 @@ export class RotationBall {
         addEventListener("mousemove", (event) => {   //更新鼠标坐标
             this.mouse.x = event.clientX;
             this.mouse.y = event.clientY;
-            // for (let ball of this.balls) {
-            //     ball.updateRander();
-            //     this.show = false
-            // }
-            // clearTimeout(this.timer!);
-
-            // this.timer = setTimeout(() => {
-            //     this.show = true
-            // }, 150); // 设置延迟时间，单位为毫秒
         });
 
         addEventListener("resize", () => {         //更新canvas画布宽高
@@ -161,9 +124,7 @@ export class RotationBall {
         this.ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);   //每次更新后清除上一次的路径
         for (let ball of this.balls) {
-            // if (this.show) {
             ball.update();
-            // }
         }
     }
 }
