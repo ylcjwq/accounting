@@ -43,9 +43,12 @@ class Ball {
     draw(lastPosition: { x: number, y: number }): void {
         this.ctx.beginPath();                      // 开始绘制路径
         var gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);    // 路径颜色渐变
-        gradient.addColorStop(0, 'magenta');
-        gradient.addColorStop(0.5, 'blue');
-        gradient.addColorStop(1.0, 'red');
+        gradient.addColorStop(0, 'rgb(255,209,224)');
+        gradient.addColorStop(0.2, 'rgb(255,140,0)');
+        gradient.addColorStop(0.4, 'rgb(255,140,140)');
+        gradient.addColorStop(0.6, 'rgb(246,50,245)');
+        gradient.addColorStop(0.8, 'rgb(149,0,234)');
+        gradient.addColorStop(1.0, 'rgb(255,209,224)');
         this.ctx.strokeStyle = gradient;
         this.ctx.lineWidth = this.radius;
         this.ctx.moveTo(lastPosition.x, lastPosition.y);     // 路径起始位置
@@ -73,7 +76,7 @@ class Ball {
 export class RotationBall {
     canvas: HTMLCanvasElement;    // canvas元素
     ctx: CanvasRenderingContext2D;   // 绘画上下文
-    balls: Ball[];           // 球的集合
+    ball: Ball                         //小球
     mouse: { x: number, y: number };   // 鼠标位置
 
     constructor() {
@@ -81,30 +84,29 @@ export class RotationBall {
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
         this.canvas.width = innerWidth;
         this.canvas.height = innerHeight;
-        this.balls = [];
         this.mouse = {
             x: innerWidth / 2,
             y: innerHeight / 2,
         };
 
         this.eventFn();
-        this.init();
+        // this.init();
+        this.ball = this.init()
         this.animate();
     }
 
-    init(): void {  //生成小球
+    init(): Ball {  //生成小球
         let color = "#fff"
-        this.balls.push(
-            new Ball({
-                x: this.canvas.width / 2,
-                y: this.canvas.height / 2,
-                radius: 4,
-                color,
-                canvas: this.canvas,
-                ctx: this.ctx,
-                mouse: this.mouse,
-            })
-        );
+        let ball = new Ball({
+            x: this.canvas.width / 2,
+            y: this.canvas.height / 2,
+            radius: 4,
+            color,
+            canvas: this.canvas,
+            ctx: this.ctx,
+            mouse: this.mouse,
+        })
+        return ball
     }
 
     eventFn(): void {
@@ -123,8 +125,6 @@ export class RotationBall {
         requestAnimationFrame(() => this.animate());    //递归调用animate方法实现动画效果
         this.ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);   //每次更新后清除上一次的路径
-        for (let ball of this.balls) {
-            ball.update();
-        }
+        this.ball.update();
     }
 }
