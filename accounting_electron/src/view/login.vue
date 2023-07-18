@@ -73,11 +73,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (valid) {
       const data: any = await login(ruleForm)
+      console.log(data);
+      
       if (data.code == 200) {
         userStore.$patch({    //将用户信息存入仓库
           id: data.data.id,
           name: data.data.name,
-          img: data.data.img
+          img: data.data.img,
+          time:data.data.time
         })
         localStorage.setItem('token', data.token);
         router.replace("/home")

@@ -3,14 +3,25 @@
 let mysql = require('mysql');
 
 // 使用连接池的方式进行连接
+// 服务器数据库连接池
 let pool = mysql.createPool({
-    host: 'localhost',
+    host: '8.130.71.186',
     user: 'root',
-    password: 'ylc20010506',
+    password: 'Ylc@20010506',
     port: '3306',
     database: 'accounting',
     multipleStatements: true
 })
+
+// 本地数据库连接池
+// let pool = mysql.createPool({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'ylc20010506',
+//     port: '3306',
+//     database: 'accounting',
+//     multipleStatements: true
+// })
 
 // sql语句是可变：
 // 得到操作数据库的结果 需要做的事情也不一样
@@ -22,7 +33,8 @@ module.exports = {
                 if (err) {
                     reject({
                         code: 500,
-                        msg: '数据库的连接错误'
+                        msg: '数据库的连接错误',
+                        err: err
                     })
                     return
                 }

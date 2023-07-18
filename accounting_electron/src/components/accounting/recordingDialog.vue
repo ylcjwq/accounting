@@ -1,8 +1,8 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="title">
+  <el-dialog v-model="dialogFormVisible" :title="dialogName+title">
     <el-form :model="form">
-      <el-form-item label="支出方式" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="请选择支付方式">
+      <el-form-item :label="title+'方式'" :label-width="formLabelWidth">
+        <el-select v-model="form.region" :placeholder="'请选择'+title+'方式'">
           <el-option
             v-for="item in account"
             :key="item.value"
@@ -11,7 +11,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="支出金额" :label-width="formLabelWidth">
+      <el-form-item :label="title+'金额'" :label-width="formLabelWidth">
         <el-input v-model="form.number" autocomplete="off" />
       </el-form-item>
       <el-form-item label="备注" :label-width="formLabelWidth">
@@ -44,9 +44,9 @@ dialogFormVisible = show;
 //计算弹窗名称
 const title = computed(() => {
   if (dialogType.value === "spend") {
-    return dialogName.value + "支出";
+    return "支出";
   }
-  return dialogName.value + "收入";
+  return "收入";
 });
 
 const formLabelWidth = "140px";
@@ -61,6 +61,7 @@ const form = reactive({
 const save = ():void=>{    //点击确认时将支出/收入保存
   console.log(dialogType);
   console.log(form);
+  dialogFormVisible.value = false
 }
 </script>
 <style scoped lang="scss">
