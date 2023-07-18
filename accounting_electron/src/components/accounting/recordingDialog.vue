@@ -35,12 +35,23 @@ import { storeToRefs } from "pinia";
 import { useRecordingStore } from "@/store/recording";
 import { account } from "@/util/accounting/recording";
 
+interface Form{
+  region:number|null
+  number:number|null
+  remark:string|null
+}
+
 let dialogFormVisible = ref<boolean>(false); //弹窗的状态
 const recordingStore = useRecordingStore();
 const { dialogType, dialogName, show } = storeToRefs(recordingStore);
-console.log(dialogType);
 
-dialogFormVisible = show;
+const form = reactive<Form>({
+  region: null,
+  number: null,
+  remark: null,
+});
+
+dialogFormVisible = show;   //从仓库中同步弹窗状态
 //计算弹窗名称
 const title = computed(() => {
   if (dialogType.value === "spend") {
@@ -51,19 +62,13 @@ const title = computed(() => {
 
 const formLabelWidth = "140px";
 
-const form = reactive({
-  number: "",
-  remark:"",
-  region: "",
-  type: [],
-});
-
 const save = ():void=>{    //点击确认时将支出/收入保存
   console.log(dialogType);
   console.log(form);
   dialogFormVisible.value = false
 }
 </script>
+
 <style scoped lang="scss">
 .el-button--text {
   margin-right: 15px;
