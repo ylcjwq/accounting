@@ -26,6 +26,10 @@ app.use('/login', login)
 let user = require('./api/user/user')
 app.use('/user', user)
 
+//记账相关模块
+let record = require('./api/accounting/record')
+app.use('/record', record)
+
 
 app.listen(3300, () => {
     console.log('running port is 3300(client)');
