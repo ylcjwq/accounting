@@ -58,10 +58,12 @@
 import { reactive, ref } from "vue";
 import type { FormRules, TabsPaneContext } from "element-plus";
 
+//基本信息的接口
 interface RuleFormBasic {
   name: string;
 }
 
+//修改密码的接口
 interface RuleFormPassword {
   oldPassword: string;
   newPassword: string;
