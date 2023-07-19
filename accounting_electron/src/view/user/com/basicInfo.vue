@@ -18,6 +18,9 @@
             <el-input v-model="ruleFormBasic.name" />
           </el-form-item>
         </el-form>
+        <div style="display: flex; justify-content: end">
+          <el-button type="primary">保存</el-button>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
         <el-form
@@ -46,11 +49,11 @@
             />
           </el-form-item>
         </el-form>
+        <div style="display: flex; justify-content: end">
+          <el-button type="primary">保存</el-button>
+        </div>
       </el-tab-pane>
     </el-tabs>
-    <div style="display: flex; justify-content: end">
-      <el-button type="primary">保存</el-button>
-    </div>
   </el-card>
 </template>
 
