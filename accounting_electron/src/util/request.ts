@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import type { InternalAxiosRequestConfig,  AxiosResponse, AxiosError } from 'axios'
 import { Names } from './requestCom/envName'//枚举
 // console.log(import.meta.env.VITE_HTTP)
 const service = axios.create({
@@ -11,7 +11,7 @@ const service = axios.create({
     timeout: 1000 * Names.TIME,
 })
 //请求拦截器
-service.interceptors.request.use((config: AxiosRequestConfig) => {
+service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     return config
 }, (error: AxiosError) => {
     console.log(error, 'e')
