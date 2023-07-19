@@ -8,7 +8,6 @@
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
       <el-tab-pane label="基本资料" name="first">
         <el-form
-          ref="ruleFormRef"
           :model="ruleFormBasic"
           :rules="rulesBasic"
           label-width="80px"
@@ -22,7 +21,6 @@
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
         <el-form
-          ref="ruleFormRef"
           :model="ruleFormPassword"
           :rules="rulesPassword"
           label-width="80px"
@@ -58,7 +56,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import type { FormInstance, FormRules, TabsPaneContext } from "element-plus";
+import type { FormRules, TabsPaneContext } from "element-plus";
 
 interface RuleFormBasic {
   name: string;
@@ -70,7 +68,6 @@ interface RuleFormPassword {
   surePassword: string;
 }
 
-const ruleFormRef = ref<FormInstance>();
 //基本信息
 const ruleFormBasic = reactive<RuleFormBasic>({
   name: "",
