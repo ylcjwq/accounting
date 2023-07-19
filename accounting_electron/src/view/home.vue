@@ -2,8 +2,14 @@
   <el-container class="layout-container-demo" style="height: 100vh">
     <el-aside :width="200">
       <el-scrollbar>
-        <el-menu default-active="1" :collapse="isCollapse" class="el-menu-vertical-demo">
-          <el-menu-item index="1" @click="routerPush('/')">
+        <el-menu
+          :collapse="isCollapse"
+          :unique-opened="true"
+          :router="true"
+          :default-active="$route.path"
+          class="el-menu-vertical-demo"
+        >
+          <el-menu-item index="/home">
             <el-icon>
               <House />
             </el-icon>
@@ -17,8 +23,8 @@
               <span>记账</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="2-1" @click="routerPush('/spending')">支出</el-menu-item>
-              <el-menu-item index="2-2" @click="routerPush('/revenue')">收入</el-menu-item>
+              <el-menu-item index="/spending">支出</el-menu-item>
+              <el-menu-item index="/revenue">收入</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <el-sub-menu index="3">
@@ -44,27 +50,21 @@
               <el-icon>
                 <setting />
               </el-icon>
-              <span>Navigator Three</span>
+              <span>设置</span>
             </template>
             <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="4-1">Option 1</el-menu-item>
+              <el-menu-item index="/user">个人信息</el-menu-item>
               <el-menu-item index="4-2">Option 2</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="4-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="4-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="4-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
           </el-sub-menu>
         </el-menu>
       </el-scrollbar>
     </el-aside>
 
     <el-container>
-      <el-header style="display: flex; font-size: 16px;justify-content: space-between;">
+      <el-header
+        style="display: flex; font-size: 16px; justify-content: space-between"
+      >
         <div class="leftbar">
           <el-icon @click="isCollapse = false" v-if="isCollapse">
             <Expand />
@@ -73,18 +73,18 @@
             <Fold />
           </el-icon>
         </div>
-        <div class="h_title">
-          记账本软件
-        </div>
+        <div class="h_title">记账本软件</div>
         <div class="toolbar">
           <span class="h_username">{{ greet(time) }} {{ name }}！</span>
           <el-dropdown>
             <div class="h_headscul">
-              <img src="../assets/headscu.png" alt="">
+              <img src="../assets/headscu.png" alt="" />
             </div>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="routerPush('/user')">个人设置</el-dropdown-item>
+                <el-dropdown-item @click="routerPush('/user')"
+                  >个人设置</el-dropdown-item
+                >
                 <el-dropdown-item @click="OutLogin">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -99,48 +99,48 @@
     <canvas id="canvas"></canvas>
   </el-container>
 </template>
-  
+
 <script lang="ts" setup>
-import { Menu as IconMenu } from '@element-plus/icons-vue'
-import { useRouter } from "vue-router"
+import { Menu as IconMenu } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { RotationBall } from "@/util/mouseCanvas.js";
 
-const router = useRouter()
-const isCollapse = ref<boolean>(false)
-const userStore = useUserStore()
-const { name } = storeToRefs(userStore)  //从仓库中获取用户名
-const time: Date = new Date()     //获取当前时间对象
+const router = useRouter();
+const isCollapse = ref<boolean>(false);
+const userStore = useUserStore();
+const { name } = storeToRefs(userStore); //从仓库中获取用户名
+const time: Date = new Date(); //获取当前时间对象
 
-const greet = (time: Date): string => {   //判断当前时间，返回对应的问候语
+const greet = (time: Date): string => {
+  //判断当前时间，返回对应的问候语
   if (time.getHours() >= 0 && time.getHours() < 12) {
-    return "早上好!"
+    return "早上好!";
   } else if (time.getHours() >= 12 && time.getHours() < 14) {
-    return "中午好!"
+    return "中午好!";
   } else if (time.getHours() >= 14 && time.getHours() < 18) {
-    return "下午好!"
+    return "下午好!";
   }
-  return "晚上好!"
-}
+  return "晚上好!";
+};
 
-const routerPush = (path: string) => {    //路由跳转方法
-  router.push(path)
-}
+const routerPush = (path: string) => {
+  //路由跳转方法
+  router.push(path);
+};
 // 点击退出按钮
 const OutLogin = () => {
-  router.replace('/login');
-  window.localStorage.removeItem('token')
-}
+  router.replace("/login");
+  window.localStorage.removeItem("token");
+};
 
 onMounted(() => {
-  new RotationBall();      //执行画布方法
-})
-
-
+  new RotationBall(); //执行画布方法
+});
 </script>
-  
+
 <style scoped lang="scss">
 .layout-container-demo .el-header {
   position: relative;
@@ -215,5 +215,3 @@ onMounted(() => {
   pointer-events: none; //设置画布层不捕获鼠标事件
 }
 </style>
-  
-  
