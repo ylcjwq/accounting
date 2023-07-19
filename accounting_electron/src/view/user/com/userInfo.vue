@@ -34,7 +34,7 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
-const { username, name, time } = userStore;
+const { username, name, time } = storeToRefs(userStore);
 </script>
 
 <style lang="scss" scoped>
