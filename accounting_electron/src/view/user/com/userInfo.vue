@@ -40,6 +40,7 @@ const { username, name, time } = storeToRefs(userStore);
 <style lang="scss" scoped>
 .box-card {
   width: 34%;
+  height: 100%;
   margin: 20px 0 0 20px;
   .card-header {
     display: flex;
