@@ -28,7 +28,7 @@ Router.post('/login', async (req, res) => {
         // 根据用户数据，生成token
         // 将id账号密码信息存入对象，转换为token
         delete row[0].password;
-        row[0].time = dayjs(row[0].time).format('YYYY-MM-DD')
+        row[0].time = dayjs(row[0].time).format('YYYY-MM-DD HH:mm:ss')
         let obj = { id: row[0].id, username: row[0].username };
         const token = JWT.sign(obj, 'hello', {
             expiresIn: '7d',   //过期时间
@@ -56,7 +56,7 @@ Router.post("/enroll", async (req, res) => {
         const { username, password } = req.body
         const row = await mysql.query(`SELECT * FROM user WHERE username='${username}'`) //查询数据库中用户名是否存在
         if (row.length == 0) {     //用户名不存在，可以注册
-            const time = dayjs().format('YYYY-MM-DD');
+            const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
             console.log(time);
             const row = await mysql.query(`INSERT INTO user  VALUES (NULL,'${username}', '${password}',NULL,'${username}','${time}')`)   //将用户名、密码、名称写入user表
             res.send({

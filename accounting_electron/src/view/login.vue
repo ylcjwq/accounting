@@ -3,17 +3,43 @@
   <div class="loginBox">
     <div class="login_item">
       <span class="log_item">登 录</span>
-      <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="70px" class="demo-ruleForm">
+      <el-form
+        ref="ruleFormRef"
+        :model="ruleForm"
+        :rules="rules"
+        label-width="70px"
+        class="demo-ruleForm"
+      >
         <el-form-item label="账 号" prop="username">
-          <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User" :append="''" />
+          <el-input
+            v-model="ruleForm.username"
+            type="text"
+            autocomplete="off"
+            :prefix-icon="User"
+            :append="''"
+          />
         </el-form-item>
         <el-form-item label="密 码" prop="password">
-          <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password />
+          <el-input
+            v-model="ruleForm.password"
+            type="password"
+            autocomplete="off"
+            :prefix-icon="Lock"
+            show-password
+          />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleFormRef)" style="margin-left: 73px; margin-top: 30px;">登
-            录</el-button>
-          <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px;margin-top: 30px;">重 置</el-button>
+          <el-button
+            type="primary"
+            @click="submitForm(ruleFormRef)"
+            style="margin-left: 73px; margin-top: 30px"
+            >登 录</el-button
+          >
+          <el-button
+            @click="resetForm(ruleFormRef)"
+            style="margin-left: 40px; margin-top: 30px"
+            >重 置</el-button
+          >
         </el-form-item>
         <span class="register" @click="router.push('/enroll')">
           <span style="color: rgb(141, 139, 139)">没有账号?</span>
@@ -23,88 +49,89 @@
     </div>
   </div>
 </template>
-  
-<script lang="ts" setup>
-import { User, Lock } from '@element-plus/icons-vue'
-import { reactive, ref } from 'vue'
-import { useRouter } from "vue-router";
-import type { FormInstance, FormRules } from "element-plus"
-import { useUserStore } from "@/store/user";
-import { login } from "@/api/login"
 
-const ruleFormRef = ref<FormInstance>()
-const router = useRouter()
-const userStore = useUserStore()
+<script lang="ts" setup>
+import { User, Lock } from "@element-plus/icons-vue";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import type { FormInstance, FormRules } from "element-plus";
+import { useUserStore } from "@/store/user";
+import { login } from "@/api/login";
+
+const ruleFormRef = ref<FormInstance>();
+const router = useRouter();
+const userStore = useUserStore();
 
 // 登录参数声明
 const ruleForm = reactive({
-  username: '',
-  password: ''
-})
+  username: "",
+  password: "",
+});
 
 // 点击登录事件
 const validatePass = (_rule: any, value: any, callback: any) => {
-  if (value === '') {
-    callback(new Error('请输入账号！'))
+  if (value === "") {
+    callback(new Error("请输入账号！"));
   } else {
-    if (ruleForm.password !== '') {
-      if (!ruleFormRef.value) return
-      ruleFormRef.value.validateField('password', () => null)
+    if (ruleForm.password !== "") {
+      if (!ruleFormRef.value) return;
+      ruleFormRef.value.validateField("password", () => null);
     }
-    callback()
+    callback();
   }
-}
-const validatePass2 = (_rule: any, value: any, callback: any) => {   //未使用的参数前面加_解决ts报错的问题
-  if (value === '') {
-    callback(new Error('请输入密码！'))
+};
+const validatePass2 = (_rule: any, value: any, callback: any) => {
+  //未使用的参数前面加_解决ts报错的问题
+  if (value === "") {
+    callback(new Error("请输入密码！"));
   } else {
-    callback()
+    callback();
   }
-}
+};
 
 const rules = reactive<FormRules>({
-  username: [{ validator: validatePass, trigger: 'blur' }],
-  password: [{ validator: validatePass2, trigger: 'blur' }],
-})
+  username: [{ validator: validatePass, trigger: "blur" }],
+  password: [{ validator: validatePass2, trigger: "blur" }],
+});
 
 // 点击登录
 const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
+  if (!formEl) return;
   formEl.validate(async (valid) => {
     if (valid) {
-      const data: any = await login(ruleForm)
+      const data: any = await login(ruleForm);
       console.log(data);
-      
+
       if (data.code == 200) {
-        userStore.$patch({    //将用户信息存入仓库
+        userStore.$patch({
+          //将用户信息存入仓库
           id: data.data.id,
+          username: data.data.username,
           name: data.data.name,
           img: data.data.img,
-          time:data.data.time
-        })
-        localStorage.setItem('token', data.token);
-        router.replace("/home")
+          time: data.data.time,
+        });
+        localStorage.setItem("token", data.token);
+        router.replace("/home");
       }
     } else {
-      return false
+      return false;
     }
-  })
-}
+  });
+};
 
 const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
-}
+  if (!formEl) return;
+  formEl.resetFields();
+};
 </script>
-  
+
 <style scoped lang="scss">
 .loginBox {
   height: 100vh;
   background: url(../assets/login.jpg) no-repeat;
   /* 背景图片路径 */
   background-size: 100% 100%;
-  ;
-
   /* 图片充满元素 */
   .login_item {
     .log_item {
@@ -138,7 +165,16 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
         .goToLogin {
           font-size: 16px;
-          background: -webkit-gradient(linear, left top, right top, color-stop(0, #89e972), color-stop(.4, rgb(159, 241, 173)), color-stop(.5, rgb(188, 243, 227)), color-stop(.6, #92e9f0), color-stop(1, rgb(96, 207, 235)));
+          background: -webkit-gradient(
+            linear,
+            left top,
+            right top,
+            color-stop(0, #89e972),
+            color-stop(0.4, rgb(159, 241, 173)),
+            color-stop(0.5, rgb(188, 243, 227)),
+            color-stop(0.6, #92e9f0),
+            color-stop(1, rgb(96, 207, 235))
+          );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           cursor: pointer;
@@ -148,5 +184,3 @@ const resetForm = (formEl: FormInstance | undefined) => {
   }
 }
 </style>
-  
-  

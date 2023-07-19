@@ -13,23 +13,29 @@
     </div>
     <el-divider />
     <div class="card-footer">
-      <span>用户名称：</span>
-      <span>admin</span>
+      <span>账号：</span>
+      <span>{{ username }}</span>
     </div>
     <el-divider />
     <div class="card-footer">
-      <span>账号：</span>
-      <span>admin</span>
+      <span>用户名称：</span>
+      <span>{{ name }}</span>
     </div>
     <el-divider />
     <div class="card-footer">
       <span>创建日期：</span>
-      <span>admin</span>
+      <span>{{ time }}</span>
     </div>
   </el-card>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/store/user";
+
+const userStore = useUserStore();
+const { username, name, time } = userStore;
+</script>
 
 <style lang="scss" scoped>
 .box-card {

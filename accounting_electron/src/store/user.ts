@@ -5,6 +5,7 @@ export const useUserStore = defineStore("userInfo", {
     state: () => {
         return {
             id: null as number | null,
+            username:null as number | string | null,
             name: null as string | number | null,
             img: null as string | null,
             time: null as string | null
