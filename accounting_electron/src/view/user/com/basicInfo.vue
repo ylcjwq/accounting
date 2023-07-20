@@ -174,6 +174,7 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
   ],
 });
 
+//修改基本信息保存按钮
 const saveUserMessage = async (): Promise<void> => {
   const data = {
     id: id.value,
@@ -196,10 +197,6 @@ const saveUserMessage = async (): Promise<void> => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
   }
 }
 </style>
