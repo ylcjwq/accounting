@@ -8,3 +8,12 @@ export const userMessage = (data: any) => {
         data
     })
 };
+
+//修改用户密码接口
+export const changePassword = (data: any) => {
+    return request({
+        url: '/user/changePassword',
+        method: 'post',
+        data
+    })
+};

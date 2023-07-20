@@ -62,7 +62,7 @@
           </el-form-item>
         </el-form>
         <div style="display: flex; justify-content: end">
-          <el-button type="primary">保存</el-button>
+          <el-button type="primary" @click="saveChangePassword">保存</el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -74,7 +74,7 @@ import { reactive, ref } from "vue";
 import type { FormRules } from "element-plus";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
-import { userMessage } from "@/api/user";
+import { userMessage, changePassword } from "@/api/user";
 
 //基本信息的接口
 interface RuleFormBasic {
@@ -191,6 +191,19 @@ const saveUserMessage = async (): Promise<void> => {
   ElMessage.success("修改成功！");
   name.value = ruleFormBasic.name;
   gender.value = ruleFormBasic.gender;
+};
+
+const saveChangePassword = async (): Promise<void> => {
+  const data = {
+    id: id.value,
+    oldPassword: ruleFormPassword.oldPassword,
+    newPassword: ruleFormPassword.newPassword,
+  };
+  await changePassword(data);
+  ElMessage.success("修改成功！");
+  ruleFormPassword.oldPassword = "";
+  ruleFormPassword.newPassword = "";
+  ruleFormPassword.surePassword = "";
 };
 </script>
 
