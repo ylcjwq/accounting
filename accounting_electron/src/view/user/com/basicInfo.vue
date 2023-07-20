@@ -5,7 +5,7 @@
         <span>基本资料</span>
       </div>
     </template>
-    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tabs v-model="activeName" class="demo-tabs">
       <el-tab-pane label="基本资料" name="first">
         <el-form
           :model="ruleFormBasic"
@@ -65,7 +65,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import type { FormRules, TabsPaneContext } from "element-plus";
+import type { FormRules } from "element-plus";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { userMessage } from "@/api/user";
@@ -97,10 +97,6 @@ const ruleFormPassword = reactive<RuleFormPassword>({
   newPassword: "",
   surePassword: "",
 });
-
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event);
-};
 
 //基本信息校验规则
 const rulesBasic = reactive<FormRules<RuleFormBasic>>({
