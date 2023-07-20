@@ -8,6 +8,7 @@ export const login = (data: any) => {
         data
     })
 };
+//注册接口
 export const enroll = (data: any) => {
     return request({
         url: '/login/enroll',

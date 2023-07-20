@@ -17,9 +17,15 @@
           <el-form-item label="用户名称" prop="name">
             <el-input v-model="ruleFormBasic.name" />
           </el-form-item>
+          <el-form-item label="性别" prop="gender">
+            <el-radio-group v-model="ruleFormBasic.gender">
+              <el-radio label="男" />
+              <el-radio label="女" />
+            </el-radio-group>
+          </el-form-item>
         </el-form>
         <div style="display: flex; justify-content: end">
-          <el-button type="primary">保存</el-button>
+          <el-button type="primary" @click="saveUserMessage">保存</el-button>
         </div>
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
@@ -60,12 +66,15 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import type { FormRules, TabsPaneContext } from "element-plus";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/store/user";
+import { userMessage } from "@/api/user";
 
 //基本信息的接口
 interface RuleFormBasic {
-  name: string;
+  name: string | number;
+  gender: string;
 }
-
 //修改密码的接口
 interface RuleFormPassword {
   oldPassword: string;
@@ -73,9 +82,14 @@ interface RuleFormPassword {
   surePassword: string;
 }
 
+const activeName = ref<string>("first");
+const userStore = useUserStore();
+const { id, name, gender } = storeToRefs(userStore);
+
 //基本信息
 const ruleFormBasic = reactive<RuleFormBasic>({
-  name: "",
+  name: name.value!,
+  gender: gender.value!,
 });
 //修改密码
 const ruleFormPassword = reactive<RuleFormPassword>({
@@ -83,8 +97,6 @@ const ruleFormPassword = reactive<RuleFormPassword>({
   newPassword: "",
   surePassword: "",
 });
-
-const activeName = ref<string>("first");
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event);
@@ -95,6 +107,13 @@ const rulesBasic = reactive<FormRules<RuleFormBasic>>({
   name: [
     { required: true, message: "请输入用户名称", trigger: "blur" },
     { min: 2, max: 8, message: "用户名称必须为2~8位字符", trigger: "blur" },
+  ],
+  gender: [
+    {
+      required: true,
+      message: "请选择性别",
+      trigger: "change",
+    },
   ],
 });
 
@@ -158,6 +177,18 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
     },
   ],
 });
+
+const saveUserMessage = async (): Promise<void> => {
+  const data = {
+    id: id.value,
+    name: ruleFormBasic.name,
+    gender: ruleFormBasic.gender,
+  };
+  await userMessage(data);
+  ElMessage.success("修改成功！");
+  name.value = ruleFormBasic.name;
+  gender.value = ruleFormBasic.gender;
+};
 </script>
 
 <style lang="scss" scoped>

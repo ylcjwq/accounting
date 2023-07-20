@@ -23,6 +23,11 @@
     </div>
     <el-divider />
     <div class="card-footer">
+      <span>用户名称：</span>
+      <span>{{ gender }}</span>
+    </div>
+    <el-divider />
+    <div class="card-footer">
       <span>创建日期：</span>
       <span>{{ time }}</span>
     </div>
@@ -34,7 +39,7 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
-const { username, name, time } = storeToRefs(userStore);
+const { username, name, gender, time } = storeToRefs(userStore);
 </script>
 
 <style lang="scss" scoped>

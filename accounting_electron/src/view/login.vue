@@ -108,6 +108,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
           id: data.data.id,
           username: data.data.username,
           name: data.data.name,
+          gender: data.data.gender,
           img: data.data.img,
           time: data.data.time,
         });

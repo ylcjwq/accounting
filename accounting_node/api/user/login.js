@@ -58,7 +58,7 @@ Router.post("/enroll", async (req, res) => {
         if (row.length == 0) {     //用户名不存在，可以注册
             const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
             console.log(time);
-            const row = await mysql.query(`INSERT INTO user  VALUES (NULL,'${username}', '${password}',NULL,'${username}','${time}')`)   //将用户名、密码、名称写入user表
+            const row = await mysql.query(`INSERT INTO user  VALUES (NULL,'${username}', '${password}','${username}','男',NULL,'${time}')`)   //将用户名、密码、名称写入user表
             res.send({
                 code: 200,
                 msg: '注册成功',
