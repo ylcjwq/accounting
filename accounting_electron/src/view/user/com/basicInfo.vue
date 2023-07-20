@@ -40,18 +40,24 @@
             <el-input
               v-model="ruleFormPassword.oldPassword"
               placeholder="请输入旧密码"
+              type="password"
+              show-password
             />
           </el-form-item>
           <el-form-item label="新密码" prop="newPassword">
             <el-input
               v-model="ruleFormPassword.newPassword"
               placeholder="请输入新密码"
+              type="password"
+              show-password
             />
           </el-form-item>
           <el-form-item label="确认密码" prop="surePassword">
             <el-input
               v-model="ruleFormPassword.surePassword"
               placeholder="请再次输入新密码"
+              type="password"
+              show-password
             />
           </el-form-item>
         </el-form>
