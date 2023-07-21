@@ -109,12 +109,18 @@ export default {
   },
   methods: {
     getCode() {
+      console.log("进入")
       getCodeImg().then(res => {
+        console.log("进入")
         this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
         if (this.captchaEnabled) {
           this.codeUrl = "data:image/gif;base64," + res.img;
+          console.log("666");
           this.loginForm.uuid = res.uuid;
         }
+      },
+      error => {
+        console.log(error.captchaEnabled)
       });
     },
     getCookie() {
