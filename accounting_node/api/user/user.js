@@ -32,7 +32,7 @@ Router.post('/userMessage', async (req, res) => {
     }
 })
 
-//修改用户基本信息接口
+//修改用户密码接口
 Router.post('/changePassword', async (req, res) => {
     try {
         const { id, oldPassword, newPassword } = req.body

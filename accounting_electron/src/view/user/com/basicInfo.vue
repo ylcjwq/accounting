@@ -78,7 +78,7 @@ import { userMessage, changePassword } from "@/api/user";
 
 //基本信息的接口
 interface RuleFormBasic {
-  name: string | number;
+  name: string;
   gender: string;
 }
 //修改密码的接口
@@ -183,7 +183,7 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
 //修改基本信息保存按钮
 const saveUserMessage = async (): Promise<void> => {
   const data = {
-    id: id.value,
+    id: id.value!,
     name: ruleFormBasic.name,
     gender: ruleFormBasic.gender,
   };
@@ -195,7 +195,7 @@ const saveUserMessage = async (): Promise<void> => {
 
 const saveChangePassword = async (): Promise<void> => {
   const data = {
-    id: id.value,
+    id: id.value!,
     oldPassword: ruleFormPassword.oldPassword,
     newPassword: ruleFormPassword.newPassword,
   };

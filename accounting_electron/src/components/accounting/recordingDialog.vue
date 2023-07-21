@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="title + '金额'" :label-width="formLabelWidth">
-        <el-input v-model="form.number" autocomplete="off" />
+        <el-input v-model.number="form.number" autocomplete="off" />
       </el-form-item>
       <el-form-item label="备注" :label-width="formLabelWidth">
         <el-input v-model="form.remark" autocomplete="off" />
@@ -39,8 +39,8 @@ import { account } from "@/util/accounting/recording";
 import { record } from "@/api/record";
 
 interface Form {
-  region: number | string;
-  number: number | string;
+  region: number | null;
+  number: string;
   remark: string;
 }
 
@@ -51,7 +51,7 @@ const { dialogType, dialogName, show } = storeToRefs(recordingStore);
 const { id } = storeToRefs(userStore);
 
 const form = reactive<Form>({
-  region: "",
+  region: null,
   number: "",
   remark: "",
 });
@@ -68,11 +68,11 @@ const title = computed(() => {
 
 const formLabelWidth = "140px";
 
+//点击确认时将支出/收入保存
 const save = async (): Promise<void> => {
-  //点击确认时将支出/收入保存
   console.log(dialogType);
   console.log(form);
-  if (form.region == "") {
+  if (form.region == null) {
     ElMessage.info(`请选择${title.value}方式！`);
     return;
   }
@@ -80,7 +80,11 @@ const save = async (): Promise<void> => {
     ElMessage.info("请填写金额！");
     return;
   }
-  let data = { form, dialogType: dialogType.value, userId: id.value };
+  let data = {
+    form: { region: form.region, number: form.number, remark: form.remark },
+    dialogType: dialogType.value,
+    userId: id.value!,
+  };
   console.log(data);
 
   await record(data);
