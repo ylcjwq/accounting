@@ -43,6 +43,7 @@ import { useUserStore } from "@/store/user";
 import { account } from "@/util/accounting/recording";
 import { record } from "@/api/record";
 
+//定义表单内容接口
 interface Form {
   region: number;
   number: string;
@@ -55,6 +56,7 @@ const userStore = useUserStore();
 const { dialogType, dialogName, show } = storeToRefs(recordingStore);
 const { id } = storeToRefs(userStore);
 
+//表单内容
 const form = reactive<Form>({
   region: 1,
   number: "",
