@@ -1,14 +1,17 @@
 package com.ruoyi.generator.mapper;
 
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.generator.domain.GenTableColumn;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 业务字段 数据层
  * 
  * @author ruoyi
- */
-public interface GenTableColumnMapper
+ */@Mapper
+public interface GenTableColumnMapper extends BaseMapper<GenTableColumn>
 {
     /**
      * 根据表名称查询列信息
