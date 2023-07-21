@@ -86,9 +86,7 @@ const save = async (): Promise<void> => {
     userId: id.value!,
   };
   console.log(data);
-
   await record(data);
-  console.log(111);
   dialogFormVisible.value = false;
 };
 </script>
