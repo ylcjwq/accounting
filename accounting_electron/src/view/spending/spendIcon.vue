@@ -8,7 +8,7 @@
           :key="item.name"
           @click="recording(item.name, 'spend')"
         >
-          <svg class="icon svg-icon" aria-hidden="true">
+          <svg class="icon" aria-hidden="true">
             <use :xlink:href="item.href"></use>
           </svg>
           <div class="name">{{ item.name }}</div>
@@ -19,13 +19,13 @@
   <recordingDialog />
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { spendIcon } from "@/util/accounting/icon";
 import { recording } from "@/util/accounting/recording";
 import recordingDialog from "@/components/accounting/recordingDialog.vue";
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .spendIcon {
   width: 100%;
   height: 400px;
@@ -55,6 +55,10 @@ import recordingDialog from "@/components/accounting/recordingDialog.vue";
           vertical-align: -0.15em;
           fill: currentColor;
           overflow: hidden;
+        }
+
+        .icon:hover {
+          height: 70px;
         }
 
         .name {
