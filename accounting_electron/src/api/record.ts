@@ -1,5 +1,6 @@
 import request from "@/util/request";
 
+//定义记录接口的data类型
 interface Record {
   form: {
     region: number;
