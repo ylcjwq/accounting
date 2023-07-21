@@ -1,18 +1,15 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * 用户表 数据层
  * 
  * @author ruoyi
- */@Mapper
-public interface SysUserMapper extends BaseMapper<SysUser>
+ */
+public interface SysUserMapper
 {
     /**
      * 根据条件分页查询用户列表
