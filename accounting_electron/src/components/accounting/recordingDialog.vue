@@ -1,3 +1,4 @@
+<!-- 封装支出/收入弹窗记录组件 -->
 <template>
   <el-dialog v-model="dialogFormVisible" :title="dialogName + title">
     <el-form :model="form">
@@ -15,7 +16,11 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="title + '金额'" :label-width="formLabelWidth">
-        <el-input v-model.number="form.number" autocomplete="off" />
+        <el-input
+          v-model.number="form.number"
+          autocomplete="off"
+          :placeholder="'请输入' + title + '金额'"
+        />
       </el-form-item>
       <el-form-item label="备注" :label-width="formLabelWidth">
         <el-input v-model="form.remark" autocomplete="off" />
@@ -39,7 +44,7 @@ import { account } from "@/util/accounting/recording";
 import { record } from "@/api/record";
 
 interface Form {
-  region: number | null;
+  region: number;
   number: string;
   remark: string;
 }
@@ -51,7 +56,7 @@ const { dialogType, dialogName, show } = storeToRefs(recordingStore);
 const { id } = storeToRefs(userStore);
 
 const form = reactive<Form>({
-  region: null,
+  region: 1,
   number: "",
   remark: "",
 });
@@ -72,16 +77,12 @@ const formLabelWidth = "140px";
 const save = async (): Promise<void> => {
   console.log(dialogType);
   console.log(form);
-  if (form.region == null) {
-    ElMessage.info(`请选择${title.value}方式！`);
-    return;
-  }
   if (form.number == "") {
-    ElMessage.info("请填写金额！");
+    ElMessage.warning(`请填写${title.value}金额！`);
     return;
   }
   let data = {
-    form: { region: form.region, number: form.number, remark: form.remark },
+    form,
     dialogType: dialogType.value,
     userId: id.value!,
   };
