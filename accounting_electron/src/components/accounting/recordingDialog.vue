@@ -75,8 +75,6 @@ const formLabelWidth = "140px";
 
 //点击确认时将支出/收入保存
 const save = async (): Promise<void> => {
-  console.log(dialogType);
-  console.log(form);
   if (form.number == "") {
     ElMessage.warning(`请填写${title.value}金额！`);
     return;
@@ -86,9 +84,12 @@ const save = async (): Promise<void> => {
     dialogType: dialogType.value,
     userId: id.value!,
   };
-  console.log(data);
   await record(data);
+  form.region = 1;
+  form.number = "";
+  form.remark = "";
   dialogFormVisible.value = false;
+  ElMessage.success("记录成功！");
 };
 </script>
 
