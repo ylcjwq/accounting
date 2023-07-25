@@ -36,12 +36,17 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { inquiryBudget, setBudget } from "@/api/record";
 
-let enabled = ref<boolean>(false);
+let enabled = ref<boolean>(false); //是否开启预算
+
 const userStore = useUserStore();
 const { id } = storeToRefs(userStore);
 
-const res = await inquiryBudget({ userId: id.value! });
-console.log(res);
+//查询是否设置过预算
+const quiryBudget = async () => {
+  const res = await inquiryBudget({ userId: id.value! });
+  console.log(res);
+};
+quiryBudget();
 </script>
 
 <style lang="scss" scoped>
