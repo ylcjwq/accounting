@@ -32,8 +32,16 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/store/user";
+import { inquiryBudget, setBudget } from "@/api/record";
 
-const enabled = ref<boolean>(false);
+let enabled = ref<boolean>(false);
+const userStore = useUserStore();
+const { id } = storeToRefs(userStore);
+
+const res = await inquiryBudget({ userId: id.value! });
+console.log(res);
 </script>
 
 <style lang="scss" scoped>
