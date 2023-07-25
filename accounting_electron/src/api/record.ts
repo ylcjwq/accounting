@@ -18,3 +18,21 @@ export const record = (data: Record) => {
     data,
   });
 };
+
+//查询是否设置预算接口
+export const inquiryBudget = (data: { userId: number }) => {
+  return request({
+    url: "/record/inquiryBudget",
+    method: "get",
+    params: data,
+  });
+};
+
+//设置预算接口
+export const setBudget = (data: { userId: number; budget: string }) => {
+  return request({
+    url: "/record/setBudget",
+    method: "post",
+    data,
+  });
+};
