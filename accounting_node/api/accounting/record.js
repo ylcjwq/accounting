@@ -77,7 +77,7 @@ Router.post("/setBudget", async (req, res) => {
 //查询是否设置过预算接口
 Router.get("/inquiryBudget", async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.query;
     const row = await mysql.query(`SELECT * FROM user WHERE id='${userId}'`); //查询数据库中该用户是否存在
     if (row.length <= 0) {
       res.send({
@@ -87,7 +87,7 @@ Router.get("/inquiryBudget", async (req, res) => {
     } else {
       //查询是否设置过预算
       const set = await mysql.query(
-        `SELECT * FROM budget WHERE usedId='${userId}'`
+        `SELECT * FROM budget WHERE userId='${userId}'`
       );
       if (set.length <= 0) {
         //如果没有设置过预算，则返回false
@@ -100,15 +100,16 @@ Router.get("/inquiryBudget", async (req, res) => {
         });
       } else {
         //设置过预算，则查询是否开启预算，并返回
-        const enabled = await mysql.query(
-          `SELECT enabled FROM budget WHERE id='${userId}'`
+        const data = await mysql.query(
+          `SELECT budget,enabled FROM budget WHERE userId='${userId}'`
         );
         res.send({
           code: 200,
           msg: "已设置预算",
           data: {
             setBudget: true,
-            enabled,
+            enabled: data[0].enabled,
+            budget: data[0].budget,
           },
         });
       }
