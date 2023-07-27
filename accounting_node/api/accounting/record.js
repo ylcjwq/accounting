@@ -36,6 +36,7 @@ Router.post("/record", async (req, res) => {
 Router.post("/setBudget", async (req, res) => {
   try {
     const { userId, budget } = req.body;
+    console.log(userId, budget);
     const row = await mysql.query(`SELECT * FROM user WHERE id='${userId}'`); //查询数据库中该用户是否存在
     if (row.length <= 0) {
       res.send({
@@ -45,7 +46,7 @@ Router.post("/setBudget", async (req, res) => {
     } else {
       //查询是否设置过预算
       const set = await mysql.query(
-        `SELECT * FROM budget WHERE usedId='${userId}'`
+        `SELECT * FROM budget WHERE userId='${userId}'`
       );
       if (set.length <= 0) {
         //如果没有设置过预算，则新增一条预算信息

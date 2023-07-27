@@ -6,12 +6,13 @@
         <el-switch
           v-model="enabled"
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+          :before-change="beforeChange"
         />
       </div>
     </template>
     <div class="text">
       <span>当月预算：</span>
-      <span>￥{{ budget }}</span>
+      <span>￥{{ budget || "未设置" }}</span>
     </div>
     <el-divider />
     <div class="text">
@@ -25,7 +26,7 @@
     </div>
     <el-divider />
     <div style="display: flex; justify-content: center">
-      <el-button type="primary" round>编辑预算</el-button>
+      <el-button type="primary" round @click="editBudget">编辑预算</el-button>
     </div>
   </el-card>
 </template>
@@ -37,14 +38,14 @@ import { useUserStore } from "@/store/user";
 import { inquiryBudget, setBudget } from "@/api/record";
 
 const enabled = ref<boolean>(false); //是否开启预算
-const enabledShow = ref<boolean>(false); //是否设置预算
+const enabledShow = ref<boolean>(false); //是否设置过预算
 const budget = ref<string>(""); //预算值
 
 const userStore = useUserStore();
 const { id } = storeToRefs(userStore);
 
 //查询是否设置过预算
-const quiryBudget = async () => {
+const quiryBudget = async (): Promise<void> => {
   const res = await inquiryBudget({ userId: id.value! });
   console.log(res.data);
   const data = res.data;
@@ -59,6 +60,38 @@ const quiryBudget = async () => {
   }
 };
 quiryBudget();
+
+//如果未设置过预算，则不允许开启预算功能
+const beforeChange = (): boolean => {
+  if (enabledShow.value === false) {
+    ElMessage.warning("请先设置预算，再开启预算功能！");
+    return false;
+  }
+  return true;
+};
+
+//编辑预算
+const editBudget = async (): Promise<void> => {
+  try {
+    const { value } = await ElMessageBox.prompt(
+      "请输入您想要设置的预算",
+      "编辑预算",
+      {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /^[1-9]\d*$/,
+        inputErrorMessage: "预算只能输入正整数",
+      }
+    );
+    const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
+    await setBudget({ userId: id.value!, budget: value });
+    await quiryBudget(); //编辑预算后再调用一次查询方法
+    loadingInstance.close(); //关闭loading动画
+    ElMessage.success("编辑预算成功！");
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
