@@ -47,6 +47,7 @@ const { id } = storeToRefs(userStore);
 
 //查询是否设置过预算
 const quiryBudget = async (): Promise<void> => {
+  const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
   const res = await inquiryBudget({ userId: id.value! });
   console.log(res);
   const data = res.data;
@@ -55,6 +56,7 @@ const quiryBudget = async (): Promise<void> => {
     budget.value = data.budget;
     enabled.value = data.enabled;
   }
+  loadingInstance.close(); //关闭loading动画
 };
 quiryBudget();
 
