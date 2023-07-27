@@ -7,6 +7,7 @@
           v-model="enabled"
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
           :before-change="beforeChange"
+          @change="changeEnabled"
         />
       </div>
     </template>
@@ -35,7 +36,7 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
-import { inquiryBudget, setBudget } from "@/api/record";
+import { inquiryBudget, setBudget, openCloseBudget } from "@/api/record";
 
 const enabled = ref<boolean>(false); //是否开启预算
 const enabledShow = ref<boolean>(false); //是否设置过预算
@@ -47,16 +48,12 @@ const { id } = storeToRefs(userStore);
 //查询是否设置过预算
 const quiryBudget = async (): Promise<void> => {
   const res = await inquiryBudget({ userId: id.value! });
-  console.log(res.data);
+  console.log(res);
   const data = res.data;
   if (data.setBudget === true) {
     enabledShow.value = true; //设置过预算
     budget.value = data.budget;
-    if (data.enabled === 1) {
-      enabled.value = true;
-    } else {
-      enabled.value = false;
-    }
+    enabled.value = data.enabled;
   }
 };
 quiryBudget();
@@ -68,6 +65,13 @@ const beforeChange = (): boolean => {
     return false;
   }
   return true;
+};
+
+//改变预算开关状态
+const changeEnabled = async (): Promise<void> => {
+  const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
+  await openCloseBudget({ userId: id.value!, enabled: enabled.value });
+  loadingInstance.close(); //关闭loading动画
 };
 
 //编辑预算

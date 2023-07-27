@@ -36,3 +36,12 @@ export const setBudget = (data: { userId: number; budget: string }) => {
     data,
   });
 };
+
+//开启关闭预算接口
+export const openCloseBudget = (data: { userId: number; enabled: boolean }) => {
+  return request({
+    url: "/record/openCloseBudget",
+    method: "post",
+    data,
+  });
+};
