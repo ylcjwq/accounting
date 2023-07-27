@@ -46,6 +46,7 @@ const userStore = useUserStore();
 const { id } = storeToRefs(userStore);
 
 //查询是否设置过预算
+//INFO 如果要全局显示超出预算提示的话，该逻辑应该提升到home.vue组件中
 const quiryBudget = async (): Promise<void> => {
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
   const res = await inquiryBudget({ userId: id.value! });
