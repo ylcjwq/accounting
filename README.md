@@ -7,6 +7,7 @@
 本软件是记账本软件，主要功能是记录支出和收入明细，并将数据通过可视化图标展示
 #### 开发规范
   # import引入规范
+
   1.最开始引入vue相关内容
   2.其次引入ui组件库相关内容
   3.引入其他插件相关内容
@@ -14,7 +15,11 @@
   5.引入封装的功能函数或方法
   6.引入接口api
 
-  eg：import { reactive, ref } from 'vue'
+
+
+  eg：
+
+      import { reactive, ref } from 'vue'
       import { useRouter } from "vue-router";
       import type { FormInstance, FormRules } from "element-plus"
       import { User, Lock } from '@element-plus/icons-vue'
