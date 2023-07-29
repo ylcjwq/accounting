@@ -7,13 +7,7 @@
     </template>
     <el-tabs v-model="activeName" class="demo-tabs">
       <el-tab-pane label="基本资料" name="first">
-        <el-form
-          :model="ruleFormBasic"
-          :rules="rulesBasic"
-          label-width="80px"
-          class="demo-ruleForm"
-          status-icon
-        >
+        <el-form :model="ruleFormBasic" :rules="rulesBasic" label-width="80px" class="demo-ruleForm" status-icon>
           <el-form-item label="用户名称" prop="name">
             <el-input v-model="ruleFormBasic.name" />
           </el-form-item>
@@ -29,36 +23,15 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
-        <el-form
-          :model="ruleFormPassword"
-          :rules="rulesPassword"
-          label-width="80px"
-          class="demo-ruleForm"
-          status-icon
-        >
+        <el-form :model="ruleFormPassword" :rules="rulesPassword" label-width="80px" class="demo-ruleForm" status-icon>
           <el-form-item label="旧密码" prop="oldPassword">
-            <el-input
-              v-model="ruleFormPassword.oldPassword"
-              placeholder="请输入旧密码"
-              type="password"
-              show-password
-            />
+            <el-input v-model="ruleFormPassword.oldPassword" placeholder="请输入旧密码" type="password" show-password />
           </el-form-item>
           <el-form-item label="新密码" prop="newPassword">
-            <el-input
-              v-model="ruleFormPassword.newPassword"
-              placeholder="请输入新密码"
-              type="password"
-              show-password
-            />
+            <el-input v-model="ruleFormPassword.newPassword" placeholder="请输入新密码" type="password" show-password />
           </el-form-item>
           <el-form-item label="确认密码" prop="surePassword">
-            <el-input
-              v-model="ruleFormPassword.surePassword"
-              placeholder="请再次输入新密码"
-              type="password"
-              show-password
-            />
+            <el-input v-model="ruleFormPassword.surePassword" placeholder="请再次输入新密码" type="password" show-password />
           </el-form-item>
         </el-form>
         <div style="display: flex; justify-content: end">
@@ -139,7 +112,7 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
       trigger: "blur",
     },
     {
-      validator: (_rule, value, callback) => {
+      validator: (_rule: Record<string, any>, value: string, callback: (error?: Error) => void) => {
         if (value === ruleFormPassword.oldPassword) {
           callback(new Error("新密码不能与旧密码一致"));
         } else {
@@ -158,7 +131,7 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
       trigger: "blur",
     },
     {
-      validator: (_rule, value, callback) => {
+      validator: (_rule: Record<string, any>, value: string, callback: (error?: Error) => void) => {
         if (value === ruleFormPassword.oldPassword) {
           callback(new Error("新密码不能与旧密码一致"));
         } else {
@@ -168,7 +141,7 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
       trigger: "blur",
     },
     {
-      validator: (_rule, value, callback) => {
+      validator: (_rule: Record<string, any>, value: string, callback: (error?: Error) => void) => {
         if (value !== ruleFormPassword.newPassword) {
           callback(new Error("两次输入的新密码不一致"));
         } else {
@@ -212,6 +185,7 @@ const saveChangePassword = async (): Promise<void> => {
   flex: 1;
   margin: 20px 20px 0 20px;
   height: 100%;
+
   .card-header {
     display: flex;
     justify-content: space-between;
