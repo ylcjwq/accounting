@@ -119,8 +119,26 @@ const validatePass3 = (_rule: any, value: any, callback: any) => {
 
 const rules = reactive<FormRules>({
   username: [{ validator: validatePass1, trigger: "blur" }],
-  password: [{ validator: validatePass2, trigger: "blur" }],
-  checkPass: [{ validator: validatePass3, trigger: "blur" }],
+  // password: [{ validator: validatePass2, trigger: "blur" }],
+  // checkPass: [{ validator: validatePass3, trigger: "blur" }],
+  password: [
+    { validator: validatePass2, message: "请输入密码", trigger: "blur" },
+    { min: 6, max: 12, message: "密码必须为6~12位字符", trigger: "blur" },
+    {
+      pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
+      message: "密码只能包含字母、数字和特殊字符",
+      trigger: "blur",
+    },
+  ],
+  checkPass: [
+    {  validator: validatePass3,message: "请再次输入密码", trigger: "blur" },
+    { min: 6, max: 12, message: "密码必须为6~12位字符", trigger: "blur" },
+    {
+      pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
+      message: "密码只能包含字母、数字和特殊字符",
+      trigger: "blur",
+    },
+  ],
 });
 
 const submitForm = (formEl: FormInstance | undefined) => {
