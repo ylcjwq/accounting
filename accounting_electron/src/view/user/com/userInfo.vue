@@ -36,25 +36,34 @@
   <!-- 上传头像对话框 -->
   <el-dialog
     v-model="dialogVisible"
-    title="Tips"
+    title="头像上传"
     width="30%"
   >
   <!-- 上传本地头像文件 -->
+
+  
+<!-- 对话框的取消与确定 -->
+  <!-- <span>This is a message</span> -->
   <el-upload
-    class="avatar-uploader"
+    v-model:file-list="fileList"
     action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :before-upload="beforeAvatarUpload"
+    list-type="picture-card"
+    :on-preview="handlePictureCardPreview"
+    :on-remove="handleRemove"
   >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-    <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+    <el-icon><Plus /></el-icon>
   </el-upload>
+
+  <el-dialog v-model="dialogVisiblef">
+    <img w-full :src="dialogImageUrl" alt="Preview Image" />
+  </el-dialog>
+
+
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="dialogVisible = false">
-          Confirm
+          确定上传
         </el-button>
       </span>
     </template>
@@ -66,10 +75,10 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { ref } from 'vue'
 //引入
-import { ElMessage } from 'element-plus'
+// import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 
-import type { UploadProps } from 'element-plus'
+import type { UploadProps,UploadUserFile } from 'element-plus'
 const userStore = useUserStore();
 const { username, name, gender, time } = storeToRefs(userStore);
 //控制对话框的显示和隐藏
@@ -80,24 +89,22 @@ const replaceHscul = () => {
   dialogVisible.value = true
 };
 // 上传头像逻辑
-const imageUrl = ref('')
+const fileList = ref<UploadUserFile[]>([
+  { name: 'food.jpeg',
+  url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+}
+])
 
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile
-) => {
-  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+const dialogImageUrl = ref('')
+const dialogVisiblef = ref(false)
+
+const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  console.log(uploadFile, uploadFiles)
 }
 
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
-    return false
-  }
-  return true
+const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
+  dialogImageUrl.value = uploadFile.url!
+  dialogVisiblef.value = true
 }
 </script>
 
