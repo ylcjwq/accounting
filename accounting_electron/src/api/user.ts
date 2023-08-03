@@ -2,9 +2,9 @@ import request from "@/util/request"
 
 //修改用户基本信息接口
 export const userMessage = (data: {
-    id:number,
-    name:string,
-    gender:string
+    id: number,
+    name: string,
+    gender: string
 }) => {
     return request({
         url: '/user/userMessage',
@@ -15,13 +15,25 @@ export const userMessage = (data: {
 
 //修改用户密码接口
 export const changePassword = (data: {
-    id:number,
-    oldPassword:string,
-    newPassword:string
+    id: number,
+    oldPassword: string,
+    newPassword: string
 }) => {
     return request({
         url: '/user/changePassword',
         method: 'post',
         data
+    })
+};
+
+//上传头像接口
+export const changeUserImg = (
+    id: number,
+    FormData: any,
+) => {
+    return request({
+        url: `/user/avatar/${id}`,
+        method: 'post',
+        data: FormData
     })
 };
