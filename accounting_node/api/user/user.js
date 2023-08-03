@@ -1,6 +1,8 @@
 const express = require("express");
 let Router = express.Router();
 let mysql = require("../sql");
+let path = require("path");
+let multer = require("multer");
 
 module.express = Router;
 Router.use(express.json(), express.urlencoded());
@@ -70,5 +72,46 @@ Router.post("/changePassword", async (req, res) => {
       msg: "服务端内部错误",
     });
   }
+});
+
+let storage = multer.diskStorage({
+  destination: "./images",
+  filename: function (req, file, cb) {
+    // console.log(req.params);
+    let ext = path.extname(file.originalname); //后缀
+    let { id } = req.params;
+    cb(null, file.fieldname + "-" + Date.now() + "-" + id + ext);
+  },
+});
+let upload = multer({ storage });
+
+//上传头像接口
+// 是否有参数：图片文件  用户id
+Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
+  let server = "http://localhost:3300"; //拼接服务器ip地址
+  // let server = "http://8.130.71.186:3300";
+  let url = req.file.destination.substring(1);
+  let filename = req.file.filename;
+  let path = server + url + "/" + filename;
+  let { id } = req.params; //multer会把普通文本数据格式化到body中
+  let row = await mysql.query(
+    `UPDATE user SET img='${path}' WHERE id=${id};select * from user where id=${id};`
+  );
+  // console.log(req.params);
+  res.send({
+    code: 200,
+    msg: "头像切换成功",
+  });
+});
+
+Router.post("/imgget", async (req, res) => {
+  //切换头像接口
+  let { id } = req.body;
+  let row = await mysql.query(`select img from user where id=${id}`);
+  res.send({
+    code: 200,
+    msg: "切换成功",
+    data: row,
+  });
 });
 module.exports = Router;
