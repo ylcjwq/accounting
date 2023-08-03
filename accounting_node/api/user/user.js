@@ -100,7 +100,7 @@ Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
   // console.log(req.params);
   res.send({
     code: 200,
-    msg: "头像切换成功",
+    msg: "头像上传成功",
   });
 });
 
