@@ -6,7 +6,7 @@
         ref="ruleFormRef"
         :model="ruleForm"
         :rules="rules"
-        label-width="70px"
+        label-width="90px"
         class="demo-ruleForm"
       >
         <el-form-item label="账 号" prop="username">
@@ -82,47 +82,19 @@ const ruleForm = reactive<RuleForm>({
   checkPass: "",
 });
 
-const validatePass1 = (_rule: any, value: any, callback: any) => {
-  //账号校验规则
-  if (value === "") {
-    callback(new Error("请输入账号"));
-  } else {
-    if (ruleForm.username !== "") {
-      if (!ruleFormRef.value) return;
-      ruleFormRef.value.validateField("username", () => null);
-    }
-    callback();
-  }
-};
-const validatePass2 = (_rule: any, value: any, callback: any) => {
-  //密码校验规则
-  if (value === "") {
-    callback(new Error("请输入密码"));
-  } else {
-    if (ruleForm.checkPass !== "") {
-      if (!ruleFormRef.value) return;
-      ruleFormRef.value.validateField("password", () => null);
-    }
-    callback();
-  }
-};
-const validatePass3 = (_rule: any, value: any, callback: any) => {
-  //确认密码校验规则
-  if (value === "") {
-    callback(new Error("请再次输入密码"));
-  } else if (value !== ruleForm.password) {
-    callback(new Error("两次密码输入不一致"));
-  } else {
-    callback();
-  }
-};
-
 const rules = reactive<FormRules>({
-  username: [{ validator: validatePass1, trigger: "blur" }],
-  // password: [{ validator: validatePass2, trigger: "blur" }],
-  // checkPass: [{ validator: validatePass3, trigger: "blur" }],
+  username: [
+    { required: true, message: "请输入账号", trigger: "blur" },
+    { min: 5, max: 12, message: "账号必须为5~12位字符", trigger: "blur" },
+    {
+      pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
+      message: "密码只能包含字母、数字和特殊字符",
+      trigger: "blur",
+    },
+  ],
+
   password: [
-    { validator: validatePass2, message: "请输入密码", trigger: "blur" },
+    { required: true, message: "请输入密码", trigger: "blur" },
     { min: 6, max: 12, message: "密码必须为6~12位字符", trigger: "blur" },
     {
       pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
@@ -130,12 +102,27 @@ const rules = reactive<FormRules>({
       trigger: "blur",
     },
   ],
+
   checkPass: [
-    {  validator: validatePass3,message: "请再次输入密码", trigger: "blur" },
+    { required: true, message: "请再次输入密码", trigger: "blur" },
     { min: 6, max: 12, message: "密码必须为6~12位字符", trigger: "blur" },
     {
       pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
       message: "密码只能包含字母、数字和特殊字符",
+      trigger: "blur",
+    },
+    {
+      validator: (
+        _rule: Record<string, any>,
+        value: string,
+        callback: (error?: Error) => void
+      ) => {
+        if (value !== ruleForm.password) {
+          callback(new Error("两次输入的新密码不一致"));
+        } else {
+          callback();
+        }
+      },
       trigger: "blur",
     },
   ],

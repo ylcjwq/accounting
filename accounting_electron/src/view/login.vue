@@ -7,7 +7,7 @@
         ref="ruleFormRef"
         :model="ruleForm"
         :rules="rules"
-        label-width="70px"
+        label-width="90px"
         class="demo-ruleForm"
       >
         <el-form-item label="账 号" prop="username">
@@ -68,32 +68,19 @@ const ruleForm = reactive({
   password: "",
 });
 
-// 点击登录事件
-const validatePass = (_rule: any, value: any, callback: any) => {
-  if (value === "") {
-    callback(new Error("请输入账号！"));
-  } else {
-    if (ruleForm.password !== "") {
-      if (!ruleFormRef.value) return;
-      ruleFormRef.value.validateField("password", () => null);
-    }
-    callback();
-  }
-};
-const validatePass2 = (_rule: any, value: any, callback: any) => {
-  //未使用的参数前面加_解决ts报错的问题
-  if (value === "") {
-    callback(new Error("请输入密码！"));
-  } else {
-    callback();
-  }
-};
-
 const rules = reactive<FormRules>({
-  username: [{ validator: validatePass, trigger: "blur" }],
-  // password: [{ validator: validatePass2, trigger: "blur" }],
+  username: [
+    { required: true, message: "请输入账号", trigger: "blur" },
+    { min: 5, max: 12, message: "账号必须为5~12位字符", trigger: "blur" },
+    {
+      pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
+      message: "密码只能包含字母、数字和特殊字符",
+      trigger: "blur",
+    },
+  ],
+
   password: [
-    {  validator: validatePass2,message: "请输入密码", trigger: "blur" },
+    { required: true, message: "请输入密码", trigger: "blur" },
     { min: 6, max: 12, message: "密码必须为6~12位字符", trigger: "blur" },
     {
       pattern: /^[a-zA-Z0-9@.~!#$%^]*$/,
