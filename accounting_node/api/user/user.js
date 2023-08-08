@@ -90,6 +90,7 @@ let upload = multer({ storage });
 Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
   let server = "http://localhost:3300"; //拼接服务器ip地址
   // let server = "http://8.130.71.186:3300";
+  console.log(req.file);
   let url = req.file.destination.substring(1);
   let filename = req.file.filename;
   let path = server + url + "/" + filename;

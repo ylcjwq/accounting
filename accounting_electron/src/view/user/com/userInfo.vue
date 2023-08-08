@@ -45,7 +45,7 @@
       action=""
       list-type="picture-card"
       :limit="1"
-      :before-upload="uploadImg"
+      :before-upload="beforeUpload"
       :http-request="request"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
@@ -61,9 +61,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">
-          确定上传
-        </el-button>
+        <el-button type="primary" @click="uploadImg"> 确定上传 </el-button>
       </span>
     </template>
   </el-dialog>
@@ -74,24 +72,25 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { Plus } from "@element-plus/icons-vue";
-
 import type { UploadProps, UploadUserFile } from "element-plus";
+import { changeUserImg } from "@/api/user";
+
 const userStore = useUserStore();
-const { username, name, gender, time } = storeToRefs(userStore);
+const { username, name, gender, time, id } = storeToRefs(userStore);
 
 //控制对话框的显示和隐藏
 const dialogVisible = ref(false);
-
 // 上传头像逻辑
 const fileList = ref<UploadUserFile[]>([]);
-
-const dialogImageUrl = ref("");
-const dialogVisiblef = ref(false);
-const isShow = ref(false); //是否隐藏上传框
+const dialogImageUrl = ref<string>(""); //图片预览路径
+const dialogVisiblef = ref<boolean>(false); //图片预览弹框
+const isShow = ref<boolean>(false); //是否隐藏上传框
+const imageFile = ref<File | undefined>();
 
 //上传文件之前
-const uploadImg = (file: File) => {
+const beforeUpload = (file: File) => {
   console.log(file);
+  imageFile.value = file;
   isShow.value = true;
 };
 
@@ -106,6 +105,13 @@ const handlePictureCardPreview: UploadProps["onPreview"] = (
 ): void => {
   dialogImageUrl.value = uploadFile.url!;
   dialogVisiblef.value = true;
+};
+
+//上传图片
+const uploadImg = async () => {
+  let formData = new FormData();
+  formData.append("file", imageFile.value);
+  await changeUserImg(id.value!, formData);
 };
 </script>
 
