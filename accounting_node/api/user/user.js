@@ -78,9 +78,9 @@ let storage = multer.diskStorage({
   destination: "./images",
   filename: function (req, file, cb) {
     // console.log(req.params);
-    let ext = path.extname(file.originalname); //后缀
-    let { id } = req.params;
-    cb(null, file.fieldname + "-" + Date.now() + "-" + id + ext);
+    let ext = path.extname(file.originalname); //获取后缀
+    let { id } = req.params; //获取id
+    cb(null, file.fieldname + "-" + Date.now() + "-" + id + ext); //拼接生成唯一文件名
   },
 });
 let upload = multer({ storage });
@@ -90,10 +90,10 @@ let upload = multer({ storage });
 Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
   let server = "http://localhost:3300"; //拼接服务器ip地址
   // let server = "http://8.130.71.186:3300";
-  console.log(req.file);
-  let url = req.file.destination.substring(1);
-  let filename = req.file.filename;
-  let path = server + url + "/" + filename;
+  console.log(req);
+  let url = req.file.destination.substring(1); //移除路径前面的.
+  let filename = req.file.filename; //获取文件名
+  let path = server + url + "/" + filename; //构建完整的url
   let { id } = req.params; //multer会把普通文本数据格式化到body中
   let row = await mysql.query(
     `UPDATE user SET img='${path}' WHERE id=${id};select * from user where id=${id};`

@@ -10,7 +10,10 @@
         @click="dialogVisible = true"
         :size="100"
         type="file"
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        :src="
+          img ??
+          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+        "
       />
     </div>
     <el-divider />
@@ -76,7 +79,7 @@ import type { UploadProps, UploadUserFile } from "element-plus";
 import { changeUserImg } from "@/api/user";
 
 const userStore = useUserStore();
-const { username, name, gender, time, id } = storeToRefs(userStore);
+const { username, name, gender, time, id, img } = storeToRefs(userStore);
 
 //控制对话框的显示和隐藏
 const dialogVisible = ref(false);
@@ -110,8 +113,9 @@ const handlePictureCardPreview: UploadProps["onPreview"] = (
 //上传图片
 const uploadImg = async () => {
   let formData = new FormData();
-  formData.append("file", imageFile.value);
+  formData.append("avatar", imageFile.value!);
   await changeUserImg(id.value!, formData);
+  dialogVisible.value = false;
 };
 </script>
 
