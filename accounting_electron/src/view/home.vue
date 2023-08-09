@@ -107,7 +107,7 @@ const time: Date = new Date(); //获取当前时间对象
 
 const greet = (time: Date): string => {
   //判断当前时间，返回对应的问候语
-  if (time.getHours() >= 0 && time.getHours() < 12) {
+  if (time.getHours() >= 5 && time.getHours() < 12) {
     return "早上好!";
   } else if (time.getHours() >= 12 && time.getHours() < 14) {
     return "中午好!";
