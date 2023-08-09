@@ -6,15 +6,9 @@
       </div>
     </template>
     <div style="display: flex; justify-content: center">
-      <el-avatar
-        @click="dialogVisible = true"
-        :size="100"
-        type="file"
-        :src="
-          img ??
-          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-        "
-      />
+      <el-avatar @click="dialogVisible = true" :size="100" type="file" :src="userimg ??
+        'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+        " />
     </div>
     <el-divider />
     <div class="card-footer">
@@ -40,23 +34,15 @@
 
   <!-- 上传头像对话框 -->
   <el-dialog v-model="dialogVisible" title="头像上传" width="30%">
-    <!-- 上传本地头像文件 -->
-
-    <!-- 对话框的取消与确定 -->
-    <el-upload
-      v-model:file-list="fileList"
-      action=""
-      list-type="picture-card"
-      :limit="1"
-      :before-upload="beforeUpload"
-      :http-request="request"
-      :on-preview="handlePictureCardPreview"
-      :on-remove="handleRemove"
-      :class="{ disabled: isShow }"
-    >
-      <el-icon><Plus /></el-icon>
+    <el-upload v-model:file-list="fileList" action="" list-type="picture-card" :limit="1" :before-upload="beforeUpload"
+      :http-request="request" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+      :class="{ disabled: isShow }">
+      <el-icon>
+        <Plus />
+      </el-icon>
     </el-upload>
 
+    <!-- 预览头像 -->
     <el-dialog v-model="dialogVisiblef">
       <img w-full :src="dialogImageUrl" alt="Preview Image" />
     </el-dialog>
@@ -79,30 +65,30 @@ import type { UploadProps, UploadUserFile } from "element-plus";
 import { changeUserImg } from "@/api/user";
 
 const userStore = useUserStore();
-const { username, name, gender, time, id, img } = storeToRefs(userStore);
+const { username, name, gender, time, id, userimg } = storeToRefs(userStore);
 
-//控制对话框的显示和隐藏
-const dialogVisible = ref(false);
-// 上传头像逻辑
-const fileList = ref<UploadUserFile[]>([]);
-const dialogImageUrl = ref<string>(""); //图片预览路径
-const dialogVisiblef = ref<boolean>(false); //图片预览弹框
-const isShow = ref<boolean>(false); //是否隐藏上传框
-const imageFile = ref<File | undefined>();
+
+const dialogVisible = ref(false);             //控制对话框的显示和隐藏
+const fileList = ref<UploadUserFile[]>([]);   //上传的图片
+const dialogImageUrl = ref<string>("");       //图片预览路径
+const dialogVisiblef = ref<boolean>(false);   //图片预览弹框
+const isShow = ref<boolean>(false);            //是否隐藏上传框
+const imageFile = ref<File | undefined>();     //文件信息
 
 //上传文件之前
 const beforeUpload = (file: File) => {
   console.log(file);
   imageFile.value = file;
-  isShow.value = true;
+  isShow.value = true;    //上传图片后隐藏上传框
 };
 
-const request = (): void => {}; //让上传走自定义方法
+const request = (): void => { }; //让上传走自定义方法
 
 const handleRemove: UploadProps["onRemove"] = (): void => {
-  isShow.value = false;
+  isShow.value = false;              //移除图片后重新显示上传框
 };
 
+//预览头像
 const handlePictureCardPreview: UploadProps["onPreview"] = (
   uploadFile
 ): void => {
@@ -112,9 +98,10 @@ const handlePictureCardPreview: UploadProps["onPreview"] = (
 
 //上传图片
 const uploadImg = async () => {
-  let formData = new FormData();
-  formData.append("avatar", imageFile.value!);
-  await changeUserImg(id.value!, formData);
+  let formData = new FormData();    //new一个FormData对象用来传输文件
+  formData.append("avatar", imageFile.value!);   //将图片添加到FormData对象中，对应后端解析的字段avatar
+  const res = await changeUserImg(id.value!, formData);
+  userimg.value = res.data.path
   dialogVisible.value = false;
 };
 </script>
@@ -124,20 +111,24 @@ const uploadImg = async () => {
   width: 34%;
   height: 100%;
   margin: 20px 0 0 20px;
+
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   .card-footer {
     display: flex;
     justify-content: space-between;
   }
 }
+
 // 对话框样式
 .dialog-footer button:first-child {
   margin-right: 10px;
 }
+
 // 上传本地头像样式
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
