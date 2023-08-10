@@ -89,27 +89,28 @@ let upload = multer({ storage });
 // 是否有参数：图片文件  用户id
 Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
   try {
-    let server = "http://localhost:3300"; //拼接服务器ip地址
-    // let server = "http://8.130.71.186:3300";
+    // let server = "http://localhost:3300";
+    let server = "http://8.130.71.186:3300"; //拼接服务器ip地址
     if (req.file == undefined) {
       res.send({
         code: 403,
-        msg: "未上传成功，请重新上传图片"
-      })
-      return
+        msg: "未上传成功，请重新上传图片",
+      });
+      return;
     }
-    let url = req.file.destination.substring(1);        //移除路径前面的.
-    let filename = req.file.filename;                  //获取文件名
-    let path = server + url + "/" + filename;         //构建完整的url
-    let { id } = req.params;                         //multer会把普通文本数据格式化到body中
-    let row = await mysql.query(                    //存储头像路径
+    let url = req.file.destination.substring(1); //移除路径前面的.
+    let filename = req.file.filename; //获取文件名
+    let path = server + url + "/" + filename; //构建完整的url
+    let { id } = req.params; //multer会把普通文本数据格式化到body中
+    let row = await mysql.query(
+      //存储头像路径
       `UPDATE user SET img='${path}' WHERE id=${id};select * from user where id=${id};`
     );
     // console.log(req.params);
     res.send({
       code: 200,
       msg: "头像上传成功",
-      data: { path }
+      data: { path },
     });
   } catch (error) {
     console.log(error);
