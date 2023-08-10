@@ -1,5 +1,13 @@
 import request from "@/util/request";
 
+//查询用户基本信息接口
+export const getUserMessage = (id: number) => {
+  return request({
+    url: `/user/getUserMessage/${id}`,
+    method: "get",
+  });
+};
+
 //修改用户基本信息接口
 export const userMessage = (data: {
   id: number;

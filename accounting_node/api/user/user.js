@@ -7,11 +7,41 @@ let multer = require("multer");
 module.express = Router;
 Router.use(express.json(), express.urlencoded());
 
+//查询用户基本信息接口
+Router.get("/getUserMessage/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const row = await mysql.query(`SELECT * FROM user WHERE id='${id}'`); //查询数据库中该用户是否存在
+    if (row.length <= 0) {
+      res.send({
+        code: 401,
+        msg: "该用户不存在，请联系管理员",
+      });
+    } else {
+      res.send({
+        code: 200,
+        msg: "查询成功",
+        data: {
+          id: row[0].id,
+          name: row[0].name,
+          userimg: row[0].img,
+          gender:row[0].gender
+        }
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      code: 500,
+      msg: "服务端内部错误",
+    });
+  }
+});
+
 //修改用户基本信息接口
 Router.post("/userMessage", async (req, res) => {
   try {
     const { id, name, gender } = req.body;
-    console.log(id, name, gender);
     const row = await mysql.query(`SELECT * FROM user WHERE id='${id}'`); //查询数据库中该用户是否存在
     if (row.length <= 0) {
       res.send({
@@ -74,6 +104,7 @@ Router.post("/changePassword", async (req, res) => {
   }
 });
 
+//上传头像的中间件
 let storage = multer.diskStorage({
   destination: "./images",
   filename: function (req, file, cb) {

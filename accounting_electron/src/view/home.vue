@@ -111,12 +111,13 @@ import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
+import { getUserMessage } from "@/api/user";
 import { RotationBall } from "@/util/mouseCanvas.js";
 
 const router = useRouter();
 const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
-const { name, userimg } = storeToRefs(userStore); //从仓库中获取用户名和头像
+const { id, name, userimg, gender } = storeToRefs(userStore); //从仓库中获取用户信息
 const time: Date = new Date(); //获取当前时间对象
 
 const greet = (time: Date): string => {
@@ -131,18 +132,28 @@ const greet = (time: Date): string => {
   return "晚上好!";
 };
 
-const routerPush = (path: string) => {
+//请求最新的用户信息
+const getUser = async (): Promise<void> => {
+  const res = await getUserMessage(id.value!);
+  const data = res.data;
+  name.value = data.name;
+  userimg.value = data.userimg;
+  gender.value = data.gender;
+};
+
+const routerPush = (path: string): void => {
   //路由跳转方法
   router.push(path);
 };
 // 点击退出按钮
-const OutLogin = () => {
+const OutLogin = (): void => {
   router.replace("/login");
   window.localStorage.removeItem("token");
 };
 
 onMounted(() => {
   new RotationBall(); //执行画布方法
+  getUser();
 });
 </script>
 
