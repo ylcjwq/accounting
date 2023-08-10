@@ -2,8 +2,13 @@
   <el-container class="layout-container-demo" style="height: 100vh">
     <el-aside :width="200">
       <el-scrollbar>
-        <el-menu :collapse="isCollapse" :unique-opened="true" :router="true" :default-active="$route.path"
-          class="el-menu-vertical-demo">
+        <el-menu
+          :collapse="isCollapse"
+          :unique-opened="true"
+          :router="true"
+          :default-active="$route.path"
+          class="el-menu-vertical-demo"
+        >
           <el-menu-item index="/home">
             <el-icon>
               <House />
@@ -57,7 +62,9 @@
     </el-aside>
 
     <el-container>
-      <el-header style="display: flex; font-size: 16px; justify-content: space-between">
+      <el-header
+        style="display: flex; font-size: 16px; justify-content: space-between"
+      >
         <div class="leftbar">
           <el-icon @click="isCollapse = false" v-if="isCollapse">
             <Expand />
@@ -70,12 +77,19 @@
         <div class="toolbar">
           <span class="h_username">{{ greet(time) }} {{ name }}！</span>
           <el-dropdown>
-            <el-avatar :size="50" type="file" :src="userimg ??
-              'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-              " />
+            <el-avatar
+              :size="50"
+              type="file"
+              :src="
+                userimg ??
+                'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+              "
+            />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="routerPush('/user')">个人设置</el-dropdown-item>
+                <el-dropdown-item @click="routerPush('/user')"
+                  >个人设置</el-dropdown-item
+                >
                 <el-dropdown-item @click="OutLogin">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -102,7 +116,7 @@ import { RotationBall } from "@/util/mouseCanvas.js";
 const router = useRouter();
 const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
-const { name, userimg } = storeToRefs(userStore); //从仓库中获取用户名
+const { name, userimg } = storeToRefs(userStore); //从仓库中获取用户名和头像
 const time: Date = new Date(); //获取当前时间对象
 
 const greet = (time: Date): string => {
