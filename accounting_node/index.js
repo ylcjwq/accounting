@@ -15,8 +15,12 @@ app.use(express.static("./api"));
 
 const SECRET_KEY = "hello"; // 与生成token的密钥要一致!
 const parseJwt = (req, res, next) => {
-  if (req.path === "/login/login" || req.path === "/login/enroll") {
-    // 登录注册页无需校验
+  if (
+    req.path === "/login/login" ||
+    req.path === "/login/enroll" ||
+    req.path.startsWith("/images/")
+  ) {
+    // 登录注册页和头像资源无需校验
     return next();
   }
   const token = req.headers.authorization?.split(" ")[1]; // 从请求头中提取 Token
