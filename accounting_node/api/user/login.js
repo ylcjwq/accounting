@@ -27,7 +27,7 @@ Router.post("/login", async (req, res) => {
     }
     // 存在
     // 根据用户数据，生成token
-    // 将id账号密码信息存入对象，转换为token
+    // 将id和账号信息存入对象，转换为token
     delete row[0].password;
     row[0].time = dayjs(row[0].time).format("YYYY-MM-DD HH:mm:ss");
     let obj = { id: row[0].id, username: row[0].username };
@@ -81,27 +81,6 @@ Router.post("/enroll", async (req, res) => {
       code: 500,
       msg: "服务端内部错误",
     });
-  }
-});
-
-// !校验登录(暂未实现)
-Router.post("/checkLogin", async (req, res) => {
-  // 从token获取用户id
-  const token = req.body.token;
-  try {
-    const { _id } = JWT.verify(token, "hello");
-    //token没问题
-    const result = await User.findById(_id).populate("roles");
-    if (result) {
-      //登录的状态是正确的。
-      res.json({ code: 0, message: "登录成功", data: result });
-    } else {
-      //登录状态被窜改了。
-      res.json({ code: -1, message: "过期了,请重新登录" });
-    }
-  } catch (error) {
-    //token失效了
-    res.json({ code: -1, message: "过期了,请重新登录" });
   }
 });
 

@@ -140,6 +140,7 @@ const getUser = async (): Promise<void> => {
   userimg.value = data.userimg;
   gender.value = data.gender;
 };
+getUser();
 
 const routerPush = (path: string): void => {
   //路由跳转方法
@@ -153,7 +154,6 @@ const OutLogin = (): void => {
 
 onMounted(() => {
   new RotationBall(); //执行画布方法
-  getUser();
 });
 </script>
 

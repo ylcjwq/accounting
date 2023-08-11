@@ -4,21 +4,19 @@ import type {
   AxiosResponse,
   AxiosError,
 } from "axios";
-import { Names } from "./requestCom/envName"; //枚举
-// console.log(import.meta.env.VITE_HTTP)
 const service = axios.create({
   //配置的跨域标识
   baseURL: "/api",
   //请求头
   headers: {},
   //超时
-  timeout: 1000 * Names.TIME,
+  timeout: 10000,
 });
 //请求拦截器
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("token"); //携带token
-    config.headers["Authorization"] = `${token}`;
+    config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
   (error: AxiosError) => {

@@ -25,8 +25,8 @@ Router.get("/getUserMessage/:id", async (req, res) => {
           id: row[0].id,
           name: row[0].name,
           userimg: row[0].img,
-          gender:row[0].gender
-        }
+          gender: row[0].gender,
+        },
       });
     }
   } catch (err) {
