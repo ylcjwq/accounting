@@ -50,7 +50,6 @@ const { id } = storeToRefs(userStore);
 const quiryBudget = async (): Promise<void> => {
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
   const res = await inquiryBudget({ userId: id.value! });
-  console.log(res);
   const data = res.data;
   if (data.setBudget === true) {
     enabledShow.value = true; //设置过预算
