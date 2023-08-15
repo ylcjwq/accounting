@@ -28,7 +28,6 @@ const parseJwt = (req, res, next) => {
     try {
       const decoded = JWT.verify(token, SECRET_KEY);
       // 进一步检查数据库中是否存在用户信息的逻辑，例如查询数据库
-      console.log(decoded);
       if (userExistsInDatabase(decoded.id)) {
         req.user = decoded; // 将解码后的信息存储在 req.user 中
       } else {
