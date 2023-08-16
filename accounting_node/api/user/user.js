@@ -3,6 +3,7 @@ let Router = express.Router();
 let mysql = require("../sql");
 let path = require("path");
 let multer = require("multer");
+const fs = require('fs');
 
 module.express = Router;
 Router.use(express.json(), express.urlencoded());
@@ -128,20 +129,34 @@ Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
       });
       return;
     }
-    let url = req.file.destination.substring(1); //移除路径前面的.
-    let filename = req.file.filename; //获取文件名
-    let path = server + url + "/" + filename; //构建完整的url
+    const url = req.file.destination.substring(1); //移除路径前面的.
+    const filename = req.file.filename; //获取文件名
+    const img = server + url + "/" + filename; //构建完整的url
     const { id } = req.params; //multer会把普通文本数据格式化到body中
-    const {userimg} = req.query
+    let { userimg } = req.query
+    const delPath = server + url + "/"     //获取应该切掉的路径
+    userimg = userimg.split(delPath)[1]    //切割出文件名
+    const filePath = path.join(__dirname, '../..', 'images', userimg);  //找到images文件夹
+    //删除文件
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        res.send({
+          code: 500,
+          msg: "服务端内部错误",
+        });
+        return;
+      }
+      console.log('文件删除成功');
+    });
     let row = await mysql.query(
       //存储头像路径
-      `UPDATE user SET img='${path}' WHERE id=${id};select * from user where id=${id};`
+      `UPDATE user SET img='${img}' WHERE id=${id};select * from user where id=${id};`
     );
     // console.log(req.params);
     res.send({
       code: 200,
       msg: "头像上传成功",
-      data: { path },
+      data: { img },
     });
   } catch (error) {
     console.log(error);

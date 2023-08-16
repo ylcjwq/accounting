@@ -115,7 +115,8 @@ const uploadImg = async () => {
   formData.append("avatar", imageFile.value!); //将图片添加到FormData对象中，对应后端解析的字段avatar
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
   const res = await changeUserImg(id.value!, userimg.value, formData);
-  userimg.value = res.data.path; //重新赋值仓库头像路径
+  console.log(res);
+  userimg.value = res.data.img; //重新赋值仓库头像路径
   dialogVisible.value = false; //关闭弹窗，清空上传图片列表，显示上传框
   fileList.value = [];
   isShow.value = false;
