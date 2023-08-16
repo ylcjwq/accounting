@@ -120,8 +120,8 @@ let upload = multer({ storage });
 // 是否有参数：图片文件  用户id
 Router.post("/avatar/:id", upload.single("avatar"), async (req, res) => {
   try {
-    let server = "http://localhost:3300";
-    // let server = "http://8.130.71.186:3300"; //拼接服务器ip地址
+    // let server = "http://localhost:3300";
+    let server = "http://8.130.71.186:3300"; //拼接服务器ip地址
     if (req.file == undefined) {
       res.send({
         code: 403,
