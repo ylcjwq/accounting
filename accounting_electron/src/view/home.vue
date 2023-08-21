@@ -112,7 +112,7 @@ import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { getUserMessage } from "@/api/user";
-import { RotationBall } from "@/util/mouseCanvas.js";
+import { RotationBall } from "@/util/mouseCanvas";
 
 const router = useRouter();
 const isCollapse = ref<boolean>(false);
