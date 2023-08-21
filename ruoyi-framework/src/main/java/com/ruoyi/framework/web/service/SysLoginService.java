@@ -86,7 +86,7 @@ public class SysLoginService {
         ajax.put(Constants.TOKEN, tokenService.createToken(loginUser));
         SysUser user = loginUser.getUser();
         ajax.put("id", loginUser.getUserId());
-        ajax.put("username", loginUser.getUserId());
+        ajax.put("username", loginUser.getUsername());
         ajax.put("nickname", user.getNickName());
         ajax.put("avatar", user.getAvatar());
         ajax.put("sex", user.getSex());
