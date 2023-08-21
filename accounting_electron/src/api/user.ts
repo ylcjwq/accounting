@@ -35,9 +35,13 @@ export const changePassword = (data: {
 };
 
 //上传头像接口
-export const changeUserImg = (id: number, formData: FormData) => {
+export const changeUserImg = (
+  id: number,
+  userimg: string | null,
+  formData: FormData
+) => {
   return request({
-    url: `/user/avatar/${id}`,
+    url: `/user/avatar/${id}?userimg=${userimg}`,
     method: "post",
     data: formData,
   });
