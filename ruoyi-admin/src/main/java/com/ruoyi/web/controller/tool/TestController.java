@@ -38,7 +38,6 @@ public class TestController extends BaseController
         users.put(2, new UserEntity(2, "ry", "admin123", "15666666666"));
     }
 
-    @ApiOperation("获取用户列表")
     @GetMapping("/list")
     public R<List<UserEntity>> userList()
     {
@@ -46,7 +45,6 @@ public class TestController extends BaseController
         return R.ok(userList);
     }
 
-    @ApiOperation("获取用户详细")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
     @GetMapping("/{userId}")
     public R<UserEntity> getUser(@PathVariable Integer userId)
@@ -61,7 +59,6 @@ public class TestController extends BaseController
         }
     }
 
-    @ApiOperation("新增用户")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", dataTypeClass = Integer.class),
         @ApiImplicitParam(name = "username", value = "用户名称", dataType = "String", dataTypeClass = String.class),
@@ -79,7 +76,6 @@ public class TestController extends BaseController
         return R.ok();
     }
 
-    @ApiOperation("更新用户")
     @PutMapping("/update")
     public R<String> update(@RequestBody UserEntity user)
     {
@@ -96,7 +92,6 @@ public class TestController extends BaseController
         return R.ok();
     }
 
-    @ApiOperation("删除用户信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
     @DeleteMapping("/{userId}")
     public R<String> delete(@PathVariable Integer userId)
