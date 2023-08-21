@@ -1,15 +1,5 @@
 package com.ruoyi.web.controller.system;
 
-import java.util.List;
-import java.util.Set;
-
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -18,6 +8,16 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.web.service.SysLoginService;
 import com.ruoyi.framework.web.service.SysPermissionService;
 import com.ruoyi.system.service.ISysMenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 登录验证
@@ -25,6 +25,7 @@ import com.ruoyi.system.service.ISysMenuService;
  * @author ruoyi
  */
 @RestController
+@Api(tags = "登录相关")
 public class SysLoginController {
     @Autowired
     private SysLoginService loginService;
@@ -75,7 +76,6 @@ public class SysLoginController {
      * @return 路由信息
      */
     @GetMapping("getRouters")
-    @ApiOperation("获取路由信息")
     public AjaxResult getRouters() {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
