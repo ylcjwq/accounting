@@ -82,7 +82,7 @@ const save = async (): Promise<void> => {
     return;
   }
   let data = {
-    form,
+    ...form,
     dialogType: dialogType.value,
     userId: id.value!,
   };
