@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ruoyi
  */
 @RestController
-@Api("用户信息管理")
+@Api(tags = "用户信息管理")
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController
 {
