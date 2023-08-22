@@ -16,4 +16,6 @@ public class Budget {
     private Long userId;
     private String budget;
     private Boolean enabled;
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
 }
