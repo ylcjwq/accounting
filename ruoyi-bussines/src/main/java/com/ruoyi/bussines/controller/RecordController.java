@@ -1,9 +1,9 @@
 package com.ruoyi.bussines.controller;
 
 import com.ruoyi.bussines.dto.BudgetDTO;
-import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.service.IRecordService;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +42,7 @@ public class RecordController {
     @ApiOperation("设置预算状态开关")
     @PutMapping("/setBudgetStatus/{userId}")
     public AjaxResult setBudgetStatus(@PathVariable("userId") Long userId, @PathParam("status") Boolean status) {
-        recordService.setBudgetStatus(userId,status);
+        recordService.setBudgetStatus(userId, status);
         return AjaxResult.success();
     }
 
