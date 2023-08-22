@@ -15,9 +15,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @author ruoyi
  */
 @Slf4j
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}, scanBasePackages = {"com.ruoyi"})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}, scanBasePackages = {"com.ruoyi.*.controller"})
 @EnableAsync
 @MapperScan("com.ruoyi.*.mapper")
+@ComponentScan(basePackages = {"com.ruoyi.*"})
 public class RuoYiApplication
 {
     public static void main(String[] args)
