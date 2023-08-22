@@ -117,7 +117,7 @@ import { RotationBall } from "@/util/mouseCanvas";
 const router = useRouter();
 const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
-const { id, name, userimg, gender } = storeToRefs(userStore); //从仓库中获取用户信息
+const { id, name, userimg, sex } = storeToRefs(userStore); //从仓库中获取用户信息
 const time: Date = new Date(); //获取当前时间对象
 
 const greet = (time: Date): string => {
@@ -138,7 +138,7 @@ const getUser = async (): Promise<void> => {
   const data = res.data;
   name.value = data.name;
   userimg.value = data.userimg;
-  gender.value = data.gender;
+  sex.value = data.sex;
 };
 getUser();
 

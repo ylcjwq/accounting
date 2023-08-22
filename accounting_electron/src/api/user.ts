@@ -1,9 +1,9 @@
 import request from "@/util/request";
 
 //查询用户基本信息接口
-export const getUserMessage = (id: number) => {
+export const getUserMessage = (userId: number) => {
   return request({
-    url: `/user/getUserMessage/${id}`,
+    url: `/getInfo`,
     method: "get",
   });
 };
@@ -12,7 +12,7 @@ export const getUserMessage = (id: number) => {
 export const userMessage = (data: {
   id: number;
   name: string;
-  gender: string;
+  sex: string;
 }) => {
   return request({
     url: "/user/userMessage",

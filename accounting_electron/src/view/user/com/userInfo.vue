@@ -29,7 +29,7 @@
     <el-divider />
     <div class="card-footer">
       <span>用户名称：</span>
-      <span>{{ gender }}</span>
+      <span>{{ sex }}</span>
     </div>
     <el-divider />
     <div class="card-footer">
@@ -79,7 +79,7 @@ import type { UploadProps, UploadUserFile } from "element-plus";
 import { changeUserImg } from "@/api/user";
 
 const userStore = useUserStore();
-const { username, name, gender, time, id, userimg } = storeToRefs(userStore);
+const { username, name, sex, time, id, userimg } = storeToRefs(userStore);
 
 const dialogVisible = ref(false); //控制对话框的显示和隐藏
 const fileList = ref<UploadUserFile[]>([]); //上传的图片

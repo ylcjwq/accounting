@@ -17,8 +17,8 @@
           <el-form-item label="用户名称" prop="name">
             <el-input v-model="ruleFormBasic.name" />
           </el-form-item>
-          <el-form-item label="性别" prop="gender">
-            <el-radio-group v-model="ruleFormBasic.gender">
+          <el-form-item label="性别" prop="sex">
+            <el-radio-group v-model="ruleFormBasic.sex">
               <el-radio label="男" />
               <el-radio label="女" />
             </el-radio-group>
@@ -79,7 +79,7 @@ import { userMessage, changePassword } from "@/api/user";
 //基本信息的接口
 interface RuleFormBasic {
   name: string;
-  gender: string;
+  sex: string;
 }
 //修改密码的接口
 interface RuleFormPassword {
@@ -90,12 +90,12 @@ interface RuleFormPassword {
 
 const activeName = ref<string>("first");
 const userStore = useUserStore();
-const { id, name, gender } = storeToRefs(userStore);
+const { id, name, sex } = storeToRefs(userStore);
 
 //基本信息
 const ruleFormBasic = reactive<RuleFormBasic>({
   name: name.value!,
-  gender: gender.value!,
+  sex: sex.value!,
 });
 //修改密码
 const ruleFormPassword = reactive<RuleFormPassword>({
@@ -110,7 +110,7 @@ const rulesBasic = reactive<FormRules<RuleFormBasic>>({
     { required: true, message: "请输入用户名称", trigger: "blur" },
     { min: 2, max: 8, message: "用户名称必须为2~8位字符", trigger: "blur" },
   ],
-  gender: [
+  sex: [
     {
       required: true,
       message: "请选择性别",
@@ -197,12 +197,12 @@ const saveUserMessage = async (): Promise<void> => {
   const data = {
     id: id.value!,
     name: ruleFormBasic.name,
-    gender: ruleFormBasic.gender,
+    sex: ruleFormBasic.sex,
   };
   await userMessage(data);
   ElMessage.success("修改成功！");
   name.value = ruleFormBasic.name;
-  gender.value = ruleFormBasic.gender;
+  sex.value = ruleFormBasic.sex;
 };
 
 //修改密码保存按钮

@@ -1,26 +1,62 @@
 <template>
   <!-- 登录模块 -->
   <div class="loginBox">
-    <div class="login_item">
+    <video
+      src="@/assets/login_bg.mp4"
+      class="beijin"
+      autoplay
+      loop
+      muted
+    ></video>
+    <div class="login_item" v-if="logOrEnr">
       <span class="log_item">登 录</span>
-      <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="90px" class="demo-ruleForm">
+      <el-form
+        ref="ruleFormRef"
+        :model="ruleForm"
+        :rules="rules"
+        label-width="90px"
+        class="demo-ruleForm"
+      >
         <el-form-item label="账 号" prop="username">
-          <el-input v-model="ruleForm.username" type="text" autocomplete="off" :prefix-icon="User" :append="''" />
+          <el-input
+            v-model="ruleForm.username"
+            type="text"
+            autocomplete="off"
+            :prefix-icon="User"
+            :append="''"
+            size="large"
+          />
         </el-form-item>
         <el-form-item label="密 码" prop="password">
-          <el-input v-model="ruleForm.password" type="password" autocomplete="off" :prefix-icon="Lock" show-password />
+          <el-input
+            v-model="ruleForm.password"
+            type="password"
+            autocomplete="off"
+            :prefix-icon="Lock"
+            show-password
+            size="large"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleFormRef)" style="margin-left: 73px; margin-top: 30px">登
-            录</el-button>
-          <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px; margin-top: 30px">重 置</el-button>
+          <el-button
+            type="primary"
+            @click="submitForm(ruleFormRef)"
+            style="margin-left: 73px; margin-top: 30px"
+            >登 录</el-button
+          >
+          <el-button
+            @click="resetForm(ruleFormRef)"
+            style="margin-left: 40px; margin-top: 30px"
+            >重 置</el-button
+          >
         </el-form-item>
-        <span class="register" @click="router.push('/enroll')">
+        <span class="register" @click="logOrEnr = false">
           <span style="color: rgb(141, 139, 139)">没有账号?</span>
           <span class="goToLogin">去注册</span>
         </span>
       </el-form>
     </div>
+    <enroll v-else @getToLogin="getToLogin" />
   </div>
 </template>
 
@@ -31,7 +67,9 @@ import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus";
 import { useUserStore } from "@/store/user";
 import { login } from "@/api/login";
+import enroll from "@/view/enroll.vue";
 
+const logOrEnr = ref<boolean>(true);
 const ruleFormRef = ref<FormInstance>();
 const router = useRouter();
 const userStore = useUserStore();
@@ -75,12 +113,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
       if (data.code == 200) {
         userStore.$patch({
           //将用户信息存入仓库
-          id: data.data.id,
-          username: data.data.username,
-          name: data.data.name,
-          gender: data.data.gender,
-          userimg: data.data.img,
-          time: data.data.time,
+          id: data.id,
+          username: data.username,
+          name: data.nickname,
+          sex: data.sex,
+          userimg: data.avatar,
+          time: data.loginDate,
         });
         localStorage.setItem("token", data.token);
         router.replace("/home");
@@ -95,16 +133,25 @@ const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
 };
+
+const getToLogin = (): void => {
+  logOrEnr.value = true;
+};
 </script>
 
 <style scoped lang="scss">
 .loginBox {
   height: 100vh;
-  background: url(../assets/login.jpg) no-repeat;
-  /* 背景图片路径 */
-  background-size: 100% 100%;
-
-  /* 图片充满元素 */
+  width: 100vw;
+  .beijin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    object-fit: cover;
+  }
   .login_item {
     .log_item {
       color: rgb(141, 139, 139);
@@ -113,14 +160,19 @@ const resetForm = (formEl: FormInstance | undefined) => {
       margin-left: 10px;
     }
 
-    width: 450px;
-    height: 350px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 8px;
     position: absolute;
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    /* 半透明背景颜色 */
+    width: 500px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 25px;
+    align-items: center;
+    backdrop-filter: blur(4px) saturate(150%);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 
     .demo-ruleForm {
       /* margin-left: 0; */
@@ -137,14 +189,16 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
         .goToLogin {
           font-size: 16px;
-          background: -webkit-gradient(linear,
-              left top,
-              right top,
-              color-stop(0, #89e972),
-              color-stop(0.4, rgb(159, 241, 173)),
-              color-stop(0.5, rgb(188, 243, 227)),
-              color-stop(0.6, #92e9f0),
-              color-stop(1, rgb(96, 207, 235)));
+          background: -webkit-gradient(
+            linear,
+            left top,
+            right top,
+            color-stop(0, #89e972),
+            color-stop(0.4, rgb(159, 241, 173)),
+            color-stop(0.5, rgb(188, 243, 227)),
+            color-stop(0.6, #92e9f0),
+            color-stop(1, rgb(96, 207, 235))
+          );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           cursor: pointer;
@@ -152,5 +206,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
       }
     }
   }
+}
+::v-deep .el-input__wrapper {
+  background-color: rgba(255, 255, 255, 0.4);
 }
 </style>
