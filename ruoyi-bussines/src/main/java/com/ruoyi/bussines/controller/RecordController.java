@@ -29,7 +29,7 @@ public class RecordController {
         return i <= 0 ? AjaxResult.error() : AjaxResult.success();
     }
 
-    @Operation(summary = "查询收入/支出详情")
+    @ApiOperation("查询收入/支出详情")
     @GetMapping("/info")
     public R<List<RecordDTO>> info(
             @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
