@@ -1,16 +1,22 @@
 package com.ruoyi.bussines.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.bussines.enums.RegionEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Getter
 @Setter
 @ApiModel("添加收入/支出参数")
 public class RecordDTO {
+    @ApiModelProperty("记录主键编号")
+    private Long id;
+
     @ApiModelProperty("用户id")
     private Long userId;
 
@@ -22,10 +28,22 @@ public class RecordDTO {
     @NotBlank(message = "收入/支出方式不能为空")
     private Integer region;
 
+    @ApiModelProperty("支出/收入方式说明")
+    public String getRegionDesc() {
+        return RegionEnum.of(region) == null ? "" : RegionEnum.of(region).getDesc();
+    }
+
     @ApiModelProperty("金额")
     @NotBlank(message = "金额不能为空")
     private Integer number;
 
     @ApiModelProperty("备注")
     private String remark;
+
+    @ApiModelProperty("记录时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date time;
+
+    @ApiModelProperty("月份")
+    private Integer mouth;
 }

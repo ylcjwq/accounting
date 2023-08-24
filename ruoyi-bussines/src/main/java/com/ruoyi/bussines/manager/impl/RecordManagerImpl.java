@@ -2,22 +2,36 @@ package com.ruoyi.bussines.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.manager.RecordManager;
 import com.ruoyi.bussines.mapper.BudgetMapper;
+import com.ruoyi.bussines.mapper.RecordMapper;
 import com.ruoyi.bussines.model.Budget;
-import org.springframework.context.annotation.ComponentScan;
+import com.ruoyi.common.utils.SecurityUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class RecordManagerImpl implements RecordManager {
-    @Resource
-    private BudgetMapper budgetMapper;
+    private final BudgetMapper budgetMapper;
+    private final RecordMapper recordMapper;
 
     @Override
     public int insertBudget(Budget budget) {
         return budgetMapper.insert(budget);
+    }
+
+    @Override
+    public List<RecordDTO> queryAll(String dialogType, Integer region, Integer mouth) {
+        Long userId = SecurityUtils.getUserId();
+        if (userId == null) {
+            return null;
+        }
+        List<RecordDTO> recordDTOS = recordMapper.selectAll(dialogType, region, mouth, userId);
+        return recordDTOS;
     }
 
     @Override

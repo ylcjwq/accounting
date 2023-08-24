@@ -1,15 +1,14 @@
 package com.ruoyi.bussines.service.Impl;
 
 import com.ruoyi.bussines.dto.BudgetDTO;
-import com.ruoyi.bussines.manager.RecordManager;
-import com.ruoyi.bussines.model.Budget;
-import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.bussines.dto.RecordDTO;
+import com.ruoyi.bussines.manager.RecordManager;
 import com.ruoyi.bussines.mapper.RecordMapper;
+import com.ruoyi.bussines.model.Budget;
 import com.ruoyi.bussines.model.Record;
 import com.ruoyi.bussines.service.IRecordService;
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.mapper.SysUserMapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +28,12 @@ public class RecordServiceImpl implements IRecordService {
     private SysUserMapper sysUserMapper;
     @Resource
     private RecordManager recordManager;
+
+    @Override
+    public List<RecordDTO> info(String dialogType, Integer region, Integer mouth) {
+        List<RecordDTO> records = recordManager.queryAll(dialogType, region, mouth);
+        return records;
+    }
 
     @Override
     public void setBudgetStatus(Long userId, Boolean status) {

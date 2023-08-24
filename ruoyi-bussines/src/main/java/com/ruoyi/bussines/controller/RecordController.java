@@ -7,10 +7,13 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping("/record")
@@ -21,9 +24,20 @@ public class RecordController {
 
     @ApiOperation("新增收入支出记录")
     @PostMapping("/add")
-    public AjaxResult info(@RequestBody RecordDTO recordDTO) {
+    public AjaxResult add(@RequestBody RecordDTO recordDTO) {
         Integer i = recordService.add(recordDTO);
         return i <= 0 ? AjaxResult.error() : AjaxResult.success();
+    }
+
+    @Operation(summary = "查询收入/支出详情")
+    @GetMapping("/info")
+    public R<List<RecordDTO>> info(
+            @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
+            @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region,
+            @Parameter(description = "月份") @RequestParam(value = "mouth", required = false) Integer mouth
+    ) {
+        List<RecordDTO> record = recordService.info(dialogType, region, mouth);
+        return R.ok(record);
     }
 
     @ApiOperation("设置预算")
