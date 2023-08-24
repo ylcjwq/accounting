@@ -1,7 +1,14 @@
 import request from "@/util/request";
 
+interface UserResponse {
+  user: {
+    nickName: string;
+    avatar: string;
+    sex: string;
+  };
+}
 //查询用户基本信息接口
-export const getUserMessage = (userId: number) => {
+export const getUserMessage = (userId: number): Promise<UserResponse> => {
   return request({
     url: `/getInfo`,
     method: "get",
