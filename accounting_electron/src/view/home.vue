@@ -135,9 +135,11 @@ const greet = (time: Date): string => {
 //请求最新的用户信息
 const getUser = async (): Promise<void> => {
   const res = await getUserMessage(id.value!);
-  const data = res.data;
-  name.value = data.name;
-  userimg.value = data.userimg;
+  const data = res.user;
+  console.log(data);
+
+  name.value = data.nickName;
+  userimg.value = data.avatar;
   sex.value = data.sex;
 };
 getUser();
