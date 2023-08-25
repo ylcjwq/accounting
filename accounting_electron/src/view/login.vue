@@ -2,7 +2,7 @@
   <!-- 登录模块 -->
   <div class="loginBox">
     <video
-      src="@/assets/login_bg.mp4"
+      src="http://8.130.71.186:3300/images/login_bg.mp4"
       class="beijin"
       autoplay
       loop
@@ -117,7 +117,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
           username: data.username,
           name: data.nickname,
           sex: data.sex,
-          userimg: data.avatar,
+          userimg: `http://43.138.195.96:9999${data.avatar}`,
           time: data.loginDate,
         });
         localStorage.setItem("token", data.token);

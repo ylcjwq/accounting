@@ -125,7 +125,7 @@ const getUser = async (): Promise<void> => {
   console.log(data);
 
   name.value = data.nickName;
-  userimg.value = data.avatar;
+  userimg.value = `http://43.138.195.96:9999${data.avatar}`;
   sex.value = data.sex;
 };
 getUser();
