@@ -1,6 +1,7 @@
 <template>
   <!-- 登录模块 -->
   <div class="loginBox">
+    <img src="@/assets/login_bg.png" class="beijin" alt="" />
     <video
       src="http://8.130.71.186:3300/images/login_bg.mp4"
       class="beijin"
