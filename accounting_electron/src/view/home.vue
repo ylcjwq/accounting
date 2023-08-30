@@ -101,6 +101,8 @@ import { getUserMessage } from "@/api/user";
 import { RotationBall } from "@/util/mouseCanvas";
 
 const router = useRouter();
+console.log(router);
+
 const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
 const { id, name, userimg, sex } = storeToRefs(userStore); //从仓库中获取用户信息

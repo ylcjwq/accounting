@@ -1,6 +1,7 @@
 import request from "@/util/request";
 
 interface UserResponse {
+  code: number;
   user: {
     nickName: string;
     avatar: string;
