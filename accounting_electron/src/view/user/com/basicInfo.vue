@@ -195,12 +195,15 @@ const rulesPassword = reactive<FormRules<RuleFormPassword>>({
 //修改基本信息保存按钮
 const saveUserMessage = async (): Promise<void> => {
   const data = {
-    id: id.value!,
-    name: ruleFormBasic.name,
+    userId: id.value!,
+    nickName: ruleFormBasic.name,
     sex: ruleFormBasic.sex,
   };
-  await userMessage(data);
-  ElMessage.success("修改成功！");
+  await userMessage(data).then((res) => {
+    if (res.code == 200) {
+      ElMessage.success("修改成功！");
+    }
+  });
   name.value = ruleFormBasic.name;
   sex.value = ruleFormBasic.sex;
 };
@@ -208,12 +211,14 @@ const saveUserMessage = async (): Promise<void> => {
 //修改密码保存按钮
 const saveChangePassword = async (): Promise<void> => {
   const data = {
-    id: id.value!,
     oldPassword: ruleFormPassword.oldPassword,
     newPassword: ruleFormPassword.newPassword,
   };
-  await changePassword(data);
-  ElMessage.success("修改成功！");
+  await changePassword(data).then((res) => {
+    if (res.code == 200) {
+      ElMessage.success("修改成功！");
+    }
+  });
   ruleFormPassword.oldPassword = "";
   ruleFormPassword.newPassword = "";
   ruleFormPassword.surePassword = "";

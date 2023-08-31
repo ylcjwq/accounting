@@ -8,6 +8,12 @@ interface UserResponse {
     sex: string;
   };
 }
+
+interface changeUserMassage {
+  code: number;
+  imgUrl: string;
+}
+
 //查询用户基本信息接口
 export const getUserMessage = (userId: number): Promise<UserResponse> => {
   return request({
@@ -18,38 +24,35 @@ export const getUserMessage = (userId: number): Promise<UserResponse> => {
 
 //修改用户基本信息接口
 export const userMessage = (data: {
-  id: number;
-  name: string;
+  userId: number;
+  nickName: string;
   sex: string;
-}) => {
+}): Promise<changeUserMassage> => {
   return request({
-    url: "/user/userMessage",
-    method: "post",
+    url: "/system/user/profile",
+    method: "put",
     data,
   });
 };
 
 //修改用户密码接口
 export const changePassword = (data: {
-  id: number;
   oldPassword: string;
   newPassword: string;
-}) => {
+}): Promise<changeUserMassage> => {
   return request({
-    url: "/user/changePassword",
-    method: "post",
-    data,
+    url: "/system/user/profile/updatePwd",
+    method: "put",
+    params: data,
   });
 };
 
 //上传头像接口
 export const changeUserImg = (
-  id: number,
-  userimg: string | null,
   formData: FormData
-) => {
+): Promise<changeUserMassage> => {
   return request({
-    url: `/user/avatar/${id}?userimg=${userimg}`,
+    url: `/system/user/profile/avatar`,
     method: "post",
     data: formData,
   });
