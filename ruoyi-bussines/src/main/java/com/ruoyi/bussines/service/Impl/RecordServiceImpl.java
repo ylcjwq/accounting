@@ -30,8 +30,8 @@ public class RecordServiceImpl implements IRecordService {
     private RecordManager recordManager;
 
     @Override
-    public List<RecordDTO> info(String dialogType, Integer region, Integer mouth) {
-        List<RecordDTO> records = recordManager.queryAll(dialogType, region, mouth);
+    public List<RecordDTO> info(String dialogType, Integer region) {
+        List<RecordDTO> records = recordManager.queryAll(dialogType, region);
         return records;
     }
 
@@ -89,5 +89,10 @@ public class RecordServiceImpl implements IRecordService {
         record.setTime(new Date());
         int i = recordMapper.insert(record);
         return i;
+    }
+
+    @Override
+    public Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day) {
+        return recordManager.queryInfoByDate(dialogType, region, year, month, day);
     }
 }

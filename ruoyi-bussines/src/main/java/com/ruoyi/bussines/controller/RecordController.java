@@ -7,7 +7,6 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,11 +32,22 @@ public class RecordController {
     @GetMapping("/info")
     public R<List<RecordDTO>> info(
             @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
-            @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region,
-            @Parameter(description = "月份") @RequestParam(value = "mouth", required = false) Integer mouth
-    ) {
-        List<RecordDTO> record = recordService.info(dialogType, region, mouth);
+            @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region
+            ) {
+        List<RecordDTO> record = recordService.info(dialogType, region);
         return R.ok(record);
+    }
+
+    @ApiOperation("查询年/年月/年月日/全部收入/支出详情")
+    @GetMapping("/queryInfoByDate")
+    public R<Object> queryInfoByDate(
+            @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
+            @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region,
+            @Parameter(description = "年") @RequestParam(value = "year", required = false) String year,
+            @Parameter(description = "年月") @RequestParam(value = "month", required = false) String month,
+            @Parameter(description = "天") @RequestParam(value = "day", required = false) String day
+    ) {
+        return R.ok(recordService.queryInfoByDate(dialogType, region, year, month, day));
     }
 
     @ApiOperation("设置预算")

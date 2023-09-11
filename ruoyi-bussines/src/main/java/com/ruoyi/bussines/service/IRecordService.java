@@ -41,12 +41,23 @@ public interface IRecordService {
     void setBudgetStatus(Long userId, Boolean status);
 
     /**
-     * 查询收入/支出信息
+     * 查询收入/记录
      *
-     * @param dialogType 支出：spand，收入：revenue
-     * @param region     支出/收入方式
-     * @param mouth      月份
-     * @return
+     * @param dialogType 收入/支出
+     * @param region     方式
+     * @return 返回查询结果
      */
-    List<RecordDTO> info(String dialogType, Integer region, Integer mouth);
+    List<RecordDTO> info(String dialogType, Integer region);
+
+    /**
+     * 查询收入/记录-按照年/年月/年月日
+     *
+     * @param dialogType 收入/支出
+     * @param region     方式
+     * @param year       年
+     * @param month      月
+     * @param day        日
+     * @return 返回查询结果
+     */
+    Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day);
 }

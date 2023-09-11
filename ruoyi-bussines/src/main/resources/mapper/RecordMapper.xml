@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ruoyi.bussines.mapper.RecordMapper">
 
-    <select id="selectAll" resultType="com.ruoyi.bussines.dto.RecordDTO">
+    <select id="queryInfoByDate" resultType="com.ruoyi.bussines.dto.RecordDTO">
         select
         id,
         user_id as userId,
@@ -11,7 +11,9 @@
         `number`,
         remark,
         `time`,
-        MONTH(`time`) as mouth
+        YEAR(`time`) as `year`,
+        MONTH(`time`) as `month`,
+        DAY(`time`) as `day`
         from record
         <where>
             user_id = #{userId}
@@ -21,10 +23,36 @@
             <if test="region != null and region != ''">
                 and region = #{region}
             </if>
-            <if test="mouth != null and mouth != ''">
-                and MONTH(`time`) = #{mouth}
+            <if test="type != null and type == 3">
+                and YEAR(`time`) = #{year} and MONTH(`time`) = #{month} and DAY(`time`) = #{day}
+            </if>
+            <if test="type != null and type == 2">
+                and YEAR(`time`) = #{year} and MONTH(`time`) = #{month}
+            </if>
+            <if test="type != null and type == 1">
+                and YEAR(`time`) = #{year}
             </if>
         </where>
+    </select>
 
+    <select id="selectAll" resultType="com.ruoyi.bussines.dto.RecordDTO">
+        select
+        id,
+        user_id as userId,
+        dialog_type as dialogType,
+        region,
+        `number`,
+        remark,
+        `time`
+        from record
+        <where>
+            user_id = #{userId}
+            <if test="dialogType != null and dialogType != ''">
+                and dialog_type = #{dialogType}
+            </if>
+            <if test="region != null and region != ''">
+                and region = #{region}
+            </if>
+        </where>
     </select>
 </mapper>

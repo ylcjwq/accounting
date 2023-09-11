@@ -14,5 +14,7 @@ public interface RecordManager {
 
     int updateBudgetById(Budget budget);
 
-    List<RecordDTO> queryAll(String dialogType, Integer region, Integer mouth);
+    List<RecordDTO> queryAll(String dialogType, Integer region);
+
+    Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day);
 }
