@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.bussines.mapper.EmailsMapper">
+    <select id="getList" resultType="com.ruoyi.bussines.dto.EmailsDTO">
+        select id,
+               user_id   as userId,
+               topic,
+               content,
+               send_time as sendTime,
+               is_read   as isRead
+        from emails
+        where user_id = #{userId}
+    </select>
+    <select id="selectExpenseByTopic" resultType="com.ruoyi.bussines.dto.EmailsDTO">
+        select id,
+               user_id   as userId,
+               topic,
+               content,
+               send_time as sendTime,
+               is_read   as isRead
+        from emails
+        where user_id = #{userId}
+            and topic = #{topic}
+            and MONTH(send_time) = MONTH(now())
+        limit 1
+    </select>
+</mapper>

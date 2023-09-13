@@ -7,9 +7,14 @@ import com.ruoyi.bussines.manager.RecordManager;
 import com.ruoyi.bussines.mapper.BudgetMapper;
 import com.ruoyi.bussines.mapper.RecordMapper;
 import com.ruoyi.bussines.model.Budget;
+import com.ruoyi.bussines.model.Expense;
+import com.ruoyi.bussines.tracker.ExpenseTracker;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -71,6 +76,7 @@ public class RecordManagerImpl implements RecordManager {
 
     /**
      * 获取查询类型
+     *
      * @return 年月日=1，年月=2，年=3，其他=0
      */
     private Integer getType(String year, String month, String day) {
@@ -87,6 +93,7 @@ public class RecordManagerImpl implements RecordManager {
 
     /**
      * 拼接返回的数据
+     *
      * @return 年月日=直接返回list，年月=返回根据日分组的map，年=返回根据月分组的map
      */
     private Object strResult(List<RecordDTO> recordDTOS, String year, Integer type) {
@@ -126,5 +133,24 @@ public class RecordManagerImpl implements RecordManager {
         // 先根据月份分组
         Map<Integer, List<RecordDTO>> monthMap = dtos.stream().collect(Collectors.groupingBy(RecordDTO::getDay, TreeMap::new, Collectors.toList()));
         return monthMap;
+    }
+
+    @Override
+    public void asyncBudgetRemind() {
+        Long userId = SecurityUtils.getUserId();
+        if(userId == null){
+            throw new ServiceException("非法用户！");
+        }
+        // 查询当月预算
+        Budget budget = selectBudgetByUserId(userId);
+        if (ObjectUtils.isEmpty(budget) || !budget.getEnabled()) {
+            // 若预算为空，且预算不可用，则不进行超出预算提醒
+            return;
+        }
+        ExpenseTracker tracker = new ExpenseTracker(Double.valueOf(budget.getBudget()));
+        // 查询当月的支出，是否触发预算提醒
+        Double sum = recordMapper.sumByMonth(userId);
+        Expense expense = new Expense(sum);
+        tracker.addExpense(expense);
     }
 }

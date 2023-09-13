@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -33,7 +32,7 @@ public class RecordController {
     public R<List<RecordDTO>> info(
             @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
             @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region
-            ) {
+    ) {
         List<RecordDTO> record = recordService.info(dialogType, region);
         return R.ok(record);
     }
@@ -65,7 +64,7 @@ public class RecordController {
 
     @ApiOperation("设置预算状态开关")
     @PutMapping("/setBudgetStatus/{userId}")
-    public AjaxResult setBudgetStatus(@PathVariable("userId") Long userId, @PathParam("status") Boolean status) {
+    public AjaxResult setBudgetStatus(@PathVariable("userId") Long userId, @RequestParam("status") Boolean status) {
         recordService.setBudgetStatus(userId, status);
         return AjaxResult.success();
     }

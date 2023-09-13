@@ -55,4 +55,12 @@
             </if>
         </where>
     </select>
+    <select id="sumByMonth" resultType="java.lang.Double">
+        select sum(number)
+        from record
+        where dialog_type = 'spend'
+        and MONTH (time) = MONTH (NOW())
+        and YEAR (time) = YEAR (NOW())
+        and user_id = #{userId}
+    </select>
 </mapper>
