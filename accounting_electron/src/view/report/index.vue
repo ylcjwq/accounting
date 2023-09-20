@@ -1,46 +1,49 @@
 <template>
   <div style="padding: 20px">
-    <el-table :data="tableData" style="width: 100%" :max-height="300">
-      <el-table-column fixed prop="date" label="Date" width="150" />
-      <el-table-column prop="name" label="Name" width="120" />
-      <el-table-column prop="state" label="State" width="120" />
-      <el-table-column prop="city" label="City" width="120" />
-      <el-table-column prop="address" label="Address" width="600" />
-      <el-table-column prop="zip" label="Zip" width="120" />
-      <el-table-column fixed="right" label="Operations" width="120">
-        <template #default>
-          <el-button link type="primary" size="small" @click="handleClick"
-            >Detail</el-button
-          >
-          <el-button link type="primary" size="small">Edit</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div v-for="item in information">
+      <div>{{ item }}</div>
+      <div>9月</div>
+      <el-collapse @change="handleChange">
+        <el-collapse-item title="Consistency" name="1">
+          <div>
+            Consistent with real life: in line with the process and logic of
+            real life, and comply with languages and habits that the users are
+            used to;
+          </div>
+          <div>
+            Consistent within interface: all elements should be consistent, such
+            as: design style, icons and texts, position of elements, etc.
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { getInfoRecording } from "@/api/record";
+import { onMounted, ref } from "vue";
 
-const tableHeight = computed(() => {
-  //    return 100vh * 0.9
-});
-
-const handleClick = () => {
-  console.log("click");
+let information = ref<any[]>([]);
+const handleChange = (val: string[]) => {
+  console.log(val);
 };
 
-const tableData = [];
+const getInfo = async (): Promise<void> => {
+  const data = {
+    // dialogType: "revenue",
+    // region: 1,
+    year: "2023",
+    // month: "9",
+  };
+  const res = await getInfoRecording(data);
+  information.value = res.data;
+  console.log(information);
+  console.log(res);
+};
 
-for (let i = 0; i < 100; i++) {
-  tableData.push({
-    date: "2016-05-03",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home",
-  });
-}
+// 在组件挂载之前调用getInfo()函数
+onMounted(() => {
+  getInfo();
+});
 </script>

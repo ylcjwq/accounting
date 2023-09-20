@@ -42,3 +42,18 @@ export const openCloseBudget = (data: { status: boolean }, userId: number) => {
     params: data,
   });
 };
+
+//查询收入支出详情
+export const getInfoRecording = (data: {
+  dialogType?: string;
+  region?: number;
+  year?: string;
+  month?: string;
+  day?: string;
+}) => {
+  return request({
+    url: `/record/queryInfoByDate`,
+    method: "get",
+    params: data,
+  });
+};
