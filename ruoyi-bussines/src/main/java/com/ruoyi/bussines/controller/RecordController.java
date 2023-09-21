@@ -40,7 +40,7 @@ public class RecordController {
     @ApiOperation("查询年/年月/年月日/全部收入/支出详情")
     @GetMapping("/queryInfoByDate")
     public R<Object> queryInfoByDate(
-            @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
+            @Parameter(description = "spend:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
             @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region,
             @Parameter(description = "年") @RequestParam(value = "year", required = false) String year,
             @Parameter(description = "年月") @RequestParam(value = "month", required = false) String month,

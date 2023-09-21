@@ -6,17 +6,16 @@ import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.manager.RecordManager;
 import com.ruoyi.bussines.mapper.BudgetMapper;
 import com.ruoyi.bussines.mapper.RecordMapper;
-import com.ruoyi.bussines.model.Budget;
-import com.ruoyi.bussines.model.Expense;
+import com.ruoyi.bussines.model.*;
 import com.ruoyi.bussines.tracker.ExpenseTracker;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -25,6 +24,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
+@SuppressWarnings("all")
 public class RecordManagerImpl implements RecordManager {
     private final BudgetMapper budgetMapper;
     private final RecordMapper recordMapper;
@@ -97,48 +97,68 @@ public class RecordManagerImpl implements RecordManager {
      * @return 年月日=直接返回list，年月=返回根据日分组的map，年=返回根据月分组的map
      */
     private Object strResult(List<RecordDTO> recordDTOS, String year, Integer type) {
-        Map map = new ConcurrentHashMap<String, Map<String, List<RecordDTO>>>();
-        // 拼接返回的数据
-        switch (type) {
-            case 1:
-                Map<Integer, Map<Integer, List<RecordDTO>>> monthDateResultMap = getResultGroupByMonth(recordDTOS);
-                map.put(StringUtils.format("{}", year), monthDateResultMap);
-                return map;
-            case 2:
-                Map<Integer, List<RecordDTO>> dateResultMap = getResultGroupByDay(recordDTOS);
-                return dateResultMap;
-            case 3:
-                return recordDTOS;
-            default:
-                break;
+        Map map = new ConcurrentHashMap<String, Object>();
+        if (type == 0) {
+            map.put("year",getResultGroupByYear(recordDTOS));
+            return map;
         }
+        YearModel yearModel = new YearModel();
+        List<MonthModel> monthModel = getResultGroupByMonth(recordDTOS);
+        yearModel.setNumber(year);
+        yearModel.setMonth(monthModel);
+        map.put("year", yearModel);
         return map;
     }
 
+    private List<YearModel> getResultGroupByYear(List<RecordDTO> dtos) {
+        // 先根据年份分组
+        List<YearModel> yearModels = new ArrayList<>();
+        Map<Integer, List<RecordDTO>> yearMap = dtos.stream().collect(Collectors.groupingBy(RecordDTO::getYear, TreeMap::new, Collectors.toList()));
+        for (Map.Entry<Integer, List<RecordDTO>> entry : yearMap.entrySet()) {
+            YearModel yearModel = new YearModel();
+            yearModel.setNumber(entry.getKey().toString());
+            yearModel.setMonth(getResultGroupByMonth(entry.getValue()));
+            yearModels.add(yearModel);
+        }
+        return yearModels;
+    }
 
     // 先根据月分组，后根据日分组
-    private Map<Integer, Map<Integer, List<RecordDTO>>> getResultGroupByMonth(List<RecordDTO> dtos) {
+    private List<MonthModel> getResultGroupByMonth(List<RecordDTO> dtos) {
         // 先根据月份分组
-        TreeMap<Integer, List<RecordDTO>> monthMap = dtos.stream().collect(Collectors.groupingBy(RecordDTO::getMonth, TreeMap::new, Collectors.toList()));
+        Map<Integer, List<RecordDTO>> monthMap = dtos.stream().collect(Collectors.groupingBy(RecordDTO::getMonth, TreeMap::new, Collectors.toList()));
         Map<Integer, Map<Integer, List<RecordDTO>>> resultMap = monthMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> {
             // 根据月份分组后，再根据天分组
             TreeMap<Integer, List<RecordDTO>> dayMap = entry.getValue().stream().collect(Collectors.groupingBy(RecordDTO::getDay, TreeMap::new, Collectors.toList()));
             return dayMap;
         }));
-        return resultMap;
-    }
 
-    // 根据日分组
-    private Map<Integer, List<RecordDTO>> getResultGroupByDay(List<RecordDTO> dtos) {
-        // 先根据月份分组
-        Map<Integer, List<RecordDTO>> monthMap = dtos.stream().collect(Collectors.groupingBy(RecordDTO::getDay, TreeMap::new, Collectors.toList()));
-        return monthMap;
+        List<MonthModel> monthModels = new ArrayList<>();
+        resultMap.entrySet().stream().forEach(entry -> {
+            Integer month = entry.getKey();
+            Map<Integer, List<RecordDTO>> values = entry.getValue();
+            // 处理月下的日
+            List<DayModel> dayModels = new ArrayList<>();
+            MonthModel monthModel = new MonthModel();
+            values.entrySet().stream().forEach(value -> {
+                Integer day = value.getKey();
+                List<RecordDTO> recordDTOS = value.getValue();
+                DayModel dayModel = new DayModel();
+                dayModel.setNumber(day.toString());
+                dayModel.setPay(recordDTOS);
+                dayModels.add(dayModel);
+            });
+            monthModel.setNumber(month.toString());
+            monthModel.setDay(dayModels);
+            monthModels.add(monthModel);
+        });
+        return monthModels;
     }
 
     @Override
     public void asyncBudgetRemind() {
         Long userId = SecurityUtils.getUserId();
-        if(userId == null){
+        if (userId == null) {
             throw new ServiceException("非法用户！");
         }
         // 查询当月预算
