@@ -9,13 +9,12 @@ import java.util.Arrays;
 
 @Getter
 public enum RegionEnum {
-    WX_WALLET(1, "微信钱包"),
-    WX_CHANGE_PASS(2, "微信零钱通"),
-    ALIPAY_BALANCE(3, "支付宝余额"),
-    ALIPAY_YUEBAO(4, "支付宝余额宝"),
-    BANK_CARDS(5, "银行卡"),
-    FUNDS(6, "基金"),
-    OTHER(7, "其它");
+    WX_WALLET(0, "微信钱包"),
+    WX_CHANGE_PASS(1, "微信零钱通"),
+    ALIPAY_BALANCE(2, "支付宝余额"),
+    ALIPAY_YUEBAO(3, "银行卡"),
+    BANK_CARDS(4, "基金"),
+    FUNDS(5, "支付宝余额宝");
 
     @EnumValue
     @JsonValue

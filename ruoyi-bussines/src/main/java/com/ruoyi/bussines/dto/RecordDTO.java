@@ -1,7 +1,8 @@
 package com.ruoyi.bussines.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.bussines.enums.RegionEnum;
+import com.ruoyi.common.utils.spring.SpringUtils;
+import com.ruoyi.system.service.ISysDictDataService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -26,13 +27,16 @@ public class RecordDTO {
     @NotBlank(message = "记录类型不能为空")
     private String dialogType;
 
-    @ApiModelProperty("支出收入方式=1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他，8：其他，9：其他")
+    @ApiModelProperty("支出收入方式=0：微信钱包，1：微信零钱通，2：支付宝余额，3：银行卡，4：基金，5：支付宝余额宝")
     @NotBlank(message = "收入/支出方式不能为空")
     private Integer region;
 
     @ApiModelProperty("支出/收入方式说明")
     public String getRegionDesc() {
-        return RegionEnum.of(region) == null ? "" : RegionEnum.of(region).getDesc();
+        if (ObjectUtils.isEmpty(this.region)) {
+            return null;
+        }
+        return SpringUtils.getBean(ISysDictDataService.class).selectDictLabel("expense_or_income_type", this.region.toString());
     }
 
     @ApiModelProperty("金额")

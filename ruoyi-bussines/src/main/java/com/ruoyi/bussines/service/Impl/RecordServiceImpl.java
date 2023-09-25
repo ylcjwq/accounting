@@ -7,18 +7,24 @@ import com.ruoyi.bussines.mapper.RecordMapper;
 import com.ruoyi.bussines.model.Budget;
 import com.ruoyi.bussines.model.Record;
 import com.ruoyi.bussines.service.IRecordService;
+import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.mapper.SysUserMapper;
+import com.ruoyi.system.service.ISysDictDataService;
+import com.ruoyi.system.service.ISysDictTypeService;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class RecordServiceImpl implements IRecordService {
@@ -28,6 +34,10 @@ public class RecordServiceImpl implements IRecordService {
     private SysUserMapper sysUserMapper;
     @Resource
     private RecordManager recordManager;
+    @Autowired
+    private ISysDictTypeService dictTypeService;
+    @Autowired
+    private ISysDictDataService dictDataService;
 
     @Override
     public List<RecordDTO> info(String dialogType, Integer region) {
@@ -94,5 +104,62 @@ public class RecordServiceImpl implements IRecordService {
     @Override
     public Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day) {
         return recordManager.queryInfoByDate(dialogType, region, year, month, day);
+    }
+
+    @Override
+    public Map<String, Object> queryType() {
+        // 查询收入/支出类型
+        String dictType = "expense_or_income_type";
+        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType(dictType);
+        // 以dict_label为key，以dict_valuer为value
+        return dictDatas.stream().collect(Collectors.toMap(SysDictData::getDictValue, SysDictData::getDictLabel));
+    }
+
+    @Override
+    public void addType(String type) {
+        type = type.replaceAll("\"", "");
+        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType("expense_or_income_type");
+        // step1 检查是否已存在该类型
+        String finalType = type;
+        dictDatas.forEach(dictData -> {
+            if (dictData.getDictLabel().equals(finalType)) {
+                throw new ServiceException("已存在该类型");
+            }
+        });
+        // step2 获取当前最大的排序
+        Long maxSort = dictDatas.stream().map(SysDictData::getDictSort).max(Long::compareTo).get();
+        // step3 新增
+        SysDictData dictData = new SysDictData();
+        dictData.setDictType("expense_or_income_type");
+        dictData.setDictLabel(type);
+        dictData.setDictValue(maxSort + "");
+        dictData.setDictSort(maxSort + 1);
+        dictData.setCreateBy("admin");
+        dictData.setCreateTime(new Date());
+        dictDataService.insertDictData(dictData);
+    }
+
+    @Override
+    public void deleteType(String code) {
+        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType("expense_or_income_type");
+        // step1 检查是否存在该类型
+        SysDictData eqDictData = getEqDictData(code, dictDatas);
+        if (CollectionUtils.isEmpty(dictDatas)) {
+            throw new ServiceException("不存在该类型！");
+        }
+        if (dictDatas.size() > 0 && eqDictData == null) {
+            throw new ServiceException("不存在该类型！");
+        }
+        // step2 删除
+        dictDataService.deleteDictDataById(eqDictData.getDictCode());
+    }
+
+    private static SysDictData getEqDictData(String code, List<SysDictData> dictDatas) {
+        for (SysDictData dictData : dictDatas) {
+            if (dictData.getDictValue().equals(code)) {
+                return dictData;
+            }
+        }
+        return null;
     }
 }

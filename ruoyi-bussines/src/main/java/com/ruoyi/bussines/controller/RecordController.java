@@ -31,7 +31,7 @@ public class RecordController {
     @GetMapping("/info")
     public R<List<RecordDTO>> info(
             @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
-            @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region
+            @Parameter(description = "方式 = 0：微信钱包，1：微信零钱通，2：支付宝余额，3：银行卡，4：基金，5：支付宝余额宝 ") @RequestParam(value = "region", required = false) Integer region
     ) {
         List<RecordDTO> record = recordService.info(dialogType, region);
         return R.ok(record);
@@ -43,7 +43,7 @@ public class RecordController {
             @Parameter(description = "spend:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
             @Parameter(description = "方式 = 1：微信钱包，2：微信零钱通，3：支付宝余额，4：支付宝余额宝，5：银行卡，6：基金，7：其他 ") @RequestParam(value = "region", required = false) Integer region,
             @Parameter(description = "年") @RequestParam(value = "year", required = false) String year,
-            @Parameter(description = "年月") @RequestParam(value = "month", required = false) String month,
+            @Parameter(description = "月") @RequestParam(value = "month", required = false) String month,
             @Parameter(description = "天") @RequestParam(value = "day", required = false) String day
     ) {
         return R.ok(recordService.queryInfoByDate(dialogType, region, year, month, day));
@@ -68,5 +68,4 @@ public class RecordController {
         recordService.setBudgetStatus(userId, status);
         return AjaxResult.success();
     }
-
 }

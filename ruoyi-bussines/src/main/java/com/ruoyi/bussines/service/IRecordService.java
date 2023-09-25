@@ -60,4 +60,25 @@ public interface IRecordService {
      * @return 返回查询结果
      */
     Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day);
+
+    /**
+     * 查询收入/支出方式
+     *
+     * @return 返回查询结果 0=微信钱包，1=微信零钱通，2=支付宝余额，3=银行卡，4=基金，5=支付宝余额宝
+     */
+    Map<String, Object> queryType();
+
+    /**
+     * 添加收入/支出方式
+     *
+     * @param type 收入/支出方式
+     */
+    void addType(String type);
+
+    /**
+     * 删除收入/支出方式
+     *
+     * @param code 需要删除的标识code，0=微信钱包，1=微信零钱通，2=支付宝余额，3=银行卡，4=基金，5=支付宝余额宝
+     */
+    void deleteType(String code);
 }
