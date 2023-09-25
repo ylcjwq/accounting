@@ -2,6 +2,7 @@ package com.ruoyi.bussines.service;
 
 import com.ruoyi.bussines.dto.BudgetDTO;
 import com.ruoyi.bussines.dto.RecordDTO;
+import com.ruoyi.bussines.dto.RecordTypeDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public interface IRecordService {
      *
      * @return 返回查询结果 0=微信钱包，1=微信零钱通，2=支付宝余额，3=银行卡，4=基金，5=支付宝余额宝
      */
-    Map<String, Object> queryType();
+    List<RecordTypeDTO> queryType();
 
     /**
      * 添加收入/支出方式
@@ -80,5 +81,12 @@ public interface IRecordService {
      *
      * @param code 需要删除的标识code，0=微信钱包，1=微信零钱通，2=支付宝余额，3=银行卡，4=基金，5=支付宝余额宝
      */
-    void deleteType(String code);
+    void deleteType(Long code);
+
+    /**
+     * 调整顺序
+     *
+     * @param dtoList
+     */
+    void updateSort(List<RecordTypeDTO> dtoList);
 }

@@ -2,6 +2,7 @@ package com.ruoyi.bussines.service.Impl;
 
 import com.ruoyi.bussines.dto.BudgetDTO;
 import com.ruoyi.bussines.dto.RecordDTO;
+import com.ruoyi.bussines.dto.RecordTypeDTO;
 import com.ruoyi.bussines.manager.RecordManager;
 import com.ruoyi.bussines.mapper.RecordMapper;
 import com.ruoyi.bussines.model.Budget;
@@ -20,6 +21,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RecordServiceImpl implements IRecordService {
+    private static final String DICT_TYPE = "expense_or_income_type";
     @Resource
     private RecordMapper recordMapper;
     @Resource
@@ -107,18 +110,25 @@ public class RecordServiceImpl implements IRecordService {
     }
 
     @Override
-    public Map<String, Object> queryType() {
+    public List<RecordTypeDTO> queryType() {
+        ArrayList<RecordTypeDTO> dtos = new ArrayList<>();
         // 查询收入/支出类型
-        String dictType = "expense_or_income_type";
-        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType(dictType);
-        // 以dict_label为key，以dict_valuer为value
-        return dictDatas.stream().collect(Collectors.toMap(SysDictData::getDictValue, SysDictData::getDictLabel));
+        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType(DICT_TYPE);
+        dictDatas.forEach(dictData -> {
+            RecordTypeDTO dto = new RecordTypeDTO();
+            dto.setCode(dictData.getDictCode());
+            dto.setValue(dictData.getDictValue());
+            dto.setSort(dictData.getDictSort());
+            dto.setName(dictData.getDictLabel());
+            dtos.add(dto);
+        });
+        return dtos;
     }
 
     @Override
     public void addType(String type) {
         type = type.replaceAll("\"", "");
-        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType("expense_or_income_type");
+        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType(DICT_TYPE);
         // step1 检查是否已存在该类型
         String finalType = type;
         dictDatas.forEach(dictData -> {
@@ -140,26 +150,28 @@ public class RecordServiceImpl implements IRecordService {
     }
 
     @Override
-    public void deleteType(String code) {
-        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType("expense_or_income_type");
+    public void deleteType(Long code) {
+        List<SysDictData> dictDatas = dictTypeService.selectDictDataByType(DICT_TYPE);
         // step1 检查是否存在该类型
-        SysDictData eqDictData = getEqDictData(code, dictDatas);
-        if (CollectionUtils.isEmpty(dictDatas)) {
-            throw new ServiceException("不存在该类型！");
-        }
-        if (dictDatas.size() > 0 && eqDictData == null) {
+        SysDictData dictData = dictDataService.selectDictDataById(code);
+        if (CollectionUtils.isEmpty(dictDatas) || ObjectUtils.isEmpty(dictData)) {
             throw new ServiceException("不存在该类型！");
         }
         // step2 删除
-        dictDataService.deleteDictDataById(eqDictData.getDictCode());
+        dictDataService.deleteDictDataById(dictData.getDictCode());
     }
 
-    private static SysDictData getEqDictData(String code, List<SysDictData> dictDatas) {
-        for (SysDictData dictData : dictDatas) {
-            if (dictData.getDictValue().equals(code)) {
-                return dictData;
-            }
-        }
-        return null;
+    @Override
+    public void updateSort(List<RecordTypeDTO> dtoList) {
+        // 将RecordDTO 转换为 sysDictData
+        dtoList.stream().forEach(recordDTO -> {
+            SysDictData dictData = new SysDictData();
+            dictData.setDictValue(recordDTO.getValue());
+            dictData.setDictCode(recordDTO.getCode());
+            dictData.setDictSort(recordDTO.getSort());
+            dictData.setDictLabel(recordDTO.getName());
+            dictDataService.updateDictData(dictData);
+        });
+        dictTypeService.resetDictCache();
     }
 }

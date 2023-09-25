@@ -1,5 +1,7 @@
 package com.ruoyi.bussines.controller;
 
+import com.ruoyi.bussines.dto.RecordDTO;
+import com.ruoyi.bussines.dto.RecordTypeDTO;
 import com.ruoyi.bussines.service.IRecordService;
 import com.ruoyi.common.core.domain.AjaxResult;
 import io.swagger.annotations.Api;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @RestController
 @RequestMapping("/recordType")
@@ -25,15 +28,22 @@ public class RecordTypeController {
 
     @ApiOperation("新增收入/支出类型")
     @PutMapping(value = "/addType")
-    public AjaxResult addType(@Parameter(description = "需要新增的类型名称") @RequestParam(name = "type", required = true) @NotBlank String type) {
-        recordService.addType(type);
+    public AjaxResult addType(@Parameter(description = "需要新增的类型名称") @RequestParam(name = "name", required = true) @NotBlank String name) {
+        recordService.addType(name);
         return AjaxResult.success();
     }
 
     @ApiOperation("删除收入/支出类型")
-    @PostMapping(value = "/deleteType")
-    public AjaxResult deleteType(@Parameter(description = "被删除类型的数字标识") @RequestParam(name = "code", required = true) @NotBlank String code) {
+    @DeleteMapping(value = "/deleteType")
+    public AjaxResult deleteType(@Parameter(description = "被删除类型的数字标识") @RequestParam(name = "code", required = true) @NotBlank Long code) {
         recordService.deleteType(code);
+        return AjaxResult.success();
+    }
+
+    @ApiOperation("调整顺序")
+    @PostMapping(value = "/updateSort")
+    public AjaxResult updateSort(@RequestBody List<RecordTypeDTO> dtoList) {
+        recordService.updateSort(dtoList);
         return AjaxResult.success();
     }
 }
