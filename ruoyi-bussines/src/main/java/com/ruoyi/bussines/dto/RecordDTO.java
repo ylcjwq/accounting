@@ -41,7 +41,7 @@ public class RecordDTO {
 
     @ApiModelProperty("金额")
     @NotBlank(message = "金额不能为空")
-    private Integer number;
+    private Double number;
 
     @ApiModelProperty("备注")
     private String remark;
