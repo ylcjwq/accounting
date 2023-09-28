@@ -27,6 +27,7 @@ public class PicParseController {
     /**
      * 需要解析的文件上传（单个）
      */
+    @ApiOperation("需要解析的文件上传（单个）")
     @PostMapping("/upload")
     public AjaxResult uploadFile(MultipartFile file) throws Exception {
         try {
