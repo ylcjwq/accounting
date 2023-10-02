@@ -1,63 +1,62 @@
 <template>
-  <div class="enrollBox">
-    <div class="login_item">
-      <span class="log_item">注 册</span>
-      <el-form
-        ref="ruleFormRef"
-        :model="ruleForm"
-        :rules="rules"
-        label-width="90px"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="账 号" prop="username">
-          <el-input
-            v-model="ruleForm.username"
-            type="text"
-            autocomplete="off"
-            :prefix-icon="User"
-          />
-        </el-form-item>
-        <el-form-item label="密 码" prop="password">
-          <el-input
-            v-model="ruleForm.password"
-            type="password"
-            autocomplete="off"
-            :prefix-icon="Lock"
-            show-password
-          />
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            v-model="ruleForm.checkPass"
-            type="password"
-            autocomplete="off"
-            :prefix-icon="Lock"
-            show-password
-          />
-        </el-form-item>
-        <el-form-item style="margin-left: 60px">
-          <el-button type="primary" @click="submitForm(ruleFormRef)"
-            >注 册</el-button
-          >
-          <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px"
-            >重 置</el-button
-          >
-        </el-form-item>
-        <div class="register" @click="router.replace('/login')">
-          <span style="color: rgb(141, 139, 139)">已有账号?</span>
-          <span class="goToLogin">去登录</span>
-        </div>
-      </el-form>
-    </div>
+  <div class="login_item">
+    <span class="log_item">注 册</span>
+    <el-form
+      ref="ruleFormRef"
+      :model="ruleForm"
+      :rules="rules"
+      label-width="90px"
+      class="demo-ruleForm"
+    >
+      <el-form-item label="账 号" prop="username">
+        <el-input
+          v-model="ruleForm.username"
+          type="text"
+          autocomplete="off"
+          :prefix-icon="User"
+        />
+      </el-form-item>
+      <el-form-item label="密 码" prop="password">
+        <el-input
+          v-model="ruleForm.password"
+          type="password"
+          autocomplete="off"
+          :prefix-icon="Lock"
+          show-password
+        />
+      </el-form-item>
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-input
+          v-model="ruleForm.checkPass"
+          type="password"
+          autocomplete="off"
+          :prefix-icon="Lock"
+          show-password
+        />
+      </el-form-item>
+      <el-form-item style="margin-left: 60px">
+        <el-button type="primary" @click="submitForm(ruleFormRef)"
+          >注 册</el-button
+        >
+        <el-button @click="resetForm(ruleFormRef)" style="margin-left: 40px"
+          >重 置</el-button
+        >
+      </el-form-item>
+      <div class="register" @click="emit('getToLogin')">
+        <span style="color: rgb(141, 139, 139)">已有账号?</span>
+        <span class="goToLogin">去登录</span>
+      </div>
+    </el-form>
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus";
 import { User, Lock } from "@element-plus/icons-vue";
 import { enroll } from "@/api/login";
+
+const emit = defineEmits(["getToLogin"]);
 
 interface RuleForm {
   //定义输入框内容接口
@@ -74,7 +73,6 @@ const isColor = reactive({
   color: false,
 });
 
-const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive<RuleForm>({
   username: "",
@@ -136,7 +134,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       const data: any = await enroll(ruleForm);
       if (data.code == 200) {
         console.log("注册成功!");
-        router.replace("/login");
+        emit("getToLogin");
         open2();
       } else {
         console.log("失败");
@@ -163,33 +161,26 @@ const open2 = () => {
 </script>
 
 <style scoped lang="scss">
-.enrollBox {
-  height: 100vh;
-  background: url(../assets/login.jpg) no-repeat;
-  /* 背景图片路径 */
-  background-size: 100% 100%;
-  /* 图片充满元素 */
-  .login_item {
-    .log_item {
-      color: rgb(141, 139, 139);
-      float: left;
-      margin-top: 10px;
-      margin-left: 10px;
-    }
+.login_item {
+  .log_item {
+    color: rgb(141, 139, 139);
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
 
-    width: 450px;
-    height: 350px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 8px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+  width: 450px;
+  height: 350px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
-    .demo-ruleForm {
-      margin-top: 80px;
-      margin-right: 18px;
-    }
+  .demo-ruleForm {
+    margin-top: 80px;
+    margin-right: 18px;
   }
 }
 

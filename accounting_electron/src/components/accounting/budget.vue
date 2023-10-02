@@ -49,7 +49,7 @@ const { id } = storeToRefs(userStore);
 //INFO 如果要全局显示超出预算提示的话，该逻辑应该提升到home.vue组件中
 const quiryBudget = async (): Promise<void> => {
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
-  const res = await inquiryBudget({ userId: id.value! });
+  const res = await inquiryBudget(id.value!);
   const data = res.data;
   if (data.setBudget === true) {
     enabledShow.value = true; //设置过预算
@@ -72,7 +72,7 @@ const beforeChange = (): boolean => {
 //改变预算开关状态
 const changeEnabled = async (): Promise<void> => {
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
-  await openCloseBudget({ userId: id.value!, enabled: enabled.value });
+  await openCloseBudget({ status: enabled.value }, id.value!);
   loadingInstance.close(); //关闭loading动画
 };
 

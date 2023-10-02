@@ -27,24 +27,10 @@
               <el-menu-item index="/revenue">收入</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
-          <el-sub-menu index="3">
-            <template #title>
-              <el-icon><icon-menu /></el-icon>
-              <span>Navigator Two</span>
-            </template>
-            <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="3-1">Option 1</el-menu-item>
-              <el-menu-item index="3-2">Option 2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="3-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="3-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
-          </el-sub-menu>
+          <el-menu-item index="/report">
+            <el-icon><icon-menu /></el-icon>
+            <span>流水</span>
+          </el-menu-item>
           <el-sub-menu index="4">
             <template #title>
               <el-icon>
@@ -115,9 +101,11 @@ import { getUserMessage } from "@/api/user";
 import { RotationBall } from "@/util/mouseCanvas";
 
 const router = useRouter();
+console.log(router);
+
 const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
-const { id, name, userimg, gender } = storeToRefs(userStore); //从仓库中获取用户信息
+const { id, name, userimg, sex } = storeToRefs(userStore); //从仓库中获取用户信息
 const time: Date = new Date(); //获取当前时间对象
 
 const greet = (time: Date): string => {
@@ -135,10 +123,12 @@ const greet = (time: Date): string => {
 //请求最新的用户信息
 const getUser = async (): Promise<void> => {
   const res = await getUserMessage(id.value!);
-  const data = res.data;
-  name.value = data.name;
-  userimg.value = data.userimg;
-  gender.value = data.gender;
+  const data = res.user;
+  console.log(data);
+
+  name.value = data.nickName;
+  userimg.value = `http://43.138.195.96:9999${data.avatar}`;
+  sex.value = data.sex;
 };
 getUser();
 

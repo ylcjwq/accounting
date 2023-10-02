@@ -29,7 +29,7 @@
     <el-divider />
     <div class="card-footer">
       <span>用户名称：</span>
-      <span>{{ gender }}</span>
+      <span>{{ sex }}</span>
     </div>
     <el-divider />
     <div class="card-footer">
@@ -79,7 +79,7 @@ import type { UploadProps, UploadUserFile } from "element-plus";
 import { changeUserImg } from "@/api/user";
 
 const userStore = useUserStore();
-const { username, name, gender, time, id, userimg } = storeToRefs(userStore);
+const { username, name, sex, time, userimg } = storeToRefs(userStore);
 
 const dialogVisible = ref(false); //控制对话框的显示和隐藏
 const fileList = ref<UploadUserFile[]>([]); //上传的图片
@@ -112,11 +112,11 @@ const handlePictureCardPreview: UploadProps["onPreview"] = (
 //上传图片
 const uploadImg = async () => {
   let formData = new FormData(); //new一个FormData对象用来传输文件
-  formData.append("avatar", imageFile.value!); //将图片添加到FormData对象中，对应后端解析的字段avatar
+  formData.append("avatarfile", imageFile.value!); //将图片添加到FormData对象中，对应后端解析的字段avatar
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
-  const res = await changeUserImg(id.value!, userimg.value, formData);
+  const res = await changeUserImg(formData);
   console.log(res);
-  userimg.value = res.data.img; //重新赋值仓库头像路径
+  userimg.value = `http://43.138.195.96:9999${res.imgUrl}`; //重新赋值仓库头像路径
   dialogVisible.value = false; //关闭弹窗，清空上传图片列表，显示上传框
   fileList.value = [];
   isShow.value = false;
