@@ -85,6 +85,7 @@ const save = async (): Promise<void> => {
     ...form,
     dialogType: dialogType.value,
     userId: id.value!,
+    projectName: dialogName.value,
   };
   await record(data);
   form.region = 1;

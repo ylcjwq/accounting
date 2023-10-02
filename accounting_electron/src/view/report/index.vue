@@ -1,21 +1,39 @@
 <template>
   <div style="padding: 20px">
     <div v-for="item in information">
-      <div>{{ item }}</div>
-      <div>9月</div>
-      <el-collapse @change="handleChange">
-        <el-collapse-item title="Consistency" name="1">
-          <div>
-            Consistent with real life: in line with the process and logic of
-            real life, and comply with languages and habits that the users are
-            used to;
-          </div>
-          <div>
-            Consistent within interface: all elements should be consistent, such
-            as: design style, icons and texts, position of elements, etc.
-          </div>
-        </el-collapse-item>
-      </el-collapse>
+      <div>{{ item.number }}</div>
+      <div v-for="itm in item.month">
+        {{ itm.number }}
+        <el-collapse
+          @change="handleChange"
+          v-for="it in itm.day"
+          style="margin-top: 10px"
+        >
+          <el-collapse-item :title="it.number" name="1">
+            <div v-for="i in it.pay" class="pay_item">
+              <el-divider />
+              <div style="display: flex; justify-content: space-between">
+                <span>{{ i.dialogType }}</span>
+                <span
+                  :style="{
+                    color: i.dialogType === 'spend' ? '#06cdba' : '#ff5f2f',
+                    fontSize: '24px',
+                  }"
+                >
+                  {{ i.dialogType == "spend" ? "-" : "+" }}{{ i.number }}
+                </span>
+              </div>
+              <div>
+                <span>{{ i.remark }}</span>
+              </div>
+              <div style="display: flex; justify-content: end">
+                <span>{{ i.regionDesc }}</span>
+                <span style="margin-left: 12px">{{ i.time }}</span>
+              </div>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+      </div>
     </div>
   </div>
 </template>
@@ -33,11 +51,11 @@ const getInfo = async (): Promise<void> => {
   const data = {
     // dialogType: "revenue",
     // region: 1,
-    year: "2023",
+    // year: "2023",
     // month: "9",
   };
   const res = await getInfoRecording(data);
-  information.value = res.data;
+  information.value = res.data.year;
   console.log(information);
   console.log(res);
 };
@@ -47,3 +65,9 @@ onMounted(() => {
   getInfo();
 });
 </script>
+
+<style lang="scss" scoped>
+.pay_item {
+  margin-top: 4px;
+}
+</style>
