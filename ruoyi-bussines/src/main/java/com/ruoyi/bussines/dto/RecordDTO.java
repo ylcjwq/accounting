@@ -59,6 +59,9 @@ public class RecordDTO {
     @ApiModelProperty("天")
     private Integer day;
 
+    @ApiModelProperty("活动名称")
+    private String projectName;
+
     @ApiModelProperty("日期")
     public String getTimeStr() {
         if (ObjectUtils.isEmpty(this.time)) {

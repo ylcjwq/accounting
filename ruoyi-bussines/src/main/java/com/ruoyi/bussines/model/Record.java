@@ -23,6 +23,7 @@ public class Record {
     private String remark;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
+    private String projectName;
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

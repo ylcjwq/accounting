@@ -11,6 +11,7 @@
         `number`,
         remark,
         `time`,
+        `project_name` as projectName
         YEAR(`time`) as `year`,
         MONTH(`time`) as `month`,
         DAY(`time`) as `day`
@@ -43,7 +44,8 @@
         region,
         `number`,
         remark,
-        `time`
+        `time`,
+        project_name as projectName
         from record
         <where>
             user_id = #{userId}

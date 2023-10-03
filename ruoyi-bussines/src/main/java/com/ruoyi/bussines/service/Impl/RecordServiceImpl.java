@@ -9,6 +9,7 @@ import com.ruoyi.bussines.model.Budget;
 import com.ruoyi.bussines.model.Record;
 import com.ruoyi.bussines.service.IRecordService;
 import com.ruoyi.common.core.domain.entity.SysDictData;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -97,6 +98,9 @@ public class RecordServiceImpl implements IRecordService {
 
     @Override
     public Integer add(RecordDTO recordDTO) {
+        // 校验非法用户
+        Long userId = recordDTO.getUserId();
+        Assert.state(ObjectUtils.isNotEmpty(userId), "非法用户信息！");
         Record record = new Record();
         BeanUtils.copyProperties(recordDTO, record);
         record.setTime(new Date());
