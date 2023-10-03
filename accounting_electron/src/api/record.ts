@@ -7,6 +7,7 @@ interface Record {
   remark: string;
   dialogType: string;
   userId: number;
+  projectName: string;
 }
 //记录接口
 export const record = (data: Record) => {

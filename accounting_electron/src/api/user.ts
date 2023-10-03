@@ -57,3 +57,11 @@ export const changeUserImg = (
     data: formData,
   });
 };
+
+//查询用户是否超过预算
+export const emails = () => {
+  return request({
+    url: `/emails/info`,
+    method: "get",
+  });
+};

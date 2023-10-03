@@ -1,9 +1,13 @@
 <template>
   <div style="padding: 20px">
     <div v-for="item in information">
-      <div>{{ item.number }}</div>
-      <div v-for="itm in item.month">
-        {{ itm.number }}
+      <div style="color: rgb(235, 89, 44); font-size: 20px">
+        {{ item.number }}
+      </div>
+      <div v-for="itm in item.month" style="margin-top: 10px">
+        <span style="color: rgb(235, 89, 44); font-size: 18px"
+          >{{ itm.number }}月</span
+        >
         <el-collapse
           @change="handleChange"
           v-for="it in itm.day"

@@ -84,6 +84,18 @@
       </el-header>
 
       <el-main>
+        <!-- 显示10秒后消失 -->
+        <div class="tipTop">
+          <el-icon color="#ebb462" size="30"><WarningFilled /></el-icon>
+          <div>
+            <span class="tipContent">预算超支！</span>
+            <br />
+            <span class="tipContent" style="font-size: 14px">{{
+              emailsMsg.content
+            }}</span>
+          </div>
+          <div style="position: absolute; right: 10px">x</div>
+        </div>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -94,10 +106,10 @@
 <script lang="ts" setup>
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
-import { getUserMessage } from "@/api/user";
+import { getUserMessage, emails } from "@/api/user";
 import { RotationBall } from "@/util/mouseCanvas";
 
 const router = useRouter();
@@ -107,6 +119,10 @@ const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
 const { id, name, userimg, sex } = storeToRefs(userStore); //从仓库中获取用户信息
 const time: Date = new Date(); //获取当前时间对象
+const emailsMsg = reactive({
+  isExceedingThreshold: false,
+  content: "",
+});
 
 const greet = (time: Date): string => {
   //判断当前时间，返回对应的问候语
@@ -125,7 +141,6 @@ const getUser = async (): Promise<void> => {
   const res = await getUserMessage(id.value!);
   const data = res.user;
   console.log(data);
-
   name.value = data.nickName;
   userimg.value = `http://43.138.195.96:9999${data.avatar}`;
   sex.value = data.sex;
@@ -142,8 +157,17 @@ const OutLogin = (): void => {
   window.localStorage.removeItem("token");
 };
 
+//查询预算是否超支
+const getEmails = async () => {
+  const res = await emails();
+  console.log(res.data);
+  emailsMsg.content = res.data.content;
+  emailsMsg.isExceedingThreshold = res.data.isExceedingThreshold;
+};
+
 onMounted(() => {
   new RotationBall(); //执行画布方法
+  getEmails();
 });
 </script>
 
@@ -219,5 +243,27 @@ onMounted(() => {
   z-index: 9999;
   opacity: 0.2;
   pointer-events: none; //设置画布层不捕获鼠标事件
+}
+.tipTop {
+  background-color: #fdf8f0;
+  width: 100%;
+  padding: 10px 20px;
+  position: fixed;
+  display: flex;
+  z-index: 999;
+}
+.tipContent {
+  color: #ebb462;
+  line-height: 20px;
+  margin-left: 6px;
+}
+.el-alert {
+  margin: 20px 0 0;
+  position: fixed;
+  // top: 0;
+  z-index: 999;
+}
+.el-alert:first-child {
+  margin: 0;
 }
 </style>
