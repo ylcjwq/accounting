@@ -11,7 +11,7 @@
         `number`,
         remark,
         `time`,
-        `project_name` as projectName
+        `project_name` as projectName,
         YEAR(`time`) as `year`,
         MONTH(`time`) as `month`,
         DAY(`time`) as `day`
