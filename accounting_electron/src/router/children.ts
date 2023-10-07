@@ -29,6 +29,12 @@ const children = [
     title: "个人信息",
     component: () => import("@/view/user/index.vue"),
   },
+  {
+    path: "/photoKeeping",
+    name: "photoKeeping",
+    title: "识图记账",
+    component: () => import("@/view/aiPhotoKeeping/index.vue"),
+  },
 ];
 
 export default children;

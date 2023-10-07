@@ -25,6 +25,7 @@
             <el-menu-item-group>
               <el-menu-item index="/spending">支出</el-menu-item>
               <el-menu-item index="/revenue">收入</el-menu-item>
+              <el-menu-item index="/photoKeeping">识图记账</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <el-menu-item index="/report">
@@ -84,8 +85,14 @@
       </el-header>
 
       <el-main>
-        <!-- 显示10秒后消失 -->
-        <div class="tipTop">
+        <!-- 鼠标悬停1后逐渐消失 -->
+        <div
+          class="tipTop"
+          ref="tipTop"
+          @mouseenter="startTimer"
+          @mouseleave="stopTimer"
+          v-if="emailsMsg.isExceedingThreshold"
+        >
           <el-icon color="#ebb462" size="30"><WarningFilled /></el-icon>
           <div>
             <span class="tipContent">预算超支！</span>
@@ -113,8 +120,6 @@ import { getUserMessage, emails } from "@/api/user";
 import { RotationBall } from "@/util/mouseCanvas";
 
 const router = useRouter();
-console.log(router);
-
 const isCollapse = ref<boolean>(false);
 const userStore = useUserStore();
 const { id, name, userimg, sex } = storeToRefs(userStore); //从仓库中获取用户信息
@@ -123,6 +128,20 @@ const emailsMsg = reactive({
   isExceedingThreshold: false,
   content: "",
 });
+const tipTop = ref<HTMLElement | null>(null);
+let timer: ReturnType<typeof setTimeout> | null = null;
+
+const startTimer = () => {
+  timer = setTimeout(() => {
+    tipTop.value!.style.opacity = "0"; // 让元素逐渐透明
+    tipTop.value!.style.transition = "opacity 6s"; // 设置过渡效果的时间
+  }, 800);
+};
+
+const stopTimer = () => {
+  clearTimeout(timer!);
+  timer = null;
+};
 
 const greet = (time: Date): string => {
   //判断当前时间，返回对应的问候语
@@ -158,6 +177,7 @@ const OutLogin = (): void => {
 };
 
 //查询预算是否超支
+//?应该把这个方法写到仓库中去，然后dom中使用的也是仓库中的值，其他地方直接调用仓库的方法即可。
 const getEmails = async () => {
   const res = await emails();
   console.log(res.data);

@@ -13,11 +13,16 @@
           v-for="it in itm.day"
           style="margin-top: 10px"
         >
-          <el-collapse-item :title="it.number" name="1">
+          <el-collapse-item
+            :title="itm.number + '月' + it.number + '日'"
+            name="1"
+          >
             <div v-for="i in it.pay" class="pay_item">
               <el-divider />
               <div style="display: flex; justify-content: space-between">
-                <span>{{ i.dialogType }}</span>
+                <span style="font-size: 18px; color: rgb(225, 161, 138)">{{
+                  i.projectName
+                }}</span>
                 <span
                   :style="{
                     color: i.dialogType === 'spend' ? '#06cdba' : '#ff5f2f',
@@ -30,7 +35,14 @@
               <div>
                 <span>{{ i.remark }}</span>
               </div>
-              <div style="display: flex; justify-content: end">
+              <div
+                style="
+                  display: flex;
+                  justify-content: end;
+                  font-size: 14px;
+                  color: #afafaf;
+                "
+              >
                 <span>{{ i.regionDesc }}</span>
                 <span style="margin-left: 12px">{{ i.time }}</span>
               </div>

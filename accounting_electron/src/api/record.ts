@@ -58,3 +58,12 @@ export const getInfoRecording = (data: {
     params: data,
   });
 };
+
+//图片记账接口
+export const aiPhotoKeeping = (formData: FormData) => {
+  return request({
+    url: `/baiduAIParse/upload`,
+    method: "post",
+    data: formData,
+  });
+};
