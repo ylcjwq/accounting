@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { ElLoading, type UploadProps, type UploadUserFile } from "element-plus";
-import { aiPhotoKeeping } from "@/api/record";
+import { aiPhotoKeeping, aiAccounting } from "@/api/record";
 
 const fileList = ref<UploadUserFile[]>([]); //上传的图片
 const dialogImageUrl = ref<string>(""); //图片预览路径
@@ -48,7 +48,7 @@ const uploadImg = async () => {
   formData.append("file", imageFile.value!); //将图片添加到FormData对象中，对应后端解析的字段avatar
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
   const res = await aiPhotoKeeping(formData);
-  // console.log(res);
+  const data = await aiAccounting({ filePath: res.url });
   fileList.value = [];
   isShow.value = false;
   loadingInstance.close(); //关闭loading动画
