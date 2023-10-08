@@ -69,4 +69,3 @@ import recordingDialog from "@/components/accounting/recordingDialog.vue";
   }
 }
 </style>
-@/util/accounting/icon

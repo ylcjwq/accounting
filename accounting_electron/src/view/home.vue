@@ -41,7 +41,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/user">个人信息</el-menu-item>
-              <el-menu-item index="4-2">Option 2</el-menu-item>
+              <el-menu-item index="/setting">其他设置</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>

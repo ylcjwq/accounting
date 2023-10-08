@@ -18,6 +18,12 @@ const children = [
     component: () => import("@/view/revenue/index.vue"),
   },
   {
+    path: "/photoKeeping",
+    name: "photoKeeping",
+    title: "识图记账",
+    component: () => import("@/view/aiPhotoKeeping/index.vue"),
+  },
+  {
     path: "/report",
     name: "report",
     title: "报表",
@@ -30,10 +36,10 @@ const children = [
     component: () => import("@/view/user/index.vue"),
   },
   {
-    path: "/photoKeeping",
-    name: "photoKeeping",
-    title: "识图记账",
-    component: () => import("@/view/aiPhotoKeeping/index.vue"),
+    path: "/setting",
+    name: "setting",
+    title: "其他设置",
+    component: () => import("@/view/user/setting.vue"),
   },
 ];
 

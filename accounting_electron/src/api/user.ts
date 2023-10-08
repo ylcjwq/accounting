@@ -65,3 +65,11 @@ export const emails = () => {
     method: "get",
   });
 };
+
+//查询用户记帐账户类型
+export const queryType = () => {
+  return request({
+    url: `/recordType/queryType`,
+    method: "get",
+  });
+};

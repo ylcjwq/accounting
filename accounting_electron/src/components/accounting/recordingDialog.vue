@@ -8,8 +8,8 @@
           :placeholder="'请选择' + title + '方式'"
         >
           <el-option
-            v-for="item in account"
-            :key="item.value"
+            v-for="item in queryTypeStore.type"
+            :key="item.label"
             :label="item.label"
             :value="item.value"
           />
@@ -39,13 +39,12 @@
 import { computed, reactive, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRecordingStore } from "@/store/recording";
-import { useUserStore } from "@/store/user";
-import { account } from "@/util/accounting/recording";
+import { useUserStore, useQueryTypeStore } from "@/store/user";
 import { record } from "@/api/record";
 
 //定义表单内容接口
 interface Form {
-  region: number;
+  region: string;
   number: string;
   remark: string;
 }
@@ -53,12 +52,14 @@ interface Form {
 let dialogFormVisible = ref<boolean>(false); //弹窗的状态
 const recordingStore = useRecordingStore();
 const userStore = useUserStore();
+const queryTypeStore = useQueryTypeStore();
 const { dialogType, dialogName, show } = storeToRefs(recordingStore);
 const { id } = storeToRefs(userStore);
+queryTypeStore.getQueryType();
 
 //表单内容
 const form = reactive<Form>({
-  region: 1,
+  region: "1",
   number: "",
   remark: "",
 });
