@@ -49,6 +49,7 @@ const uploadImg = async () => {
   const loadingInstance = ElLoading.service({ fullscreen: true }); //开启loading动画
   const res = await aiPhotoKeeping(formData);
   const data = await aiAccounting({ filePath: res.url });
+  console.log(data);
   fileList.value = [];
   isShow.value = false;
   loadingInstance.close(); //关闭loading动画

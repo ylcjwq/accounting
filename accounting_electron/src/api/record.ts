@@ -1,4 +1,5 @@
 import request from "@/util/request";
+import { promises } from "original-fs";
 
 //定义记录接口的data类型
 interface Record {
@@ -60,7 +61,9 @@ export const getInfoRecording = (data: {
 };
 
 //图片记账上传图片接口
-export const aiPhotoKeeping = (formData: FormData) => {
+export const aiPhotoKeeping = (
+  formData: FormData
+): Promise<{ code: number; url: string }> => {
   return request({
     url: `/baiduAIParse/upload`,
     method: "post",
