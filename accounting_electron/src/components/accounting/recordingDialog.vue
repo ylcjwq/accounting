@@ -89,7 +89,7 @@ const save = async (): Promise<void> => {
     projectName: dialogName.value,
   };
   await record(data);
-  form.region = 1;
+  // form.region = "1";
   form.number = "";
   form.remark = "";
   dialogFormVisible.value = false;

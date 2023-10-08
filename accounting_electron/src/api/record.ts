@@ -3,7 +3,7 @@ import { promises } from "original-fs";
 
 //定义记录接口的data类型
 interface Record {
-  region: number;
+  region: string;
   number: string;
   remark: string;
   dialogType: string;
