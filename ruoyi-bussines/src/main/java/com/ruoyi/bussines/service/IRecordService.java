@@ -49,7 +49,7 @@ public interface IRecordService {
      * @param region     方式
      * @return 返回查询结果
      */
-    PageInfo<RecordDTO> list(String dialogType, Integer region,Integer pageNum,Integer pageSize);
+    PageInfo<RecordDTO> list(String dialogType, Integer region, Integer pageNum, Integer pageSize);
 
     /**
      * 查询收入/记录-按照年/年月/年月日
@@ -90,4 +90,6 @@ public interface IRecordService {
      * @param dtoList
      */
     void updateSort(List<RecordTypeDTO> dtoList);
+
+    Integer update(RecordDTO recordDTO);
 }

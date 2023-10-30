@@ -1,6 +1,5 @@
 package com.ruoyi.bussines.manager;
 
-import com.ruoyi.bussines.dto.EmailsDTO;
 import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.model.Budget;
 
@@ -20,4 +19,6 @@ public interface RecordManager {
     Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day);
 
     Boolean asyncBudgetRemind();
+
+    Integer updateRecordById(RecordDTO recordDTO);
 }

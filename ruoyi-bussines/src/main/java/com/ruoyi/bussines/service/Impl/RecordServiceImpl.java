@@ -12,8 +12,8 @@ import com.ruoyi.bussines.model.Budget;
 import com.ruoyi.bussines.model.Record;
 import com.ruoyi.bussines.service.IRecordService;
 import com.ruoyi.common.core.domain.entity.SysDictData;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.system.service.ISysDictDataService;
@@ -30,7 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 @Service
 public class RecordServiceImpl implements IRecordService {
@@ -182,5 +181,20 @@ public class RecordServiceImpl implements IRecordService {
             dictDataService.updateDictData(dictData);
         });
         dictTypeService.resetDictCache();
+    }
+
+    @Override
+    public Integer update(RecordDTO recordDTO) {
+        if (recordDTO == null || recordDTO.getId() == null) {
+            throw new ServiceException("非法参数！");
+        }
+        Record record = recordMapper.selectById(recordDTO.getId());
+        if (record == null) {
+            throw new ServiceException("不存在该记录!");
+        }
+        if (!record.getUserId().equals(SecurityUtils.getUserId())) {
+            throw new ServiceException("非法用户修改记录！");
+        }
+        return recordManager.updateRecordById(recordDTO);
     }
 }

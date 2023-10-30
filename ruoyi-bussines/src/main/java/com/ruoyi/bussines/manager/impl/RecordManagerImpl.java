@@ -11,6 +11,7 @@ import com.ruoyi.bussines.tracker.ExpenseTracker;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.bean.BeanUtils;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
@@ -99,7 +100,7 @@ public class RecordManagerImpl implements RecordManager {
     private Object strResult(List<RecordDTO> recordDTOS, String year, Integer type) {
         Map map = new ConcurrentHashMap<String, Object>();
         if (type == 0) {
-            map.put("year",getResultGroupByYear(recordDTOS));
+            map.put("year", getResultGroupByYear(recordDTOS));
             return map;
         }
         YearModel yearModel = new YearModel();
@@ -173,5 +174,12 @@ public class RecordManagerImpl implements RecordManager {
         Expense expense = new Expense(sum);
         tracker.addExpense(expense);
         return true;
+    }
+
+    @Override
+    public Integer updateRecordById(RecordDTO recordDTO) {
+        Record record = new Record();
+        BeanUtils.copyProperties(recordDTO, record);
+        return recordMapper.updateById(record);
     }
 }

@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ApiModel("添加收入/支出参数")
+@ApiModel("收入/支出参数")
 public class RecordDTO {
     @ApiModelProperty("记录主键编号")
     private Long id;

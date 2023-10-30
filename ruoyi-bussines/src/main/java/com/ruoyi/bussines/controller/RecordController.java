@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/record")
@@ -25,6 +24,13 @@ public class RecordController {
     @PostMapping("/add")
     public AjaxResult add(@RequestBody RecordDTO recordDTO) {
         Integer i = recordService.add(recordDTO);
+        return i <= 0 ? AjaxResult.error() : AjaxResult.success();
+    }
+
+    @ApiOperation("修改收入支出记录")
+    @PostMapping("/update")
+    public AjaxResult update(@RequestBody RecordDTO recordDTO) {
+        Integer i = recordService.update(recordDTO);
         return i <= 0 ? AjaxResult.error() : AjaxResult.success();
     }
 
