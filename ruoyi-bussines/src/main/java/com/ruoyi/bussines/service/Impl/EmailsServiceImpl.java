@@ -23,19 +23,24 @@ public class EmailsServiceImpl implements IEmailsService {
     @Override
     public Map<String, Object> info() {
         Long userId = SecurityUtils.getUserId();
-        if(userId == null){
+        if (userId == null) {
             throw new ServiceException("非法用户！");
         }
-        recordManager.asyncBudgetRemind();
+        Boolean flag = recordManager.asyncBudgetRemind();
         Map<String, Object> map = new ConcurrentHashMap<>();
-        // 查询emails表中是否有当月topic为超支提醒的邮件
-        EmailsDTO emailsDTO = emailsMapper.selectExpenseByTopic("超支提醒", userId);
-        if (ObjectUtils.isEmpty(emailsDTO)) {
+        if (!flag) {
             map.put("isExceedingThreshold", false);
             map.put("content", "您本月的支出未超出预算！");
         } else {
-            map.put("isExceedingThreshold", true);
-            map.put("content", emailsDTO.getContent());
+            // 查询emails表中是否有当月topic为超支提醒的邮件
+            EmailsDTO emailsDTO = emailsMapper.selectExpenseByTopic("超支提醒", userId);
+            if (ObjectUtils.isEmpty(emailsDTO)) {
+                map.put("isExceedingThreshold", false);
+                map.put("content", "您本月的支出未超出预算！");
+            } else {
+                map.put("isExceedingThreshold", true);
+                map.put("content", emailsDTO.getContent());
+            }
         }
         return map;
     }

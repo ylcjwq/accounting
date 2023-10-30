@@ -156,7 +156,7 @@ public class RecordManagerImpl implements RecordManager {
     }
 
     @Override
-    public void asyncBudgetRemind() {
+    public Boolean asyncBudgetRemind() {
         Long userId = SecurityUtils.getUserId();
         if (userId == null) {
             throw new ServiceException("非法用户！");
@@ -165,12 +165,13 @@ public class RecordManagerImpl implements RecordManager {
         Budget budget = selectBudgetByUserId(userId);
         if (ObjectUtils.isEmpty(budget) || !budget.getEnabled()) {
             // 若预算为空，且预算不可用，则不进行超出预算提醒
-            return;
+            return false;
         }
         ExpenseTracker tracker = new ExpenseTracker(Double.valueOf(budget.getBudget()));
         // 查询当月的支出，是否触发预算提醒
         Double sum = recordMapper.sumByMonth(userId);
         Expense expense = new Expense(sum);
         tracker.addExpense(expense);
+        return true;
     }
 }

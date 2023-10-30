@@ -19,5 +19,5 @@ public interface RecordManager {
 
     Object queryInfoByDate(String dialogType, Integer region, String year, String month, String day);
 
-    void asyncBudgetRemind();
+    Boolean asyncBudgetRemind();
 }
