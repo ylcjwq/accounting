@@ -1,5 +1,6 @@
 package com.ruoyi.bussines.service;
 
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.bussines.dto.BudgetDTO;
 import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.dto.RecordTypeDTO;
@@ -42,13 +43,13 @@ public interface IRecordService {
     void setBudgetStatus(Long userId, Boolean status);
 
     /**
-     * 查询收入/记录
+     * 查询收入/记录(分页)
      *
      * @param dialogType 收入/支出
      * @param region     方式
      * @return 返回查询结果
      */
-    List<RecordDTO> info(String dialogType, Integer region);
+    PageInfo<RecordDTO> list(String dialogType, Integer region,Integer pageNum,Integer pageSize);
 
     /**
      * 查询收入/记录-按照年/年月/年月日

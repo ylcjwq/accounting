@@ -1,5 +1,8 @@
 package com.ruoyi.bussines.service.Impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.bussines.dto.BudgetDTO;
 import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.dto.RecordTypeDTO;
@@ -44,9 +47,11 @@ public class RecordServiceImpl implements IRecordService {
     private ISysDictDataService dictDataService;
 
     @Override
-    public List<RecordDTO> info(String dialogType, Integer region) {
-        List<RecordDTO> records = recordManager.queryAll(dialogType, region);
-        return records;
+    public PageInfo<RecordDTO> list(String dialogType, Integer region, Integer pageNum, Integer pageSize) {
+        try (Page<?> ignored = PageHelper.startPage(pageNum, pageSize)) {
+            List<RecordDTO> list = recordManager.queryAll(dialogType, region);
+            return new PageInfo<>(list);
+        }
     }
 
     @Override

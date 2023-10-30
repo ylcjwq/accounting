@@ -1,5 +1,6 @@
 package com.ruoyi.bussines.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.bussines.dto.BudgetDTO;
 import com.ruoyi.bussines.dto.RecordDTO;
 import com.ruoyi.bussines.service.IRecordService;
@@ -28,12 +29,14 @@ public class RecordController {
     }
 
     @ApiOperation("查询收入/支出详情")
-    @GetMapping("/info")
-    public R<List<RecordDTO>> info(
+    @GetMapping("/list")
+    public R<PageInfo<RecordDTO>> list(
+            @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
             @Parameter(description = "spand:收入/revenue:支出 ") @RequestParam(value = "dialogType", required = false) String dialogType,
             @Parameter(description = "方式 = 0：微信钱包，1：微信零钱通，2：支付宝余额，3：银行卡，4：基金，5：支付宝余额宝 ") @RequestParam(value = "region", required = false) Integer region
     ) {
-        List<RecordDTO> record = recordService.info(dialogType, region);
+        PageInfo<RecordDTO> record = recordService.list(dialogType, region, pageNum, pageSize);
         return R.ok(record);
     }
 
