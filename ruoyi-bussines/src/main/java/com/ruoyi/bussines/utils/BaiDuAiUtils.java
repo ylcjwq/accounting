@@ -7,7 +7,7 @@ import okhttp3.*;
 public class BaiDuAiUtils {
     static final OkHttpClient HTTP_CLIENT = new OkHttpClient().newBuilder().build();
 
-    static final String ACCESS_TOKEN = "24.c9f1627d00e9c2e4b696e2b4d0f6cd4e.2592000.1698299336.282335-40008522";
+    static final String ACCESS_TOKEN = "24.a655a6a0e20647dc7dd6d2dc799ff860.2592000.1701249009.282335-42040119";
 
     public static JSONArray baiduAiParsePic(String base64Content) {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
