@@ -64,7 +64,7 @@ public class PicParseServiceImpl implements IPicParseService {
             }
             // 添加支出记录，默认为银行卡支出
             // 前缀
-            String[] prefixMoneyStr = new String[]{"实付：", "实收：", "总消费金额：", "消费合计：", "应收：", "应付：", "总消费：", "应收金额："};
+            String[] prefixMoneyStr = new String[]{"付款金额", "实付：", "实收：", "总消费金额：", "消费合计：", "应收：", "应付：", "总消费：", "应收金额："};
             Double cost = getCost(jsonArray, prefixMoneyStr);
             if (ObjectUtils.isNull(cost) || cost.equals(00.00)) {
                 accountPicMapper.deleteById(id);
